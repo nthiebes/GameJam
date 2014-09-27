@@ -4,29 +4,52 @@ window.GameJam.createWorld = function() {
     console.log('Creating world...');
 
     // Create emptiness
-    for (var x=0; x < GameJam.worldWidth; x++) {
+    /*for (var x=0; x < GameJam.worldWidth; x++) {
         GameJam.world[x] = [];
 
         for (var y=0; y < GameJam.worldHeight; y++) {
             GameJam.world[x][y] = 0;
         }
-    }
+    }*/
+    
 
     // Scatter some walls
-    for (var x=0; x < GameJam.worldWidth; x++) {
+    /*for (var x=0; x < GameJam.worldWidth; x++) {
         for (var y=0; y < GameJam.worldHeight; y++) {
             if (Math.random() > 0.75){
                 GameJam.world[x][y] = 1;
             }
         }
-    }
+    }*/
+
+    var levels = {
+            level1: [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                     [0, 1, 1, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                     [0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                     [0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                     [0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0],
+                     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0],
+                     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0],
+                     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0],
+                     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0],
+                     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0],
+                     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0],
+                     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0],
+                     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]],
+            level2: []
+        };
+
+    GameJam.world = levels.level1;
 
     // Calculate initial possible path
-    // note: unlikely but possible to never find one...
-    GameJam.currentPath = [];
+    GameJam.pathStart = [Math.floor((GameJam.worldHeight-1) / 2), GameJam.worldWidth-1];
+    GameJam.pathEnd = [Math.floor((GameJam.worldHeight-1) / 2), 0];
+
+    console.log(GameJam.pathStart);
     while (GameJam.currentPath.length == 0) {
-        GameJam.pathStart = [Math.floor(Math.random()*GameJam.worldWidth),Math.floor(Math.random()*GameJam.worldHeight)];
-        GameJam.pathEnd = [Math.floor(Math.random()*GameJam.worldWidth),Math.floor(Math.random()*GameJam.worldHeight)];
         if (GameJam.world[GameJam.pathStart[0]][GameJam.pathStart[1]] == 0){
             GameJam.currentPath = GameJam.findPath(GameJam.world,GameJam.pathStart,GameJam.pathEnd,'Manhattan');
         }
