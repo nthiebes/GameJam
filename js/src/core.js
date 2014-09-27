@@ -3,7 +3,15 @@ var core = function(document){
 
 	function init(){
 	 /* load resources needed */
-	 resources();
+	 // Initialize if all ressources are loaded
+	resources.load([
+		//'img/sprites.png',
+		//'img/bla.png',
+		//'img/blubb.png',
+		'img/tileset.png'
+	]);
+	resources.onReady(core.Resources);
+	
 	 /* load enviroment */
      enviroment();
 	 /* load player interaction */
@@ -66,8 +74,11 @@ var core = function(document){
    
 
    return {
-      Init: init
+      Init: init,
+      Resources: resources
    }
 }(document);
 
-core.Init();
+window.onload = function() {
+	core.Init();
+};
