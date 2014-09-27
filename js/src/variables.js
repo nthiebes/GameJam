@@ -23,7 +23,7 @@ window.GameJam = {
 	tileHeight: 32,
 	 
 	// start and end of path
-	pathStart: [this.worldWidth, this.worldHeight],
+	pathStart: [0, 0],
 	pathEnd: [0,0],
 	currentPath: []
 };
