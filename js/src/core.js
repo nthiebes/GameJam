@@ -1,33 +1,29 @@
 /* Main part of the game */
-var core = function(document){
+var core = function(document, window){
 
 	function init(){
-	 /* load resources needed */
-	 // Initialize if all ressources are loaded
-	resources.load([
-		//'img/sprites.png',
-		//'img/bla.png',
-		//'img/blubb.png',
-		'img/tileset.png'
-	]);
-	resources.onReady(core.Resources);
-	
-	 /* load enviroment */
-     enviroment();
-	 /* load player interaction */
-	 playerInteraction();
-	 /* load mister G */
-	 prisoner();
-	 /* setting goals of the game */
-	 settingGoals();	 
+		window.onload = function() {
+			 /* load resources needed */
+			 // Initialize if all ressources are loaded
+			resources.load([
+				//'img/sprites.png',
+				//'img/bla.png',
+				//'img/blubb.png',
+				'img/tileset.png'
+			]);
+			resources.onReady(core.Resources);
+			
+			 /* load enviroment */
+			 enviroment();
+			 /* load player interaction */
+			 playerInteraction();
+			 /* load mister G */
+			 prisoner();
+			 /* setting goals of the game */
+			 settingGoals();
+		};	 
    }
    
-   function resources (){
-   
-	 /* load sprites */
-	 /* load assets */
-	 console.log('resources loaded');
-   }
       
    function enviroment (){
    
@@ -77,8 +73,4 @@ var core = function(document){
       Init: init,
       Resources: resources
    }
-}(document);
-
-window.onload = function() {
-	core.Init();
-};
+}(document, window);
