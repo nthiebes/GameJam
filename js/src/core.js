@@ -9,7 +9,8 @@ var core = function(document, window){
 				//'img/sprites.png',
 				//'img/bla.png',
 				//'img/blubb.png',
-				'img/tileset.png'
+				'img/tileset.png',
+				'img/spritesheet.png'
 			]);
 			GameJam.resources.onReady(core.InitGame);
 			
@@ -32,7 +33,7 @@ var core = function(document, window){
 	GameJam.canvas.addEventListener("click", GameJam.canvasClick, false);
 	GameJam.ctx = GameJam.canvas.getContext("2d");
 
-	GameJam.tileset = GameJam.resources.get('img/tileset.png');
+	GameJam.tileset = GameJam.resources.get('img/spritesheet.png');
 	console.log('Ressources loaded.');
 	GameJam.tilesetLoaded = true;
 	GameJam.createWorld();
