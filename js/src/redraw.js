@@ -1,8 +1,5 @@
-window.GameJam.redraw = function() {
-  //if (!spritesheetLoaded) return;
- 
+window.GameJam.redraw = function(){ 
 	console.log('redrawing...');
-
  
 	var spriteNum = 0;
  
@@ -10,13 +7,10 @@ window.GameJam.redraw = function() {
 	GameJam.ctx.fillStyle = '#000000';
 	GameJam.ctx.fillRect(0, 0, GameJam.canvas.width, GameJam.canvas.height);
  
-	for (var x=0; x < GameJam.worldWidth; x++)
-	{
-		for (var y=0; y < GameJam.worldHeight; y++)
-		{
+	for (var x=0; x < GameJam.worldWidth; x++){
+		for (var y=0; y < GameJam.worldHeight; y++){
   		// choose a sprite to draw
-  		switch(GameJam.world[x][y])
-  		{
+  		switch(GameJam.world[x][y]){
   			case 1: 
   			spriteNum = 1; 
   			break;
@@ -37,10 +31,8 @@ window.GameJam.redraw = function() {
  
 	// draw the path
 	console.log('Current path length: '+GameJam.currentPath.length);
-	for (var rp=0; rp<GameJam.currentPath.length; rp++)
-	{
-		switch(rp)
-		{
+	for (var rp=0; rp<GameJam.currentPath.length; rp++){
+		switch(rp){
 			case 0:
   			spriteNum = 2; // start
   			break;

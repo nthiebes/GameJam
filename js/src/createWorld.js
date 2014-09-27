@@ -1,9 +1,9 @@
-// fill the world with walls
+// Fill the world with walls
 window.GameJam.createWorld = function() {
 
     console.log('Creating world...');
 
-    // create emptiness
+    // Create emptiness
     for (var x=0; x < GameJam.worldWidth; x++) {
         GameJam.world[x] = [];
 
@@ -12,7 +12,7 @@ window.GameJam.createWorld = function() {
         }
     }
 
-    // scatter some walls
+    // Scatter some walls
     for (var x=0; x < GameJam.worldWidth; x++) {
         for (var y=0; y < GameJam.worldHeight; y++) {
             if (Math.random() > 0.75){
@@ -21,7 +21,7 @@ window.GameJam.createWorld = function() {
         }
     }
 
-    // calculate initial possible path
+    // Calculate initial possible path
     // note: unlikely but possible to never find one...
     GameJam.currentPath = [];
     while (GameJam.currentPath.length == 0) {

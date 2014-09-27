@@ -3,25 +3,25 @@ var core = function(document, window){
 
 	function init(){
 		window.onload = function() {
-			 /* load resources needed */
-			 // Initialize if all ressources are loaded
+			 /* Initialize game if all ressources are loaded */
 			GameJam.resources.load([
 				//'img/sprites.png',
-				//'img/bla.png',
-				//'img/blubb.png',
 				'img/tileset.png',
 				'img/spritesheet.png'
 			]);
 			GameJam.resources.onReady(core.InitGame);
 			
 			 /* load enviroment */
-			 enviroment();
+			 //enviroment();
+
 			 /* load player interaction */
-			 playerInteraction();
+			 //playerInteraction();
+
 			 /* load mister G */
-			 prisoner();
+			 //prisoner();
+
 			 /* setting goals of the game */
-			 settingGoals();
+			 //settingGoals();
 		};	 
    }
 

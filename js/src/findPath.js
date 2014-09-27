@@ -1,7 +1,6 @@
 // world is a 2d array of integers (eg world[10][15] = 0)
 // pathStart and pathEnd are arrays like [5,10]
-window.GameJam.findPath = function(world, pathStart, pathEnd)
-{
+window.GameJam.findPath = function(world, pathStart, pathEnd){
 	// shortcuts for speed
 	var	abs = Math.abs;
 	var	max = Math.max;
@@ -52,18 +51,18 @@ window.GameJam.findPath = function(world, pathStart, pathEnd)
 	// distanceFunction functions
 	// these return how far away a point is to another
 
-	function ManhattanDistance(Point, Goal)
-	{	// linear movement - no diagonals - just cardinal directions (NSEW)
+	function ManhattanDistance(Point, Goal){
+		// linear movement - no diagonals - just cardinal directions (NSEW)
 		return abs(Point.x - Goal.x) + abs(Point.y - Goal.y);
 	}
 
-	function DiagonalDistance(Point, Goal)
-	{	// diagonal movement - assumes diag dist is 1, same as cardinals
+	function DiagonalDistance(Point, Goal){
+		// diagonal movement - assumes diag dist is 1, same as cardinals
 		return max(abs(Point.x - Goal.x), abs(Point.y - Goal.y));
 	}
 
-	function EuclideanDistance(Point, Goal)
-	{	// diagonals are considered a little farther than cardinal directions
+	function EuclideanDistance(Point, Goal){
+		// diagonals are considered a little farther than cardinal directions
 		// diagonal movement using Euclide (AC = sqrt(AB^2 + BC^2))
 		// where AB = x2 - x1 and BC = y2 - y1 and AC will be [x3, y3]
 		return sqrt(pow(Point.x - Goal.x, 2) + pow(Point.y - Goal.y, 2));
@@ -75,8 +74,7 @@ window.GameJam.findPath = function(world, pathStart, pathEnd)
 	// Returns every available North, South, East or West
 	// cell that is empty. No diagonals,
 	// unless distanceFunction function is not Manhattan
-	function Neighbours(x, y)
-	{
+	function Neighbours(x, y){
 		var	N = y - 1,
 		S = y + 1,
 		E = x + 1,
@@ -101,8 +99,7 @@ window.GameJam.findPath = function(world, pathStart, pathEnd)
 	// returns every available North East, South East,
 	// South West or North West cell - no squeezing through
 	// "cracks" between two diagonals
-	function DiagonalNeighbours(myN, myS, myE, myW, N, S, E, W, result)
-	{
+	function DiagonalNeighbours(myN, myS, myE, myW, N, S, E, W, result){
 		if(myN)
 		{
 			if(myE && canWalkHere(E, N))
@@ -122,8 +119,7 @@ window.GameJam.findPath = function(world, pathStart, pathEnd)
 	// returns every available North East, South East,
 	// South West or North West cell including the times that
 	// you would be squeezing through a "crack"
-	function DiagonalNeighboursFree(myN, myS, myE, myW, N, S, E, W, result)
-	{
+	function DiagonalNeighboursFree(myN, myS, myE, myW, N, S, E, W, result){
 		myN = N > -1;
 		myS = S < worldHeight;
 		myE = E < worldWidth;
@@ -145,8 +141,7 @@ window.GameJam.findPath = function(world, pathStart, pathEnd)
 	}
 
 	// returns boolean value (world cell is available and open)
-	function canWalkHere(x, y)
-	{
+	function canWalkHere(x, y){
 		return ((world[x] != null) &&
 			(world[x][y] != null) &&
 			(world[x][y] <= maxWalkableTileNum));
@@ -154,8 +149,7 @@ window.GameJam.findPath = function(world, pathStart, pathEnd)
 
 	// Node function, returns a new object with Node properties
 	// Used in the calculatePath function to store route costs, etc.
-	function Node(Parent, Point)
-	{
+	function Node(Parent, Point){
 		var newNode = {
 			// pointer to another Node object
 			Parent:Parent,
@@ -176,8 +170,7 @@ window.GameJam.findPath = function(world, pathStart, pathEnd)
 	}
 
 	// Path function, executes AStar algorithm operations
-	function calculatePath()
-	{
+	function calculatePath(){
 		// create Nodes from the Start and End x,y coordinates
 		var	mypathStart = Node(null, {x:pathStart[0], y:pathStart[1]});
 		var mypathEnd = Node(null, {x:pathEnd[0], y:pathEnd[1]});
