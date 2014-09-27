@@ -48,7 +48,6 @@ window.GameJam.createWorld = function() {
     GameJam.pathStart = [Math.floor((GameJam.worldHeight-1) / 2), GameJam.worldWidth-1];
     GameJam.pathEnd = [Math.floor((GameJam.worldHeight-1) / 2), 0];
 
-    console.log(GameJam.pathStart);
     while (GameJam.currentPath.length == 0) {
         if (GameJam.world[GameJam.pathStart[0]][GameJam.pathStart[1]] == 0){
             GameJam.currentPath = GameJam.findPath(GameJam.world,GameJam.pathStart,GameJam.pathEnd,'Manhattan');

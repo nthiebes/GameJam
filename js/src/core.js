@@ -50,7 +50,7 @@ var core = function(document, window){
 	    attacking: false,
 	    alternativeDir: '',
 	    pos: GameJam.pathStart,
-    	sprite: new Sprite('img/tileset.png', [0, 0], [151, 46], 0, [0], 'horizontal', false, false) // url, pos, size, speed, frames, dir, once, inProgress
+    	sprite: new Sprite('img/tileset.png', [0, 0], [32, 32], 8, [0,1,2], 'horizontal', false, false) // url, pos, size, speed, frames, dir, once, inProgress
 	});
 
 	 main();
@@ -128,10 +128,12 @@ var core = function(document, window){
 
 	// Draw everything
 	function render() {
-	    GameJam.ctxa.fillRect(0, 0, GameJam.canvasa.width, GameJam.canvasa.height);
+	    //GameJam.ctxa.fillRect(0, 0, GameJam.canvasa.width, GameJam.canvasa.height);
+
+	    GameJam.canvasa.width = GameJam.canvasa.width;
 
 	    //renderEntities(items);
-	    //renderEntities(prisoner);
+	    renderEntities(GameJam.prisoner);
 	    
 	};
 
@@ -142,10 +144,10 @@ var core = function(document, window){
 	}
 
 	function renderEntity(entity) {
-	    ctx.save();
-	    ctx.translate(entity.pos[0], entity.pos[1]);
-	    entity.sprite.render(ctx);
-	    ctx.restore();
+	    GameJam.ctxa.save();
+	    GameJam.ctxa.translate(entity.pos[0], entity.pos[1]);
+	    entity.sprite.render(GameJam.ctxa);
+	    GameJam.ctxa.restore();
 	}
    
    function startGame(){

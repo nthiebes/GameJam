@@ -37,9 +37,9 @@
                 if( idx >= max ){
                     this._index = 0;
                 }
-                if( idx >= max && !input.isDown('SPACE') ){
+                /*if( idx >= max && !input.isDown('SPACE') ){
                     this.inProgress = false;
-                }
+                }*/
             }
             else {
                 frame = 0;
@@ -60,7 +60,7 @@
                 x += frame * this.size[0];
             }
 
-            ctx.drawImage(resources.get(this.url),
+            ctx.drawImage(GameJam.resources.get(this.url),
                           x, y,
                           this.size[0], this.size[1],
                           0, 0,
