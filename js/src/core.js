@@ -26,19 +26,34 @@ var core = function(document, window){
    }
 
    function initGame (){
+   	GameJam.lastTime = Date.now();
    	console.log('Ressources loaded.');
-	GameJam.canvas = document.getElementById('game-canvas');
-	GameJam.canvas.width = GameJam.worldWidth * GameJam.tileWidth;
-	GameJam.canvas.height = GameJam.worldHeight * GameJam.tileHeight;
-	GameJam.canvas.addEventListener("click", GameJam.canvasClick, false);
-	GameJam.ctx = GameJam.canvas.getContext("2d");
+	GameJam.canvass = document.getElementById('static-canvas');
+	GameJam.canvass.width = GameJam.worldWidth * GameJam.tileWidth;
+	GameJam.canvass.height = GameJam.worldHeight * GameJam.tileHeight;
+	GameJam.canvass.addEventListener("click", GameJam.canvasClick, false);
+	GameJam.ctxs = GameJam.canvass.getContext("2d");
+
+	GameJam.canvasa = document.getElementById('animation-canvas');
+	GameJam.canvasa.width = GameJam.worldWidth * GameJam.tileWidth;
+	GameJam.canvasa.height = GameJam.worldHeight * GameJam.tileHeight;
+	GameJam.ctxa = GameJam.canvasa.getContext("2d");
 
 	GameJam.tileset = GameJam.resources.get('img/spritesheet.png');
+
 	console.log('Ressources loaded.');
 	GameJam.tilesetLoaded = true;
 	GameJam.createWorld();
 	 
-	 
+
+	GameJam.prisoner.push({
+	    attacking: false,
+	    alternativeDir: '',
+	    pos: GameJam.pathStart,
+    	sprite: new Sprite('img/tileset.png', [0, 0], [151, 46], 0, [0], 'horizontal', false, false) // url, pos, size, speed, frames, dir, once, inProgress
+	});
+
+	 main();
 	 console.log('game initialized loaded');
    }   
       
@@ -58,12 +73,6 @@ var core = function(document, window){
 	 console.log('player interaction loaded');
    }
    
-   function prisoner (){
-   
-	 /* load IA */
-	 /* load object (sprites & movements) */
-	 console.log('prisoner loaded');
-   }
    
    function settingGoals (){
    
@@ -73,6 +82,71 @@ var core = function(document, window){
 	 /* save results */
 	 console.log('Goals done!');
    }
+
+
+   	//////////////////////////////////////////////
+	// A cross-browser requestAnimationFrame    //
+	//////////////////////////////////////////////
+	var requestAnimFrame = (function(){
+	    return window.requestAnimationFrame    ||
+	        window.webkitRequestAnimationFrame ||
+	        window.mozRequestAnimationFrame    ||
+	        window.oRequestAnimationFrame      ||
+	        window.msRequestAnimationFrame     ||
+	        function(callback){
+	            window.setTimeout(callback, 1000 / 60);
+	        };
+	})();   
+
+   function main() {
+	    var now = Date.now();
+	    var dt = (now - GameJam.lastTime) / 1000.0;
+
+	    update(dt);
+	    render();
+
+	    GameJam.lastTime = now;
+	    requestAnimFrame(main);
+	}
+
+	function update(dt) {
+	    GameJam.gameTime += dt;
+
+	    updateEntities(dt);
+
+	  
+
+	}
+
+	function updateEntities(dt) {
+	    // Update the prisoner sprite animation
+	    GameJam.prisoner[0].sprite.update(dt);
+
+
+
+	}
+
+	// Draw everything
+	function render() {
+	    GameJam.ctxa.fillRect(0, 0, GameJam.canvasa.width, GameJam.canvasa.height);
+
+	    //renderEntities(items);
+	    //renderEntities(prisoner);
+	    
+	};
+
+	function renderEntities(list) {
+	    for(var i=0; i<list.length; i++) {
+	        renderEntity(list[i]);
+	    }    
+	}
+
+	function renderEntity(entity) {
+	    ctx.save();
+	    ctx.translate(entity.pos[0], entity.pos[1]);
+	    entity.sprite.render(ctx);
+	    ctx.restore();
+	}
    
    function startGame(){
 	 /* this is when the game is started after pressing the button */

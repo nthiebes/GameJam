@@ -4,8 +4,8 @@ window.GameJam.redraw = function(){
 	var spriteNum = 0;
  
 	// clear the screen
-	GameJam.ctx.fillStyle = '#000000';
-	GameJam.ctx.fillRect(0, 0, GameJam.canvas.width, GameJam.canvas.height);
+	GameJam.ctxs.fillStyle = '#000000';
+	GameJam.ctxs.fillRect(0, 0, GameJam.canvass.width, GameJam.canvass.height);
  
 	for (var x=0; x < GameJam.worldWidth; x++){
 		for (var y=0; y < GameJam.worldHeight; y++){
@@ -21,7 +21,7 @@ window.GameJam.redraw = function(){
   
   		// draw it
   		// ctx.drawImage(img,sx,sy,swidth,sheight,x,y,width,height);
-  		GameJam.ctx.drawImage(GameJam.tileset, 
+  		GameJam.ctxs.drawImage(GameJam.tileset, 
     		spriteNum*GameJam.tileWidth, 0, 
     		GameJam.tileWidth, GameJam.tileHeight,
   	  	x*GameJam.tileWidth, y*GameJam.tileHeight,
@@ -44,7 +44,7 @@ window.GameJam.redraw = function(){
   			break;
 		}
  
-		GameJam.ctx.drawImage(GameJam.tileset, 
+		GameJam.ctxs.drawImage(GameJam.tileset, 
 			spriteNum*GameJam.tileWidth, 0, 
 			GameJam.tileWidth, GameJam.tileHeight,
 			GameJam.currentPath[rp][0]*GameJam.tileWidth, 

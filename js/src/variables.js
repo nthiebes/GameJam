@@ -1,9 +1,15 @@
 window.GameJam = {
     // the game's canvas element
-	canvas: null,
+	canvasa: null,
 
 	// the canvas 2d context
-	ctx: null,
+	ctxa: null,
+
+	 // the game's canvas element
+	canvass: null,
+
+	// the canvas 2d context
+	ctxs: null,
 
 	// an image containing all sprites
 	tileset: null,
@@ -25,5 +31,10 @@ window.GameJam = {
 	// start and end of path
 	pathStart: [this.worldWidth, this.worldHeight],
 	pathEnd: [0,0],
-	currentPath: []
+	currentPath: [],
+
+	// time
+	gameTime: null,
+	prisoner: [],
+	lastTime: null
 };
