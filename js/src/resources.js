@@ -52,7 +52,7 @@
         readyCallbacks.push(func);
     }
 
-    window.resources = { 
+    window.GameJam.resources = { 
         load: load,
         get: get,
         onReady: onReady,

@@ -5,13 +5,13 @@ var core = function(document, window){
 		window.onload = function() {
 			 /* load resources needed */
 			 // Initialize if all ressources are loaded
-			resources.load([
+			GameJam.resources.load([
 				//'img/sprites.png',
 				//'img/bla.png',
 				//'img/blubb.png',
 				'img/tileset.png'
 			]);
-			resources.onReady(core.Resources);
+			GameJam.resources.onReady(core.InitGame);
 			
 			 /* load enviroment */
 			 enviroment();
@@ -23,7 +23,23 @@ var core = function(document, window){
 			 settingGoals();
 		};	 
    }
-   
+
+   function initGame (){
+   	console.log('Ressources loaded.');
+	GameJam.canvas = document.getElementById('game-canvas');
+	GameJam.canvas.width = GameJam.worldWidth * GameJam.tileWidth;
+	GameJam.canvas.height = GameJam.worldHeight * GameJam.tileHeight;
+	GameJam.canvas.addEventListener("click", GameJam.canvasClick, false);
+	GameJam.ctx = GameJam.canvas.getContext("2d");
+
+	GameJam.tileset = GameJam.resources.get('img/tileset.png');
+	console.log('Ressources loaded.');
+	GameJam.tilesetLoaded = true;
+	GameJam.createWorld();
+	 
+	 
+	 console.log('game initialized loaded');
+   }   
       
    function enviroment (){
    
@@ -71,6 +87,8 @@ var core = function(document, window){
 
    return {
       Init: init,
-      Resources: resources
+      InitGame: initGame
    }
 }(document, window);
+
+core.Init();
