@@ -1,12 +1,44 @@
 *, *:before, *:after {
   padding: 0;
   margin: 0;
-  outline: none; }
+  outline: none;
+  border: 0;
+  -webkit-tap-highlight-color: transparent; }
 
 body {
   overflow: hidden;
-  cursor: default; }
+  cursor: default;
+  -webkit-text-size-adjust: none;
+  /* Prevent font scaling in landscape */ }
+
+main {
+  position: absolute;
+  overflow: auto;
+  /* Enable scrolling on desktop */
+  bottom: 0;
+  left: 0;
+  right: 0;
+  top: 0; }
 
 canvas {
   display: block;
-  position: absolute; }
+  position: absolute;
+  height: 100%;
+  width: auto;
+  min-height: 512px;
+  min-width: 512px;
+  max-height: 1024px;
+  max-width: 1024px; }
+
+@media screen and (min-aspect-ratio: 1 / 1) {
+  canvas {
+    width: 100%;
+    height: auto; } }
+@media screen and (min-width: 1025px) {
+  canvas {
+    left: 50%;
+    margin-left: -512px; } }
+@media screen and (min-height: 1025px) {
+  canvas {
+    top: 50%;
+    margin-top: -512px; } }
