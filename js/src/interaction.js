@@ -13,7 +13,9 @@ var interaction = function(document, window){
 		mc.on("pan panstart panend", function(e) {
 			var boundings = GameJam.canvasa.getBoundingClientRect(),
            		x,
-           		y;
+           		y,
+           		xScroll,
+           		yScroll;
 
 			// grab html page coords
 			x = e.center.x + document.body.scrollLeft + document.documentElement.scrollLeft;
@@ -37,6 +39,10 @@ var interaction = function(document, window){
 							GameJam.draggedItem = i;
 						}
 					}
+
+					// Get the start scroll positions
+					//xScroll = window.scrollX,
+					//yScroll = window.scrollY;
 	                break;
 
 	            case 'pan':
@@ -44,12 +50,23 @@ var interaction = function(document, window){
 	            	if (GameJam.draggedItem) {
 	            		GameJam.items[GameJam.draggedItem].pos = [cell[0] * GameJam.tileWidth, cell[1] * GameJam.tileHeight];
 	            	} else{
-	            		// get scroll position
-						var xs = window.scrollX,
-						    ys = window.scrollY;
+						// Scroll
+						//console.log(e);
+						/*if (e.deltaY > 0) {
+							if (e.deltaX > 0) {
+								window.scrollTo( Math.round(scrollX - e.distance), Math.round(scrollY - e.distance) );
+							} else{
+								window.scrollTo( Math.round(scrollX + e.distance), Math.round(scrollY - e.distance) );
+							}
+							
+						} else {
+							if (e.deltaX > 0) {
+								window.scrollTo( Math.round(scrollX - e.distance), Math.round(scrollY + e.distance) );
+							} else{
+								window.scrollTo( Math.round(scrollX + e.distance), Math.round(scrollY + e.distance) );
+							}
+						}*/
 						
-						// set scroll position to x: 140, y: 700
-						//window.scrollTo( e.deltaX * -1, e.deltaY * -1 );
 	            	}
 	            	break;
 
