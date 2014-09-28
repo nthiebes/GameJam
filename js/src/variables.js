@@ -36,7 +36,8 @@ window.GameJam = {
 
 	//objects
 	prisoner: [],
-	items: []
+	items: [],
+	itemPath: []
 
 
 };

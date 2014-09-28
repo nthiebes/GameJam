@@ -166,7 +166,14 @@ var core = function(document, window){
 			GameJam.prisoner[0].sprite.speed = 0;
 		}
 		GameJam.prisoner[0].currentStep--;
+		
+		//items movements
+		if (GameJam.itemPath.length > 0) {
+			GameJam.items[0].pos[0] = GameJam.itemPath[0].x;
 
+			GameJam.items[0].pos[1] = GameJam.itemPath[0].y;
+			GameJam.itemPath.splice(0,1);
+		}
 
 		updateEntities(dt);
 	}
