@@ -26,47 +26,53 @@ var core = function(document, window){
 		};   
    }
 
-   function initGame(){
-	console.log('Ressources loaded.');
-	GameJam.lastTime = Date.now();
+   	function initGame(){
+		console.log('Ressources loaded.');
+		GameJam.lastTime = Date.now();
+		
+		// Static canvas
+		GameJam.canvass = document.getElementById('static-canvas');
+		GameJam.canvass.width = GameJam.worldWidth * GameJam.tileWidth;
+		GameJam.canvass.height = GameJam.worldHeight * GameJam.tileHeight;
+		GameJam.canvass.addEventListener("click", GameJam.canvasClick, false);
+		GameJam.ctxs = GameJam.canvass.getContext("2d");
+
+		// Animated canvas
+		GameJam.canvasa = document.getElementById('animation-canvas');
+		GameJam.canvasa.width = GameJam.worldWidth * GameJam.tileWidth;
+		GameJam.canvasa.height = GameJam.worldHeight * GameJam.tileHeight;
+		GameJam.ctxa = GameJam.canvasa.getContext("2d");
+
+		GameJam.tileset = GameJam.resources.get('img/spritesheet.png');
+		GameJam.createWorld();
+		 
+
+		GameJam.prisoner.push({
+			attacking: false,
+			steps: 20,			// The speed of the walk animation
+			currentStep: 20,	// Current position in the way from one tile to another
+			nextTile: [],
+			pos: [Math.floor((GameJam.worldWidth-1) / 2) * GameJam.tileWidth, (GameJam.worldHeight-1) * GameJam.tileHeight],
+			sprite: new Sprite('img/walk.png', [0, 192], [32, 50], 5, [0, 1, 2, 3, 4, 5], 'horizontal', false, false) // url, pos, size, speed, frames, dir, once, inProgress
+		});
+
+		GameJam.items.push({
+		    pos: [32, 64],
+	    	sprite: new Sprite('img/animatedTiles.png', [0, 32], [32, 32], 8, [0, 1, 2, 3, 4, 5], 'horizontal', false, false) // url, pos, size, speed, frames, dir, once, inProgress
+		});
+
+		GameJam.items.push({
+		    pos: [32, 128],
+	    	sprite: new Sprite('img/animatedTiles.png', [0, 32], [32, 32], 8, [0, 1, 2, 3, 4, 5], 'horizontal', false, false) // url, pos, size, speed, frames, dir, once, inProgress
+		});
 	
-	// Static canvas
-	GameJam.canvass = document.getElementById('static-canvas');
-	GameJam.canvass.width = GameJam.worldWidth * GameJam.tileWidth;
-	GameJam.canvass.height = GameJam.worldHeight * GameJam.tileHeight;
-	GameJam.canvass.addEventListener("click", GameJam.canvasClick, false);
-	GameJam.ctxs = GameJam.canvass.getContext("2d");
+		interaction.Init();
 
-	// Animated canvas
-	GameJam.canvasa = document.getElementById('animation-canvas');
-	GameJam.canvasa.width = GameJam.worldWidth * GameJam.tileWidth;
-	GameJam.canvasa.height = GameJam.worldHeight * GameJam.tileHeight;
-	GameJam.ctxa = GameJam.canvasa.getContext("2d");
+		GameJam.movePrisoner();
 
-	GameJam.tileset = GameJam.resources.get('img/spritesheet.png');
-	GameJam.createWorld();
-	 
+		main();
 
-	GameJam.prisoner.push({
-		attacking: false,
-		steps: 20,			// The speed of the walk animation
-		currentStep: 20,	// Current position in the way from one tile to another
-		nextTile: [],
-		pos: [Math.floor((GameJam.worldWidth-1) / 2) * GameJam.tileWidth, (GameJam.worldHeight-1) * GameJam.tileHeight],
-		sprite: new Sprite('img/walk.png', [0, 192], [32, 50], 5, [0, 1, 2, 3, 4, 5], 'horizontal', false, false) // url, pos, size, speed, frames, dir, once, inProgress
-	});
-
-	GameJam.items.push({
-	    attacking: false,
-	    alternativeDir: '',
-	    pos: [30, 45],
-    	sprite: new Sprite('img/animatedTiles.png', [0, 0], [32, 62], 8, [0,1,2], 'horizontal', false, false) // url, pos, size, speed, frames, dir, once, inProgress
-	});
-	
-	interaction.Init();
-	GameJam.movePrisoner();
-	main();
-	 console.log('Game initialized.');
+		console.log('Game initialized.');
    }   
 	  
    function enviroment (){
@@ -168,12 +174,12 @@ var core = function(document, window){
 		GameJam.prisoner[0].currentStep--;
 		
 		//items movements
-		if (GameJam.itemPath.length > 0) {
+		/*if (GameJam.itemPath.length > 0) {
 			GameJam.items[0].pos[0] = GameJam.itemPath[0].x;
 
 			GameJam.items[0].pos[1] = GameJam.itemPath[0].y;
 			GameJam.itemPath.splice(0,1);
-		}
+		}*/
 
 		updateEntities(dt);
 	}
@@ -181,7 +187,12 @@ var core = function(document, window){
 	function updateEntities(dt) {
 	    // Update the prisoner sprite animation
 	    GameJam.prisoner[0].sprite.update(dt);
-		GameJam.items[0].sprite.update(dt);
+
+	    for (var i in GameJam.items) {
+			GameJam.items[i].sprite.update(dt);
+		}
+
+		
 
 
 	}
