@@ -17,14 +17,14 @@
 }
 
 body {
-    overflow: hidden;
+    overflow: auto;
     cursor: default;
     -webkit-text-size-adjust: none; /* Prevent font scaling in landscape */
 }
 
 main {
 	position: absolute;
-	overflow: auto; /* Enable scrolling on desktop */
+	//overflow: auto; /* Enable scrolling on desktop */
     //-webkit-overflow-scrolling: touch; /* Enable momentum scrolling on iOS */
     bottom: 0;
     left: 0;

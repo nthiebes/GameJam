@@ -1,56 +1,67 @@
 var interaction = function(document, window){
 
 	function init(){
-		var startmovement = false;
-		GameJam.itemPath = [];
-        var myElement = GameJam.canvasa;
 		// create a simple instance
 		// by default, it only adds horizontal recognizers
-		var mc = new Hammer(myElement);
+		var mc = new Hammer(GameJam.canvasa);
+
+		// let the pan gesture support all directions.
+		// this will block the vertical scrolling on a touch-device while on the element
+		mc.get('pan').set({ direction: Hammer.DIRECTION_ALL });
+
 		// listen to events...
-		mc.on("panleft panright panstart panend tap press", function(ev) {
-			switch(ev.type) {
+		mc.on("pan panstart panend", function(e) {
+			var boundings = GameJam.canvasa.getBoundingClientRect(),
+           		x,
+           		y;
+
+			// grab html page coords
+			x = e.center.x + document.body.scrollLeft + document.documentElement.scrollLeft;
+			y = e.center.y + document.body.scrollTop + document.documentElement.scrollTop;
+
+			// make them relative to the canvas only
+			x -= GameJam.canvasa.offsetLeft;
+			y -= GameJam.canvasa.offsetTop;
+
+			// return tile x,y that we dragged
+			var cell = [
+				Math.floor(x/(boundings.width / GameJam.worldWidth)),
+				Math.floor(y/(boundings.height / GameJam.worldHeight))
+			];
+
+			switch(e.type) {
 	            case 'panstart':
-
-	            	console.log ("panstart");
-		            // check we click on the element
-		            console.log (ev.center.x);
-		            console.log (GameJam.items[0].pos[0]);
-		            console.log (GameJam.items[0].sprite.size[0]);
-		           	if (isItemTapped(ev,GameJam.items[0])){
-		           		startmovement = true;
-		           	}
-
+	            	// Check if an item is at the dragstart cell
+					for (var i in GameJam.items) {
+						if (GameJam.items[i].pos[0] === cell[0] * GameJam.tileWidth && GameJam.items[i].pos[1] === cell[1] * GameJam.tileHeight) {
+							GameJam.draggedItem = i;
+						}
+					}
 	                break;
 
+	            case 'pan':
+	            	// Move the dragged item
+	            	if (GameJam.draggedItem) {
+	            		GameJam.items[GameJam.draggedItem].pos = [cell[0] * GameJam.tileWidth, cell[1] * GameJam.tileHeight];
+	            	} else{
+	            		// get scroll position
+						var xs = window.scrollX,
+						    ys = window.scrollY;
+						
+						// set scroll position to x: 140, y: 700
+						//window.scrollTo( e.deltaX * -1, e.deltaY * -1 );
+	            	}
+	            	break;
+
 	            case 'panend':
-	            	console.log ("panend");
-	             	console.log (ev.center.x);
-		            console.log (GameJam.items[0].pos[0]);
-		            console.log (GameJam.items[0].sprite.size[0]);
-		            startmovement = false;
-	            	break;   
-
-	            case 'panright':
-	            	if(startmovement){
-	            	GameJam.itemPath.push(ev.center);
-	            }
+	            	// Stop the dragging
+	            	GameJam.draggedItem = null;
 	            	break;
-
-	            case 'panleft':
-	            	if(startmovement){
-	            	GameJam.itemPath.push(ev.center);
-	            }
-	            	break;
-
 	        }
-
-		    console.log( ev.type +" gesture detected." );
 		});
-
 	}
 
-	function isItemTapped(ev, item){
+	/*function isItemTapped(ev, item){
 		var isTapped = false;
 		console.log ( item.pos[0]);
 		console.log ((ev.center.x > item.pos[0] && ev.center.x < item.pos[0] + item.sprite.size[0]));
@@ -63,10 +74,10 @@ var interaction = function(document, window){
 		}
 
 		return isTapped;
+	}*/
+
+	return {
+		Init: init
 	}
 
-
-   return {
-      Init: init
-   }
 }(document, window);

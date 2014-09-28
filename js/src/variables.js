@@ -34,10 +34,8 @@ window.GameJam = {
 	gameTime: null,
 	lastTime: null,
 
-	//objects
+	// objects
 	prisoner: [],
 	items: [],
-	itemPath: []
-
-
+	draggedItem: null
 };
