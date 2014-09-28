@@ -13,9 +13,6 @@ window.GameJam = {
 
 	// an image containing all sprites
 	tileset: null,
-
-	// true when the spritesheet has been downloaded
-	tilesetLoaded: false,
 	 
 	// the world grid: a 2d array of tiles
 	world: [[]],
