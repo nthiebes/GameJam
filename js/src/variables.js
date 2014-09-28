@@ -35,6 +35,11 @@ window.GameJam = {
 
 	// time
 	gameTime: null,
+	lastTime: null,
+
+	//objects
 	prisoner: [],
-	lastTime: null
+	items: []
+
+
 };

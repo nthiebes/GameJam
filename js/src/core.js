@@ -5,7 +5,7 @@ var core = function(document, window){
 		window.onload = function() {
 			 /* Initialize game if all ressources are loaded */
 			GameJam.resources.load([
-				//'img/sprites.png',
+				'img/animatedTiles.png',
 				'img/tileset.png',
 				'img/spritesheet.png'
 			]);
@@ -53,6 +53,14 @@ var core = function(document, window){
     	sprite: new Sprite('img/tileset.png', [0, 0], [32, 32], 8, [0,1,2], 'horizontal', false, false) // url, pos, size, speed, frames, dir, once, inProgress
 	});
 
+	GameJam.items.push({
+	    attacking: false,
+	    alternativeDir: '',
+	    pos: [30, 45],
+    	sprite: new Sprite('img/animatedTiles.png', [0, 0], [32, 62], 8, [0,1,2], 'horizontal', false, false) // url, pos, size, speed, frames, dir, once, inProgress
+	});
+	
+interaction.Init();
 	 main();
 	 console.log('game initialized loaded');
    }   
@@ -121,7 +129,7 @@ var core = function(document, window){
 	function updateEntities(dt) {
 	    // Update the prisoner sprite animation
 	    GameJam.prisoner[0].sprite.update(dt);
-
+		GameJam.items[0].sprite.update(dt);
 
 
 	}
@@ -134,6 +142,7 @@ var core = function(document, window){
 
 	    //renderEntities(items);
 	    renderEntities(GameJam.prisoner);
+	    renderEntities(GameJam.items);
 	    
 	};
 
