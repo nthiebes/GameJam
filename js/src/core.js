@@ -7,6 +7,7 @@ var core = function(document, window){
 			GameJam.resources.load([
 				'img/animatedTiles.png',
 				'img/tileset.png',
+				'img/walk.png',
 				'img/spritesheet.png'
 			]);
 			GameJam.resources.onReady(core.InitGame);
@@ -22,35 +23,37 @@ var core = function(document, window){
 
 			 /* setting goals of the game */
 			 //settingGoals();
-		};	 
+		};   
    }
 
-   function initGame (){
-   	GameJam.lastTime = Date.now();
-   	console.log('Ressources loaded.');
+   function initGame(){
+	console.log('Ressources loaded.');
+	GameJam.lastTime = Date.now();
+	
+	// Static canvas
 	GameJam.canvass = document.getElementById('static-canvas');
 	GameJam.canvass.width = GameJam.worldWidth * GameJam.tileWidth;
 	GameJam.canvass.height = GameJam.worldHeight * GameJam.tileHeight;
 	GameJam.canvass.addEventListener("click", GameJam.canvasClick, false);
 	GameJam.ctxs = GameJam.canvass.getContext("2d");
 
+	// Animated canvas
 	GameJam.canvasa = document.getElementById('animation-canvas');
 	GameJam.canvasa.width = GameJam.worldWidth * GameJam.tileWidth;
 	GameJam.canvasa.height = GameJam.worldHeight * GameJam.tileHeight;
 	GameJam.ctxa = GameJam.canvasa.getContext("2d");
 
 	GameJam.tileset = GameJam.resources.get('img/spritesheet.png');
-
-	console.log('Ressources loaded.');
-	GameJam.tilesetLoaded = true;
 	GameJam.createWorld();
 	 
 
 	GameJam.prisoner.push({
-	    attacking: false,
-	    alternativeDir: '',
-	    pos: GameJam.pathStart,
-    	sprite: new Sprite('img/tileset.png', [0, 0], [32, 32], 8, [0,1,2], 'horizontal', false, false) // url, pos, size, speed, frames, dir, once, inProgress
+		attacking: false,
+		steps: 20,			// The speed of the walk animation
+		currentStep: 20,	// Current position in the way from one tile to another
+		nextTile: [],
+		pos: [Math.floor((GameJam.worldWidth-1) / 2) * GameJam.tileWidth, (GameJam.worldHeight-1) * GameJam.tileHeight],
+		sprite: new Sprite('img/walk.png', [0, 192], [32, 50], 5, [0, 1, 2, 3, 4, 5], 'horizontal', false, false) // url, pos, size, speed, frames, dir, once, inProgress
 	});
 
 	GameJam.items.push({
@@ -60,11 +63,12 @@ var core = function(document, window){
     	sprite: new Sprite('img/animatedTiles.png', [0, 0], [32, 62], 8, [0,1,2], 'horizontal', false, false) // url, pos, size, speed, frames, dir, once, inProgress
 	});
 	
-interaction.Init();
-	 main();
-	 console.log('game initialized loaded');
+	interaction.Init();
+	GameJam.movePrisoner();
+	main();
+	 console.log('Game initialized.');
    }   
-      
+	  
    function enviroment (){
    
 	 /* load map */
@@ -92,38 +96,79 @@ interaction.Init();
    }
 
 
-   	//////////////////////////////////////////////
+	//////////////////////////////////////////////
 	// A cross-browser requestAnimationFrame    //
 	//////////////////////////////////////////////
 	var requestAnimFrame = (function(){
-	    return window.requestAnimationFrame    ||
-	        window.webkitRequestAnimationFrame ||
-	        window.mozRequestAnimationFrame    ||
-	        window.oRequestAnimationFrame      ||
-	        window.msRequestAnimationFrame     ||
-	        function(callback){
-	            window.setTimeout(callback, 1000 / 60);
-	        };
+		return window.requestAnimationFrame    ||
+			window.webkitRequestAnimationFrame ||
+			window.mozRequestAnimationFrame    ||
+			window.oRequestAnimationFrame      ||
+			window.msRequestAnimationFrame     ||
+			function(callback){
+				window.setTimeout(callback, 1000 / 60);
+			};
 	})();   
 
    function main() {
-	    var now = Date.now();
-	    var dt = (now - GameJam.lastTime) / 1000.0;
+		var now = Date.now();
+		var dt = (now - GameJam.lastTime) / 1000.0;
 
-	    update(dt);
-	    render();
+		update(dt);
+		render();
 
-	    GameJam.lastTime = now;
-	    requestAnimFrame(main);
+		GameJam.lastTime = now;
+		requestAnimFrame(main);
 	}
 
 	function update(dt) {
-	    GameJam.gameTime += dt;
+		GameJam.gameTime += dt;
 
-	    updateEntities(dt);
+		// Only move if a path exists
+		if (GameJam.currentPath.length > 0) {
+			// Vertical movement
+			if (GameJam.prisoner[0].nextTile[0] === GameJam.currentPath[0][0]) {
+				// Move top if next tile is above current
+				if (GameJam.prisoner[0].nextTile[1] > GameJam.currentPath[0][1]) {
+					GameJam.prisoner[0].pos[1] = GameJam.currentPath[0][1] * GameJam.tileHeight + ((GameJam.tileHeight / GameJam.prisoner[0].steps) * GameJam.prisoner[0].currentStep);
+					GameJam.prisoner[0].sprite.pos[1] = 192;
+				// Move bottom if next tile is below current
+				} else if (GameJam.prisoner[0].nextTile[1] < GameJam.currentPath[0][1]){
+					GameJam.prisoner[0].pos[1] = GameJam.currentPath[0][1] * GameJam.tileHeight - ((GameJam.tileHeight / GameJam.prisoner[0].steps) * GameJam.prisoner[0].currentStep);
+					GameJam.prisoner[0].sprite.pos[1] = 0;
+				}
 
-	  
+			// Horizontal movement
+			} else{
+				// Move left if next tile is on the left side of the current
+				if (GameJam.prisoner[0].nextTile[0] > GameJam.currentPath[0][0]) {
+					GameJam.prisoner[0].pos[0] = GameJam.currentPath[0][0] * GameJam.tileWidth + ((GameJam.tileWidth / GameJam.prisoner[0].steps) * GameJam.prisoner[0].currentStep);
+					GameJam.prisoner[0].sprite.pos[1] = 64;
+				// Move right if next tile is on the right side of the current
+				} else if (GameJam.prisoner[0].nextTile[0] < GameJam.currentPath[0][0]) {
+					GameJam.prisoner[0].pos[0] = GameJam.currentPath[0][0] * GameJam.tileWidth - ((GameJam.tileWidth / GameJam.prisoner[0].steps) * GameJam.prisoner[0].currentStep);
+					GameJam.prisoner[0].sprite.pos[1] = 128;
+				}
+			}
 
+			// End of an animation from tile to tile
+			if (GameJam.prisoner[0].currentStep === 1) {
+				GameJam.prisoner[0].nextTile = GameJam.currentPath[0];
+
+				// Remove the first tile in the array
+				GameJam.currentPath.splice(0,1);
+
+				// Reset to start animation for next tile 
+				GameJam.prisoner[0].currentStep = GameJam.prisoner[0].steps;
+			}			
+		} else{
+			GameJam.prisoner[0].sprite.pos[1] = 192;
+			GameJam.prisoner[0].sprite.speed = 0;
+		}
+		GameJam.prisoner[0].currentStep--;
+
+
+		updateEntities(dt);
 	}
 
 	function updateEntities(dt) {
@@ -136,9 +181,7 @@ interaction.Init();
 
 	// Draw everything
 	function render() {
-	    //GameJam.ctxa.fillRect(0, 0, GameJam.canvasa.width, GameJam.canvasa.height);
-
-	    GameJam.canvasa.width = GameJam.canvasa.width;
+		GameJam.canvasa.width = GameJam.canvasa.width;
 
 	    //renderEntities(items);
 	    renderEntities(GameJam.prisoner);
@@ -147,16 +190,16 @@ interaction.Init();
 	};
 
 	function renderEntities(list) {
-	    for(var i=0; i<list.length; i++) {
-	        renderEntity(list[i]);
-	    }    
+		for(var i=0; i<list.length; i++) {
+			renderEntity(list[i]);
+		}    
 	}
 
 	function renderEntity(entity) {
-	    GameJam.ctxa.save();
-	    GameJam.ctxa.translate(entity.pos[0], entity.pos[1]);
-	    entity.sprite.render(GameJam.ctxa);
-	    GameJam.ctxa.restore();
+		GameJam.ctxa.save();
+		GameJam.ctxa.translate(entity.pos[0], entity.pos[1]);
+		entity.sprite.render(GameJam.ctxa);
+		GameJam.ctxa.restore();
 	}
    
    function startGame(){
@@ -168,12 +211,12 @@ interaction.Init();
 	 /* stop everything */
 	 console.log('startGame done!');
    }
-     
+	 
    
 
    return {
-      Init: init,
-      InitGame: initGame
+	  Init: init,
+	  InitGame: initGame
    }
 }(document, window);
 
