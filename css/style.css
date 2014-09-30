@@ -6,13 +6,13 @@
   -webkit-tap-highlight-color: transparent; }
 
 body {
-  overflow: auto;
   cursor: default;
   -webkit-text-size-adjust: none;
   /* Prevent font scaling in landscape */ }
 
 main {
   position: absolute;
+  overflow: hidden;
   bottom: 0;
   left: 0;
   right: 0;
@@ -32,11 +32,3 @@ canvas {
   canvas {
     width: 100%;
     height: auto; } }
-@media screen and (min-width: 1025px) {
-  canvas {
-    left: 50%;
-    margin-left: -512px; } }
-@media screen and (min-height: 1025px) {
-  canvas {
-    top: 50%;
-    margin-top: -512px; } }

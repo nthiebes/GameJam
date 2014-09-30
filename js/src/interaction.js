@@ -9,9 +9,14 @@ var interaction = function(document, window){
 		// this will block the vertical scrolling on a touch-device while on the element
 		mc.get('pan').set({ direction: Hammer.DIRECTION_ALL });
 
+		var canvas = document.getElementsByTagName('canvas'),
+			startMarginLeft = 0,
+			startMarginTop = 0;
+
 		// listen to events...
 		mc.on("pan panstart panend", function(e) {
 			var boundings = GameJam.canvasa.getBoundingClientRect(),
+				boundingsMain = document.getElementsByTagName('main')[0].getBoundingClientRect(),
            		x,
            		y,
            		xScroll,
@@ -40,9 +45,9 @@ var interaction = function(document, window){
 						}
 					}
 
-					// Get the start scroll positions
-					//xScroll = window.scrollX,
-					//yScroll = window.scrollY;
+					// Get the starting margins
+					startMarginLeft = parseInt(window.getComputedStyle(canvas[0]).getPropertyValue('margin-left'));
+					startMarginTop = parseInt(window.getComputedStyle(canvas[0]).getPropertyValue('margin-top'));
 	                break;
 
 	            case 'pan':
@@ -50,23 +55,23 @@ var interaction = function(document, window){
 	            	if (GameJam.draggedItem) {
 	            		GameJam.items[GameJam.draggedItem].pos = [cell[0] * GameJam.tileWidth, cell[1] * GameJam.tileHeight];
 	            	} else{
-						// Scroll
-						//console.log(e);
-						/*if (e.deltaY > 0) {
-							if (e.deltaX > 0) {
-								window.scrollTo( Math.round(scrollX - e.distance), Math.round(scrollY - e.distance) );
-							} else{
-								window.scrollTo( Math.round(scrollX + e.distance), Math.round(scrollY - e.distance) );
+						// Map scrolling
+						var newMarginLeft = e.deltaX + startMarginLeft,
+							newMarginTop = e.deltaY + startMarginTop;
+
+						// Horizontal scolling with restriction to viewport
+						if (newMarginLeft < 0 && (newMarginLeft - boundingsMain.width) * -1 < boundings.width) {
+							for (var i=0; i < canvas.length; i++) {
+								canvas[i].style.marginLeft = newMarginLeft + 'px';
 							}
-							
-						} else {
-							if (e.deltaX > 0) {
-								window.scrollTo( Math.round(scrollX - e.distance), Math.round(scrollY + e.distance) );
-							} else{
-								window.scrollTo( Math.round(scrollX + e.distance), Math.round(scrollY + e.distance) );
+						}
+
+						// Vertical scolling with restriction to viewport
+						if (newMarginTop < 0 && (newMarginTop - boundingsMain.height) * -1 < boundings.height) {
+							for (var i=0; i < canvas.length; i++) {
+								canvas[i].style.marginTop = newMarginTop + 'px';
 							}
-						}*/
-						
+						}
 	            	}
 	            	break;
 
@@ -76,22 +81,15 @@ var interaction = function(document, window){
 	            	break;
 	        }
 		});
+		
+		// Reset margin on resize
+		window.onresize = function(e){
+		    for (var i=0; i < canvas.length; i++) {
+		    	canvas[i].style.marginLeft = '0px';
+				canvas[i].style.marginTop = '0px';
+			}
+		};
 	}
-
-	/*function isItemTapped(ev, item){
-		var isTapped = false;
-		console.log ( item.pos[0]);
-		console.log ((ev.center.x > item.pos[0] && ev.center.x < item.pos[0] + item.sprite.size[0]));
-		console.log ( item.pos[1]);
-		console.log((ev.center.y > item.pos[1] && ev.center.y < item.pos[1] + item.sprite.size[1]));
-		if ((ev.center.x > item.pos[0] && ev.center.x < item.pos[0] + item.sprite.size[0]) &&
-			(ev.center.y > item.pos[1] && ev.center.y < item.pos[1] + item.sprite.size[1])){
-    		isTapped = true;
-    		console.log ("isTapped");
-		}
-
-		return isTapped;
-	}*/
 
 	return {
 		Init: init

@@ -13,18 +13,16 @@
     outline: none;
     border: 0;
     -webkit-tap-highlight-color: transparent;
-    //@include user-select( none );
 }
 
 body {
-    overflow: auto;
     cursor: default;
     -webkit-text-size-adjust: none; /* Prevent font scaling in landscape */
 }
 
 main {
 	position: absolute;
-	//overflow: auto; /* Enable scrolling on desktop */
+	overflow: hidden;
     //-webkit-overflow-scrolling: touch; /* Enable momentum scrolling on iOS */
     bottom: 0;
     left: 0;
@@ -52,14 +50,14 @@ canvas {
 
 @media screen and (min-width: 1025px){
 	canvas {
-		left: 50%;
-		margin-left: -512px;
+		//left: 50%;
+		//margin-left: -512px;
 	}
 }
 
 @media screen and (min-height: 1025px){
 	canvas {
-		top: 50%;
-		margin-top: -512px;
+		//top: 50%;
+		//margin-top: -512px;
 	}
 }
