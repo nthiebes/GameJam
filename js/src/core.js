@@ -56,15 +56,6 @@ var core = function(document, window){
 			sprite: new Sprite('img/walk.png', [0, 192], [32, 50], 5, [0, 1, 2, 3, 4, 5], 'horizontal', false, false) // url, pos, size, speed, frames, dir, once, inProgress
 		});
 
-		// GameJam.items.push({
-		//     pos: [32, 64],
-	 //    	sprite: new Sprite('img/animatedTiles.png', [0, 32], [32, 32], 8, [0, 1, 2, 3, 4, 5], 'horizontal', false, false) // url, pos, size, speed, frames, dir, once, inProgress
-		// });
-
-		// GameJam.items.push({
-		//     pos: [32, 128],
-	 //    	sprite: new Sprite('img/animatedTiles.png', [0, 32], [32, 32], 8, [0, 1, 2, 3, 4, 5], 'horizontal', false, false) // url, pos, size, speed, frames, dir, once, inProgress
-		// });
 	
 		interaction.Init();
 
@@ -232,7 +223,8 @@ var core = function(document, window){
 			GameJam.world[GameJam.items[i].pos[0]/32][GameJam.items[i].pos[1]/32] = 1;
 		}
 
-
+		// reset items, we dont want the user to be able to drag and drop them
+ 		GameJam.items = [];
 
 		/* event listeners started so prisioner starts to move */
 
