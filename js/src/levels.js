@@ -25,15 +25,21 @@ window.GameJam.levels = {
         items: [
             {
                 pos: [32, 64],
+                width: 32,
+                height: 32,
                 sprite: new Sprite('img/animatedTiles.png', [0, 32], [32, 32], 8, [0, 1, 2, 3, 4, 5], 'horizontal', false, false) // url, pos, size, speed, frames, dir, once, inProgress
             }, 
             {
                 pos: [32, 128],
+                width: 32,
+                height: 32,
                 sprite: new Sprite('img/animatedTiles.png', [0, 32], [32, 32], 8, [0, 1, 2, 3, 4, 5], 'horizontal', false, false) // url, pos, size, speed, frames, dir, once, inProgress
             },
             {
                 pos: [32, 192],
-                sprite: new Sprite('img/animatedTiles.png', [0, 32], [32, 32], 8, [0, 1, 2, 3, 4, 5], 'horizontal', false, false) // url, pos, size, speed, frames, dir, once, inProgress
+                width: 32,
+                height: 64,
+                sprite: new Sprite('img/animatedTiles.png', [0, 0], [32, 64], 8, [0, 1, 2, 3, 4, 5], 'horizontal', false, false) // url, pos, size, speed, frames, dir, once, inProgress
             }
         ]
     },

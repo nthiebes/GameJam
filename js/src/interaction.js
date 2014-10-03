@@ -40,7 +40,12 @@ var interaction = function(document, window){
 	            case 'panstart':
 	            	// Check if an item is at the dragstart cell
 					for (var i in GameJam.items) {
-						if (GameJam.items[i].pos[0] === cell[0] * GameJam.tileWidth && GameJam.items[i].pos[1] === cell[1] * GameJam.tileHeight) {
+						var startwidth = Math.floor(GameJam.items[i].pos[0]/GameJam.tileWidth),
+							endwidth = Math.floor((GameJam.items[i].pos[0] + GameJam.items[i].width)/GameJam.tileWidth),
+							startheight = Math.floor(GameJam.items[i].pos[1]/GameJam.tileHeight),
+							endheight = Math.floor((GameJam.items[i].pos[1] + GameJam.items[i].height)/GameJam.tileHeight);
+
+						if (startwidth <= cell[0] && cell[0] <= endwidth && startheight <= cell[1] && cell[1] <= endheight) {
 							GameJam.draggedItem = i;
 						}
 					}
