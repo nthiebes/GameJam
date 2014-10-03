@@ -31,17 +31,21 @@ var core = function(document, window){
 		GameJam.lastTime = Date.now();
 		
 		// Static canvas
-		GameJam.canvass = document.getElementById('static-canvas');
+		// Ground layer canvas
+		GameJam.canvass = document.createElement('canvas');
+		GameJam.ctxs = GameJam.canvass.getContext('2d');
+		document.getElementsByTagName('main')[0].appendChild(GameJam.canvass);
 		GameJam.canvass.width = GameJam.worldWidth * GameJam.tileWidth;
 		GameJam.canvass.height = GameJam.worldHeight * GameJam.tileHeight;
-		GameJam.canvass.addEventListener("click", GameJam.canvasClick, false);
-		GameJam.ctxs = GameJam.canvass.getContext("2d");
+		GameJam.canvass.id = 'static-canvas';
 
 		// Animated canvas
-		GameJam.canvasa = document.getElementById('animation-canvas');
+		GameJam.canvasa = document.createElement('canvas');
+		GameJam.ctxa = GameJam.canvasa.getContext('2d');
+		document.getElementsByTagName('main')[0].appendChild(GameJam.canvasa);
 		GameJam.canvasa.width = GameJam.worldWidth * GameJam.tileWidth;
 		GameJam.canvasa.height = GameJam.worldHeight * GameJam.tileHeight;
-		GameJam.ctxa = GameJam.canvasa.getContext("2d");
+		GameJam.canvasa.id = 'animation-canvas';
 
 		GameJam.tileset = GameJam.resources.get('img/spritesheet.png');
 		
