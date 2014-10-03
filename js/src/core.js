@@ -1,9 +1,11 @@
-/* Main part of the game */
+//////////////////////////////////////////////
+// Main part of the game   					//
+//////////////////////////////////////////////
 var core = function(document, window){
 
 	function init(){
-		window.onload = function() {
-			 /* Initialize game if all ressources are loaded */
+		window.onload = function(){
+			// Initialize game if all ressources are loaded
 			GameJam.resources.load([
 				'img/animatedTiles.png',
 				'img/tileset.png',
@@ -11,27 +13,19 @@ var core = function(document, window){
 				'img/spritesheet.png'
 			]);
 			GameJam.resources.onReady(core.InitGame);
-			
-			 /* load enviroment */
-			 //enviroment();
-
-			 /* load player interaction */
-			 //playerInteraction();
-
-			 /* load mister G */
-			 //prisoner();
-
-			 /* setting goals of the game */
-			 //settingGoals();
 		};   
-   }
+   	}
 
+
+   	//////////////////////////////////////////////
+	// Game initialization    					//
+	//////////////////////////////////////////////
    	function initGame(){
-		console.log('Ressources loaded.');
+		console.log('Resources loaded.');
+		
 		GameJam.lastTime = Date.now();
 		
 		// Static canvas
-		// Ground layer canvas
 		GameJam.canvass = document.createElement('canvas');
 		GameJam.ctxs = GameJam.canvass.getContext('2d');
 		document.getElementsByTagName('main')[0].appendChild(GameJam.canvass);
@@ -47,10 +41,10 @@ var core = function(document, window){
 		GameJam.canvasa.height = GameJam.worldHeight * GameJam.tileHeight;
 		GameJam.canvasa.id = 'animation-canvas';
 
+		// Set map tileset
 		GameJam.tileset = GameJam.resources.get('img/spritesheet.png');
-		
 		 
-		/* event listeners started so prisioner starts to move */
+		// Create the priosoner object
 		GameJam.prisoner.push({
 			attacking: false,
 			steps: 20,			// The speed of the walk animation
@@ -60,44 +54,19 @@ var core = function(document, window){
 			sprite: new Sprite('img/walk.png', [0, 192], [32, 50], 5, [0, 1, 2, 3, 4, 5], 'horizontal', false, false) // url, pos, size, speed, frames, dir, once, inProgress
 		});
 		
-
-	
+		// Register interactions (event handlers)
 		interaction.Init();
 
-		//GameJam.movePrisoner();
-
+		// Main game loop
 		main();
 
-		console.log('Game initialized.');
+		// Hide loading screen
+		window.setTimeout(function(){
+			document.getElementById('main-menu').className = 'visible';
+		}, 500);
 
-		menuGame();
-   }   
-	  
-   function enviroment (){
-   
-	 /* load map */
-	 /* load interface */
-	 /* load items on the map */
-	 
-	 console.log('enviroment loaded');
-   }
-   
-   function playerInteraction (){
-   
-	 /* load sprites for mouse */
-	 /* load drag and drop */
-	 console.log('player interaction loaded');
-   }
-   
-   
-   function settingGoals (){
-   
-	 /* load time count */
-	 /* setting start button */
-	 
-	 /* save results */
-	 console.log('Goals done!');
-   }
+		console.log('Game initialized.');
+   	}   
 
 
 	//////////////////////////////////////////////
@@ -114,18 +83,29 @@ var core = function(document, window){
 			};
 	})();   
 
-   function main() {
+
+	//////////////////////////////////////////////
+	// Main game loop   	 					//
+	//////////////////////////////////////////////
+   	function main(){
 		var now = Date.now();
 		var dt = (now - GameJam.lastTime) / 1000.0;
 
-		update(dt);
-		render();
-
+		// Render if not paused
+		if (!GameJam.paused) {
+			update(dt);
+			render();
+		}
+		
 		GameJam.lastTime = now;
 		requestAnimFrame(main);
 	}
 
-	function update(dt) {
+
+	//////////////////////////////////////////////
+	// Update sprite positions 					//
+	//////////////////////////////////////////////
+	function update(dt){
 		GameJam.gameTime += dt;
 
 		// Only move if a path exists
@@ -170,9 +150,13 @@ var core = function(document, window){
 		} else{
 			GameJam.prisoner[0].sprite.pos[1] = 192;
 			GameJam.prisoner[0].sprite.speed = 0;
+
+			if (GameJam.gameStarted) {
+				endLevel();
+			}
 		}
 		
-		//items movements
+		// Items movements
 		/*if (GameJam.itemPath.length > 0) {
 			GameJam.items[0].pos[0] = GameJam.itemPath[0].x;
 
@@ -180,10 +164,17 @@ var core = function(document, window){
 			GameJam.itemPath.splice(0,1);
 		}*/
 
+		// Update timer
+	    GameJam.timer.innerHTML = Math.round(GameJam.gameTime) + 's';
+
 		updateEntities(dt);
 	}
 
-	function updateEntities(dt) {
+
+	//////////////////////////////////////////////
+	// Update entities   	 					//
+	//////////////////////////////////////////////
+	function updateEntities(dt){
 	    // Update the prisoner sprite animation
 	    for (var i in GameJam.prisoner) {
 			GameJam.prisoner[i].sprite.update(dt);
@@ -192,46 +183,47 @@ var core = function(document, window){
 	    for (var i in GameJam.items) {
 			GameJam.items[i].sprite.update(dt);
 		}
-
-		
-
-
 	}
 
-	// Draw everything
-	function render() {
-		GameJam.canvasa.width = GameJam.canvasa.width;
 
-	    //renderEntities(items);
+	//////////////////////////////////////////////
+	// Draw everything    						//
+	//////////////////////////////////////////////
+	function render(){
+		GameJam.canvasa.width = GameJam.canvasa.width;
 	    renderEntities(GameJam.prisoner);
 	    renderEntities(GameJam.items);
-	    //onsole.log(GameJam.timer);
-	    GameJam.timer.innerHTML = Math.round(GameJam.gameTime) + 's';
-	};
+	}
 
-	function renderEntities(list) {
+
+	//////////////////////////////////////////////
+	// Render entities    						//
+	//////////////////////////////////////////////
+	function renderEntities(list){
 		for(var i=0; i<list.length; i++) {
 			renderEntity(list[i]);
 		}    
 	}
 
-	function renderEntity(entity) {
+	function renderEntity(entity){
 		GameJam.ctxa.save();
 		GameJam.ctxa.translate(entity.pos[0], entity.pos[1]);
 		entity.sprite.render(GameJam.ctxa);
 		GameJam.ctxa.restore();
 	}
-   
-   function startGame(){
-		/* this is when the game is started after pressing the button */
-		
-		/* items to world map */
+   	
+
+   	//////////////////////////////////////////////
+	// Start the second stage of the game		//
+	//////////////////////////////////////////////
+   	function startGame(){
+		// Put the items to the world map
 		var list = GameJam.items;
 		for(var i=0; i<list.length; i++){
 			GameJam.world[GameJam.items[i].pos[0]/32][GameJam.items[i].pos[1]/32] = 1;
 		}
 
-		// reset items, we dont want the user to be able to drag and drop them
+		// Reset items, we dont want the user to be able to drag and drop them
  		GameJam.items = [];
 
 		// Reset prisoner speed
@@ -240,31 +232,34 @@ var core = function(document, window){
 		// Reset game time
 		GameJam.gameTime = 0;
 		GameJam.timer.className = 'visible';
+		document.getElementById('start-game').className = '';
 
+		// Game has started
+		GameJam.gameStarted = true;
+
+		// Create the prisoner path
 		GameJam.movePrisoner();
-		/* countdown started */
-		/* time over */
-		/* stop everything */
-
 	}
 
-	function menuGame(){
-		window.setTimeout(function(){
-			document.getElementById('main-menu').className = 'visible';
-		}, 500);
-		
 
-		console.log('Game started!');
-   }
+	//////////////////////////////////////////////
+	// End of the level    						//
+	//////////////////////////////////////////////
+	function endLevel(){
+		console.log('Level done!');
+		GameJam.paused = true;
+	}
 	 
 
-   
+	//////////////////////////////////////////////
+	// Public functions    						//
+	//////////////////////////////////////////////
+	return {
+		Init: init,
+		InitGame: initGame,
+		StartGame: startGame
+	}
 
-   return {
-	  Init: init,
-	  InitGame: initGame,
-	  StartGame: startGame
-   }
 }(document, window);
 
 core.Init();

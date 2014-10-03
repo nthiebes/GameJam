@@ -1,5 +1,5 @@
 window.GameJam.redraw = function(){ 
-	console.log('redrawing...');
+	console.log('Redrawing ...');
  
 	var spriteNum = 0;
  

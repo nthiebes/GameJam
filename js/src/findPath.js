@@ -251,4 +251,4 @@ window.GameJam.findPath = function(world, pathStart, pathEnd){
 	// that is empty if no path is possible
 	return calculatePath();
 
-}; // end of findPath() function
+};

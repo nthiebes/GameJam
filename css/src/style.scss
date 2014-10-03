@@ -18,8 +18,8 @@
 body {
     cursor: default;
     -webkit-text-size-adjust: none; /* Prevent font scaling in landscape */
-    font-family: 'VT323';
-    font-size: 32px;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 26px;
 }
 
 section {
@@ -28,6 +28,12 @@ section {
 
 ul {
 	list-style: none outside none;
+}
+
+button {
+	cursor: pointer;
+	font-family: 'Press Start 2P', cursive;
+    font-size: 32px;
 }
 
 main {
@@ -75,9 +81,20 @@ canvas {
 }
 
 .menu {
+	position: relative;
+    left: 50%;
+    width: 206px;
+    margin-left: -103px;
+
 	li {
-		margin-bottom: 10px;
-		cursor: pointer;
+		background: url("../img/button.png") no-repeat scroll 0 0 transparent;
+	    color: #fff;
+	    cursor: pointer;
+	    height: 68px;
+	    margin-bottom: 20px;
+	    text-shadow: 3px 3px 0 #000;
+	    width: 206px;
+    	padding-top: 35px;
 	}
 }
 
@@ -120,6 +137,11 @@ canvas {
 	    background-color: #999;
 	    margin: 10px;
 	    cursor: pointer;
+
+	    div {
+	    	width: 20px;
+    		height: 20px;
+	    }
 	}
 
     &.visible {
@@ -128,6 +150,18 @@ canvas {
     	opacity: 1;
     	height: auto;
     }
+}
+
+.bronze {
+    background-color: chocolate;
+}
+
+.silver {
+    background-color: #ccc;
+}
+
+.gold {
+    background-color: #ff0;
 }
 
 #start-game {

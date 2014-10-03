@@ -37,15 +37,10 @@
                 if( idx >= max ){
                     this._index = 0;
                 }
-                /*if( idx >= max && !input.isDown('SPACE') ){
-                    this.inProgress = false;
-                }*/
             }
             else {
                 frame = 0;
             }
-
-            //console.log(frame);
 
             this.currentFrame = frame;
 

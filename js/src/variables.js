@@ -1,11 +1,11 @@
 window.GameJam = {
-    // the game's canvas element
+    // the game's canvas element (animated)
 	canvasa: null,
 
 	// the canvas 2d context
 	ctxa: null,
 
-	 // the game's canvas element
+	 // the game's canvas element (static)
 	canvass: null,
 
 	// the canvas 2d context
@@ -37,8 +37,10 @@ window.GameJam = {
 	// objects
 	prisoner: [],
 	items: [],
-	draggedItem: null,
 
+	// misc
+	draggedItem: null,
 	currentLevel: '',
-	timer: document.getElementById('timer')
+	timer: document.getElementById('timer'),
+	gameStarted: false
 };

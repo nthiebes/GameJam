@@ -91,16 +91,14 @@ var interaction = function(document, window){
 		var mcPlay = new Hammer(document.getElementById('play'));
 		mcPlay.on("tap", function(e){
 
+			// Create level tiles
 			var levelHtml = '<ul>';
-
 			for (var i in GameJam.levels) {
-				levelHtml += '<li class="level" id="' + i + '"></li>'
+				levelHtml += '<li class="level" id="' + i + '"><div class="bronze"></div><div class="silver"></div><div class="gold"></div></li>';
 			}
-
 			levelHtml += '</ul>';
 
 			document.getElementById('level-selection').innerHTML = levelHtml + '<button id="back-main-menu">Back</button>';
-
 			document.getElementById('level-selection').className = 'visible';
 
 			// Back to main menu button
