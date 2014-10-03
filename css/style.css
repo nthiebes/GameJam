@@ -8,7 +8,9 @@
 body {
   cursor: default;
   -webkit-text-size-adjust: none;
-  /* Prevent font scaling in landscape */ }
+  /* Prevent font scaling in landscape */
+  font-family: 'VT323';
+  font-size: 32px; }
 
 section {
   display: block; }
@@ -86,7 +88,10 @@ canvas {
 
 #start-game {
   background-color: #f00;
-  position: absolute; }
+  position: absolute;
+  display: none; }
+  #start-game.visible {
+    display: block; }
 
 #timer {
   position: absolute;

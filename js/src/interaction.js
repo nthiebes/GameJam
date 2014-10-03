@@ -112,6 +112,7 @@ var interaction = function(document, window){
 				GameJam.createWorld();
 
 				document.getElementsByTagName('main')[0].className = 'visible';
+				document.getElementById('start-game').className = 'visible';
 			}
 		});
 

@@ -18,6 +18,8 @@
 body {
     cursor: default;
     -webkit-text-size-adjust: none; /* Prevent font scaling in landscape */
+    font-family: 'VT323';
+    font-size: 32px;
 }
 
 section {
@@ -121,6 +123,11 @@ canvas {
 #start-game {
 	background-color: #f00;
 	position: absolute;
+	display: none;
+
+	&.visible {
+    	display: block;
+    }
 }
 
 #timer {
