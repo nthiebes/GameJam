@@ -46,7 +46,7 @@ var core = function(document, window){
 		GameJam.tileset = GameJam.resources.get('img/spritesheet.png');
 		
 		 
-
+		/* event listeners started so prisioner starts to move */
 		GameJam.prisoner.push({
 			attacking: false,
 			steps: 20,			// The speed of the walk animation
@@ -55,6 +55,7 @@ var core = function(document, window){
 			pos: [Math.floor((GameJam.worldWidth-1) / 2) * GameJam.tileWidth, (GameJam.worldHeight-1) * GameJam.tileHeight],
 			sprite: new Sprite('img/walk.png', [0, 192], [32, 50], 5, [0, 1, 2, 3, 4, 5], 'horizontal', false, false) // url, pos, size, speed, frames, dir, once, inProgress
 		});
+		
 
 		// GameJam.items.push({
 		//     pos: [32, 64],
@@ -189,7 +190,9 @@ var core = function(document, window){
 
 	function updateEntities(dt) {
 	    // Update the prisoner sprite animation
-	    GameJam.prisoner[0].sprite.update(dt);
+	    for (var i in GameJam.prisoner) {
+			GameJam.prisoner[i].sprite.update(dt);
+		}
 
 	    for (var i in GameJam.items) {
 			GameJam.items[i].sprite.update(dt);
@@ -233,8 +236,8 @@ var core = function(document, window){
 		}
 
 
-
-		/* event listeners started so prisioner starts to move */
+		GameJam.prisoner[0].sprite.speed = 5;
+		
 
 		GameJam.movePrisoner();
 		/* countdown started */
