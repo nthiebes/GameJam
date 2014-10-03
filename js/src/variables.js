@@ -37,5 +37,7 @@ window.GameJam = {
 	// objects
 	prisoner: [],
 	items: [],
-	draggedItem: null
+	draggedItem: null,
+
+	currentLevel: ''
 };

@@ -23,7 +23,7 @@ module.exports = function(grunt) {
 		},
 		concat: {
 			dist: {
-				src: ['js/src/variables.js', 'js/src/core.js', 'js/src/createWorld.js', 'js/src/resources.js','js/src/hammer.min.js', 'js/src/canvasClick.js', 'js/src/findPath.js', 'js/src/redraw.js', 'js/src/sprite.js', 'js/src/interaction.js', 'js/src/movePrisoner.js'],
+				src: ['js/src/variables.js', 'js/src/core.js', 'js/src/createWorld.js', 'js/src/resources.js','js/src/hammer.min.js', 'js/src/canvasClick.js', 'js/src/findPath.js', 'js/src/redraw.js', 'js/src/sprite.js', 'js/src/interaction.js', 'js/src/movePrisoner.js', 'js/src/levels.js'],
 				dest: 'js/dest/compiled.js',
 			},
 		},

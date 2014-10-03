@@ -23,10 +23,6 @@ var core = function(document, window){
 
 			 /* setting goals of the game */
 			 //settingGoals();
-
-				document.getElementById('startGame').onclick=function(){
-					startGame();
-				};
 		};   
    }
 
@@ -48,7 +44,7 @@ var core = function(document, window){
 		GameJam.ctxa = GameJam.canvasa.getContext("2d");
 
 		GameJam.tileset = GameJam.resources.get('img/spritesheet.png');
-		GameJam.createWorld();
+		
 		 
 
 		GameJam.prisoner.push({
@@ -229,12 +225,16 @@ var core = function(document, window){
    
    function startGame(){
 		/* this is when the game is started after pressing the button */
+
+		GameJam.createWorld();
 		
 		/* items to world map */
 		var list = GameJam.items;
 		for(var i=0; i<list.length; i++){
 			GameJam.world[GameJam.items[i].pos[0]/32][GameJam.items[i].pos[1]/32] = 1;
 		}
+
+
 
 		/* event listeners started so prisioner starts to move */
 
@@ -247,8 +247,7 @@ var core = function(document, window){
 
 	function menuGame(){
 		window.setTimeout(function(){
-			//document.getElementsByTagName('main')[0].className = 'loading-done';
-			document.getElementById('main-menu').className = 'loading-done';
+			document.getElementById('main-menu').className = 'visible';
 		}, 500);
 		
 

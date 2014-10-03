@@ -82,6 +82,44 @@ var interaction = function(document, window){
 	        }
 		});
 		
+		// Main menu play button
+		var mcPlay = new Hammer(document.getElementById('play'));
+		mcPlay.on("tap", function(e){
+			//document.getElementsByTagName('main')[0].className = 'visible';
+
+			//core.StartGame();
+
+			var levelHtml = '<ul>';
+
+			for (var i in GameJam.levels) {
+				levelHtml += '<li class="level" id="' + i + '"></li>'
+			}
+
+			levelHtml += '</ul>';
+
+			document.getElementById('level-selection').innerHTML = levelHtml;
+
+			document.getElementById('level-selection').className = 'visible';
+		});
+
+		// Level selection buttons
+		var mcStart = new Hammer(document.getElementById('level-selection'));
+		mcStart.on("tap", function(e){
+			console.log(e);
+
+			if (e.target.className === 'level') {
+				GameJam.currentLevel = e.target.id;
+
+				document.getElementsByTagName('main')[0].className = 'visible';
+
+				core.StartGame();
+			}
+
+			//document.getElementsByTagName('main')[0].className = 'visible';
+
+			//core.StartGame();
+		});
+		
 		// Reset margin on resize
 		window.onresize = function(e){
 		    for (var i=0; i < canvas.length; i++) {
