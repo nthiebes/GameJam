@@ -20,6 +20,14 @@ main {
   right: 0;
   top: 0;
   opacity: 0; }
+  main.game-started {
+    -webkit-transition: opacity 1s linear;
+    -moz-transition: opacity 1s linear;
+    -ms-transition: opacity 1s linear;
+    -o-transition: opacity 1s linear;
+    transition: opacity 1s linear;
+    bottom: 0;
+    opacity: 1; }
 
 canvas {
   display: block;

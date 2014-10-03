@@ -32,6 +32,12 @@ main {
     right: 0;
     top: 0;
     opacity: 0;
+
+    &.game-started {
+    	@include transition(opacity 1s linear);
+    	bottom: 0;
+    	opacity: 1;
+    }
 }
 
 canvas {
