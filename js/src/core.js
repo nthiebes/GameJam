@@ -23,6 +23,10 @@ var core = function(document, window){
 
 			 /* setting goals of the game */
 			 //settingGoals();
+
+				document.getElementById('startGame').onclick=function(){
+					startGame();
+				};
 		};   
    }
 
@@ -68,13 +72,13 @@ var core = function(document, window){
 	
 		interaction.Init();
 
-		GameJam.movePrisoner();
+		//GameJam.movePrisoner();
 
 		main();
 
 		console.log('Game initialized.');
 
-		startGame();
+		menuGame();
    }   
 	  
    function enviroment (){
@@ -168,12 +172,13 @@ var core = function(document, window){
 
 				// Reset to start animation for next tile 
 				GameJam.prisoner[0].currentStep = GameJam.prisoner[0].steps;
-			}			
+			}	
+
+			GameJam.prisoner[0].currentStep--;		
 		} else{
 			GameJam.prisoner[0].sprite.pos[1] = 192;
 			GameJam.prisoner[0].sprite.speed = 0;
 		}
-		GameJam.prisoner[0].currentStep--;
 		
 		//items movements
 		/*if (GameJam.itemPath.length > 0) {
@@ -224,12 +229,23 @@ var core = function(document, window){
    
    function startGame(){
 		/* this is when the game is started after pressing the button */
-		/* making available action items */
+		
+		/* items to world map */
+		var list = GameJam.items;
+		for(var i=0; i<list.length; i++){
+			GameJam.world[GameJam.items[i].pos[0]/32][GameJam.items[i].pos[1]/32] = 1;
+		}
+
 		/* event listeners started so prisioner starts to move */
+
+		GameJam.movePrisoner();
 		/* countdown started */
 		/* time over */
 		/* stop everything */
 
+	}
+
+	function menuGame(){
 		window.setTimeout(function(){
 			//document.getElementsByTagName('main')[0].className = 'loading-done';
 			document.getElementById('main-menu').className = 'loading-done';
@@ -239,11 +255,13 @@ var core = function(document, window){
 		console.log('Game started!');
    }
 	 
+
    
 
    return {
 	  Init: init,
-	  InitGame: initGame
+	  InitGame: initGame,
+	  StartGame: startGame
    }
 }(document, window);
 
