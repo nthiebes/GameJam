@@ -60,14 +60,14 @@ var interaction = function(document, window){
 							newMarginTop = e.deltaY + startMarginTop;
 
 						// Horizontal scolling with restriction to viewport
-						if (newMarginLeft < 0 && (newMarginLeft - boundingsMain.width) * -1 < boundings.width) {
+						if (newMarginLeft <= 0 && (newMarginLeft - boundingsMain.width) * -1 <= boundings.width) {
 							for (var i=0; i < canvas.length; i++) {
 								canvas[i].style.marginLeft = newMarginLeft + 'px';
 							}
 						}
 
 						// Vertical scolling with restriction to viewport
-						if (newMarginTop < 0 && (newMarginTop - boundingsMain.height) * -1 < boundings.height) {
+						if (newMarginTop <= 0 && (newMarginTop - boundingsMain.height) * -1 <= boundings.height) {
 							for (var i=0; i < canvas.length; i++) {
 								canvas[i].style.marginTop = newMarginTop + 'px';
 							}
