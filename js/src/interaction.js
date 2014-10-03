@@ -97,7 +97,7 @@ var interaction = function(document, window){
 
 			levelHtml += '</ul>';
 
-			document.getElementById('level-selection').innerHTML = levelHtml;
+			document.getElementById('level-selection').innerHTML = levelHtml + document.getElementById('level-selection').innerHTML;
 
 			document.getElementById('level-selection').className = 'visible';
 		});
@@ -120,6 +120,12 @@ var interaction = function(document, window){
 		var mcStart = new Hammer(document.getElementById('start-game'));
 		mcStart.on("tap", function(e){
 			core.StartGame();
+		});
+
+		// Back to main menu button the mouse ...
+		var mcBackMain = new Hammer(document.getElementById('back-main-menu'));
+		mcBackMain.on("tap", function(e){
+			document.getElementById('level-selection').className = '';
 		});
 		
 		// Reset margin on resize
