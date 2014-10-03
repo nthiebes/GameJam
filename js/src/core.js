@@ -205,7 +205,8 @@ var core = function(document, window){
 	    //renderEntities(items);
 	    renderEntities(GameJam.prisoner);
 	    renderEntities(GameJam.items);
-	    
+	    //onsole.log(GameJam.timer);
+	    GameJam.timer.innerHTML = Math.round(GameJam.gameTime) + 's';
 	};
 
 	function renderEntities(list) {
@@ -233,8 +234,12 @@ var core = function(document, window){
 		// reset items, we dont want the user to be able to drag and drop them
  		GameJam.items = [];
 
-		/* event listeners started so prisioner starts to move */
+		// Reset prisoner speed
 		GameJam.prisoner[0].sprite.speed = 5;
+
+		// Reset game time
+		GameJam.gameTime = 0;
+		GameJam.timer.className = 'visible';
 
 		GameJam.movePrisoner();
 		/* countdown started */

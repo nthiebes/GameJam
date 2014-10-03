@@ -122,3 +122,17 @@ canvas {
 	background-color: #f00;
 	position: absolute;
 }
+
+#timer {
+    position: absolute;
+    z-index: 1;
+    left: 50%;
+    width: 100px;
+    text-align: center;
+    margin-left: -50px;
+    display: none;
+
+    &.visible {
+    	display: block;
+    }
+}

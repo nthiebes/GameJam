@@ -39,5 +39,6 @@ window.GameJam = {
 	items: [],
 	draggedItem: null,
 
-	currentLevel: ''
+	currentLevel: '',
+	timer: document.getElementById('timer')
 };
