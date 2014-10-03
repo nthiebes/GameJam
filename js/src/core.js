@@ -225,8 +225,6 @@ var core = function(document, window){
    
    function startGame(){
 		/* this is when the game is started after pressing the button */
-
-		GameJam.createWorld();
 		
 		/* items to world map */
 		var list = GameJam.items;

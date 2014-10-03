@@ -103,21 +103,22 @@ var interaction = function(document, window){
 		});
 
 		// Level selection buttons
-		var mcStart = new Hammer(document.getElementById('level-selection'));
-		mcStart.on("tap", function(e){
-			console.log(e);
+		var selectLevel = new Hammer(document.getElementById('level-selection'));
+		selectLevel.on("tap", function(e){
 
 			if (e.target.className === 'level') {
 				GameJam.currentLevel = e.target.id;
 
+				GameJam.createWorld();
+
 				document.getElementsByTagName('main')[0].className = 'visible';
-
-				core.StartGame();
 			}
+		});
 
-			//document.getElementsByTagName('main')[0].className = 'visible';
-
-			//core.StartGame();
+		// Level selection buttons
+		var mcStart = new Hammer(document.getElementById('start-game'));
+		mcStart.on("tap", function(e){
+			core.StartGame();
 		});
 		
 		// Reset margin on resize
