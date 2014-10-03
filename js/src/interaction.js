@@ -120,7 +120,7 @@ var interaction = function(document, window){
 			}
 		});
 
-		// Level selection buttons
+		// Free the mouse ...
 		var mcStart = new Hammer(document.getElementById('start-game'));
 		mcStart.on("tap", function(e){
 			core.StartGame();
