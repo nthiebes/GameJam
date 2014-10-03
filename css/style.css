@@ -19,7 +19,7 @@ main {
   left: 0;
   right: 0;
   top: 0;
-  opacity: 0; }
+  bottom: 0; }
 
 canvas {
   display: block;
@@ -43,7 +43,8 @@ canvas {
   bottom: 0;
   background-color: #eee;
   text-align: center;
-  padding-top: 10px; }
+  padding-top: 10px; 
+  display: none;}
 
 #main-menu {
   position: absolute;
@@ -54,7 +55,8 @@ canvas {
   text-align: center;
   padding-top: 10px;
   opacity: 0;
-  overflow: hidden; }
+  overflow: hidden; 
+  display: none;}
   #main-menu li {
     display: block;
     list-style: none outside none; }
@@ -66,3 +68,11 @@ canvas {
     transition: opacity 1s linear;
     bottom: 0;
     opacity: 1; }
+
+  #startGame {
+    background: red;
+    width: 100px;
+    right: 10px;
+    position: absolute;
+    z-index: 1000;
+  }
