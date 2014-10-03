@@ -230,7 +230,11 @@ var core = function(document, window){
 		/* time over */
 		/* stop everything */
 
-		document.getElementById('loading').className = 'done';
+		window.setTimeout(function(){
+			//document.getElementsByTagName('main')[0].className = 'loading-done';
+			document.getElementById('main-menu').className = 'loading-done';
+		}, 500);
+		
 
 		console.log('Game started!');
    }

@@ -10,13 +10,16 @@ body {
   -webkit-text-size-adjust: none;
   /* Prevent font scaling in landscape */ }
 
+section {
+  display: block; }
+
 main {
   position: absolute;
   overflow: hidden;
-  bottom: 0;
   left: 0;
   right: 0;
-  top: 0; }
+  top: 0;
+  opacity: 0; }
 
 canvas {
   display: block;
@@ -28,6 +31,10 @@ canvas {
   max-height: 1024px;
   max-width: 1024px; }
 
+@media screen and (min-aspect-ratio: 1 / 1) {
+  canvas {
+    width: 100%;
+    height: auto; } }
 #loading {
   position: absolute;
   left: 0;
@@ -37,10 +44,25 @@ canvas {
   background-color: #eee;
   text-align: center;
   padding-top: 10px; }
-  #loading.done {
-    display: none; }
 
-@media screen and (min-aspect-ratio: 1 / 1) {
-  canvas {
-    width: 100%;
-    height: auto; } }
+#main-menu {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  background-color: #fff;
+  text-align: center;
+  padding-top: 10px;
+  opacity: 0;
+  overflow: hidden; }
+  #main-menu li {
+    display: block;
+    list-style: none outside none; }
+  #main-menu.loading-done {
+    -webkit-transition: opacity 1s linear;
+    -moz-transition: opacity 1s linear;
+    -ms-transition: opacity 1s linear;
+    -o-transition: opacity 1s linear;
+    transition: opacity 1s linear;
+    bottom: 0;
+    opacity: 1; }
