@@ -90,9 +90,6 @@ var interaction = function(document, window){
 		// Main menu play button
 		var mcPlay = new Hammer(document.getElementById('play'));
 		mcPlay.on("tap", function(e){
-			//document.getElementsByTagName('main')[0].className = 'visible';
-
-			//core.StartGame();
 
 			var levelHtml = '<ul>';
 
@@ -102,9 +99,15 @@ var interaction = function(document, window){
 
 			levelHtml += '</ul>';
 
-			document.getElementById('level-selection').innerHTML = levelHtml + document.getElementById('level-selection').innerHTML;
+			document.getElementById('level-selection').innerHTML = levelHtml + '<button id="back-main-menu">Back</button>';
 
 			document.getElementById('level-selection').className = 'visible';
+
+			// Back to main menu button
+			var mcBackMain = new Hammer(document.getElementById('back-main-menu'));
+			mcBackMain.on("tap", function(e){
+				document.getElementById('level-selection').className = '';
+			});
 		});
 
 		// Level selection buttons
@@ -127,12 +130,6 @@ var interaction = function(document, window){
 			core.StartGame();
 		});
 
-		// Back to main menu button the mouse ...
-		var mcBackMain = new Hammer(document.getElementById('back-main-menu'));
-		mcBackMain.on("tap", function(e){
-			document.getElementById('level-selection').className = '';
-		});
-		
 		// Reset margin on resize
 		window.onresize = function(e){
 		    for (var i=0; i < canvas.length; i++) {
