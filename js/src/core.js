@@ -73,6 +73,8 @@ var core = function(document, window){
 		main();
 
 		console.log('Game initialized.');
+
+		startGame();
    }   
 	  
    function enviroment (){
@@ -96,7 +98,7 @@ var core = function(document, window){
    
 	 /* load time count */
 	 /* setting start button */
-	 startGame();
+	 
 	 /* save results */
 	 console.log('Goals done!');
    }
@@ -221,13 +223,16 @@ var core = function(document, window){
 	}
    
    function startGame(){
-	 /* this is when the game is started after pressing the button */
-	 /* making available action items */
-	 /* event listeners started so prisioner starts to move */
-	 /* countdown started */
-	 /* time over */
-	 /* stop everything */
-	 console.log('startGame done!');
+		/* this is when the game is started after pressing the button */
+		/* making available action items */
+		/* event listeners started so prisioner starts to move */
+		/* countdown started */
+		/* time over */
+		/* stop everything */
+
+		document.getElementById('loading').className = 'done';
+
+		console.log('Game started!');
    }
 	 
    

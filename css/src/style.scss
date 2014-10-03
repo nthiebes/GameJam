@@ -41,23 +41,24 @@ canvas {
     max-width: 1024px;
 }
 
+#loading {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background-color: #eee;
+    text-align: center;
+    padding-top: 10px;
+
+    &.done {
+    	display: none;
+    }
+}
+
 @media screen and (min-aspect-ratio: 1/1) {
 	canvas {
 		width: 100%;
     	height: auto;
-	}
-}
-
-@media screen and (min-width: 1025px){
-	canvas {
-		//left: 50%;
-		//margin-left: -512px;
-	}
-}
-
-@media screen and (min-height: 1025px){
-	canvas {
-		//top: 50%;
-		//margin-top: -512px;
 	}
 }

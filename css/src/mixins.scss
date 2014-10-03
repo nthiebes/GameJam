@@ -6,3 +6,11 @@
     	 -moz-user-select: $select;
     	  -ms-user-select: $select;
 }
+
+@mixin transition($transition){
+	-webkit-transition: $transition;
+	   -moz-transition: $transition;
+		-ms-transition: $transition;
+		 -o-transition: $transition;
+			transition: $transition;
+}
