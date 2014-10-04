@@ -67,6 +67,7 @@ main {
     right: 0;
     top: 0;
     opacity: 0;
+    background-color: #000;
 
     &.visible {
     	@include transition(opacity 0.5s linear);
