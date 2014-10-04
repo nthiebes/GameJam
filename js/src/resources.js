@@ -23,6 +23,9 @@
             var img = new Image();
             img.onload = function() {
                 resourceCache[url] = img;
+                
+                GameJam.loadingPercentage += 10;
+                core.Loading();
 
                 if(isReady()) {
                     readyCallbacks.forEach(function(func) { func(); });

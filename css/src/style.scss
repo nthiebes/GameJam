@@ -15,11 +15,24 @@
     -webkit-tap-highlight-color: transparent;
 }
 
+html {
+	overflow: hidden;
+}
+
 body {
     cursor: default;
     -webkit-text-size-adjust: none; /* Prevent font scaling in landscape */
     font-family: 'Press Start 2P', cursive;
     font-size: 26px;
+    color: #fff;
+    background-color: #000;
+    text-shadow: 3px 3px 0 #000;
+    overflow: hidden;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
 }
 
 section {
@@ -31,22 +44,32 @@ ul {
 }
 
 button {
-	cursor: pointer;
+	background: url("../img/button_big.png") no-repeat scroll 0 0 transparent;
+    cursor: pointer;
+    height: 70px;
+    width: 254px;
+    @include user-select(none);
 	font-family: 'Press Start 2P', cursive;
     font-size: 32px;
+    color: #fff;
+    text-shadow: 3px 3px 0 #000;
+   	height: 108px;
+
+   	&:hover, &:active {
+    	background-position: 0 -108px;
+    }
 }
 
 main {
 	position: absolute;
 	overflow: hidden;
-    //-webkit-overflow-scrolling: touch; /* Enable momentum scrolling on iOS */
     left: 0;
     right: 0;
     top: 0;
     opacity: 0;
 
     &.visible {
-    	//@include transition(opacity 1s linear);
+    	@include transition(opacity 0.5s linear);
     	bottom: 0;
     	opacity: 1;
     }
@@ -76,97 +99,206 @@ canvas {
     right: 0;
     top: 0;
     bottom: 0;
-    background-color: #eee;
+    background-color: #000;
     text-align: center;
+}
+
+#loading-bar {
+    height: 72px;
+    position: absolute;
+    left: 5%;
+    right: 5%;
+    bottom: 10%;
+
+    .left {
+    	background: url("../img/loading_bar_left.png") no-repeat scroll 0 0 transparent;
+    	width: 21px;
+    	position: absolute;
+    	top: 0;
+    	bottom: 0;
+    	left: 0;
+    }
+
+    .center {
+    	background: url("../img/loading_bar_center.png") repeat-x scroll 0 0 transparent;
+    	position: absolute;
+    	left: 21px;
+    	right: 32px;
+    	top: 0;
+    	bottom: 0;
+    }
+
+    .right {
+    	background: url("../img/loading_bar_right.png") no-repeat scroll 0 0 transparent;
+    	width: 32px;
+    	position: absolute;
+    	top: 0;
+    	bottom: 0;
+    	right: 0;
+    }
+}
+
+#loaded-outer {
+	left: 15px;
+	right: 17px;
+	top: 11px;
+	bottom: 10px;
+	position: absolute;
+}
+
+#loaded-inner {
+	background: url("../img/loading_bar_center2.png") repeat-x scroll 0 0 transparent;
+    position: absolute;
+    width: 0%;
+    top: 0;
+    bottom: 0;
+    @include transition(width 0.2s linear);
+}
+
+#percentage {
+	left: 50%;
+    margin-left: -55px;
+    padding-top: 23px;
+    position: absolute;
+    top: 0;
+    width: 110px;
 }
 
 .menu {
 	position: relative;
     left: 50%;
     width: 206px;
-    margin-left: -103px;
+    margin-left: -127px;
+    margin-top: 5%;
+    margin-bottom: 5%;
 
 	li {
-		background: url("../img/button.png") no-repeat scroll 0 0 transparent;
-	    color: #fff;
+		background: url("../img/button_big.png") no-repeat scroll 0 0 transparent;
 	    cursor: pointer;
-	    height: 68px;
+	    height: 70px;
 	    margin-bottom: 20px;
-	    text-shadow: 3px 3px 0 #000;
-	    width: 206px;
-    	padding-top: 35px;
+	    padding-top: 38px;
+	    width: 254px;
+	    @include user-select(none);
+
+	    &:hover, &:active {
+	    	background-position: 0 -108px;
+	    }
 	}
 }
 
 #main-menu {
     position: absolute;
-    left: 0;
-    right: 0;
+    left: 100%;
     top: 0;
-    background-color: #fff;
+    bottom: 0;
+    background-color: #000;
     text-align: center;
-    opacity: 0;
-    overflow: hidden;
+    overflow: auto;
+    width: 100%;
+    -webkit-overflow-scrolling: touch; /* Enable momentum scrolling on iOS */
 
     li {
 	    display: block;
 	}
 
     &.visible {
-    	//@include transition(opacity 1s linear);
-    	bottom: 0;
-    	opacity: 1;
+    	@include transition(all 0.3s ease-out);
+    	@include transform(translateX(-100%));
+    }
+
+    &.hidden {
+    	@include transition(all 0.3s ease-out);
+    	@include transform(translateX(-200%));
     }
 }
 
 #level-selection {
     position: absolute;
-    left: 0;
-    right: 0;
+    left: 100%;
+    width: 100%;
     top: 0;
-    background-color: #fff;
-    opacity: 0;
-    overflow: hidden;
-    height: 0;
+    bottom: 0;
+    background-color: #000;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch; /* Enable momentum scrolling on iOS */
+
+    ul {
+	    position: relative;
+	    left: 5%;
+	    width: 90%;
+	    margin-bottom: 5%;
+	    text-align: center;
+	}
 
     li {
-	    display: block;
-	    float: left;
-	    height: 50px;
-	    width: 50px;
-	    background-color: #999;
-	    margin: 10px;
+    	background: url("../img/level.png") no-repeat scroll 0 0 transparent;
 	    cursor: pointer;
+	    display: inline-block;
+	    font-size: 36px;
+	    height: 74px;
+	    margin: 10px;
+	    padding-top: 34px;
+	    position: relative;
+	    width: 114px;
+	    margin-bottom: 70px;
+	    @include user-select(none);
+
+	    &:hover, &:active {
+	    	background-position: 0 -108px;
+	    }
 
 	    div {
-	    	width: 20px;
-    		height: 20px;
-	    }
+		    height: 50px;
+		    position: absolute;
+		    top: 107px;
+		    width: 40px;
+		    opacity: 0.25;
+
+		    &.unlocked {
+		    	opacity: 1;
+		    }
+		}
 	}
 
     &.visible {
-    	//@include transition(opacity 1s linear);
-    	bottom: 0;
-    	opacity: 1;
-    	height: auto;
+    	@include transition(all 0.3s ease-out);
+    	@include transform(translateX(-100%));
+    }
+
+    &.hidden {
+    	@include transition(all 0.3s ease-out);
+    	@include transform(translateX(0%));
     }
 }
 
+#back-main-menu {
+    left: 50%;
+    margin-left: -127px;
+    margin-top: 5%;
+    position: relative;
+    margin-bottom: 20px;
+}
+
 .bronze {
-    background-color: chocolate;
+    background: url("../img/bronze.png") no-repeat scroll 0 0 transparent;
+    left: -2px;
 }
 
 .silver {
-    background-color: #ccc;
+    background: url("../img/silver.png") no-repeat scroll 0 0 transparent;
+    left: 37px;
 }
 
 .gold {
-    background-color: #ff0;
+    background: url("../img/gold.png") no-repeat scroll 0 0 transparent;
+    left: 76px;
 }
 
 #start-game {
-	background-color: #f00;
 	position: absolute;
+    right: 5%;
+    bottom: 5%;
 	display: none;
 
 	&.visible {
