@@ -121,64 +121,58 @@ var core = function(document, window){
 	function update(dt){
 		GameJam.gameTime += dt;
 
-		// Only move if a path exists
-		if (GameJam.currentPath.length > 0) {
-			// Vertical movement
-			if (GameJam.prisoner[0].nextTile[0] === GameJam.currentPath[0][0]) {
-				// Move top if next tile is above current
-				if (GameJam.prisoner[0].nextTile[1] > GameJam.currentPath[0][1]) {
-					GameJam.prisoner[0].pos[1] = GameJam.currentPath[0][1] * GameJam.tileHeight + ((GameJam.tileHeight / GameJam.prisoner[0].steps) * GameJam.prisoner[0].currentStep);
-					GameJam.prisoner[0].sprite.pos[1] = 192;
-				// Move bottom if next tile is below current
-				} else if (GameJam.prisoner[0].nextTile[1] < GameJam.currentPath[0][1]){
-					GameJam.prisoner[0].pos[1] = GameJam.currentPath[0][1] * GameJam.tileHeight - ((GameJam.tileHeight / GameJam.prisoner[0].steps) * GameJam.prisoner[0].currentStep);
-					GameJam.prisoner[0].sprite.pos[1] = 0;
+		// Only move if a path exists and no pan is in progress
+		if (!GameJam.panning) {
+			if (GameJam.currentPath.length > 0) {
+				// Vertical movement
+				if (GameJam.prisoner[0].nextTile[0] === GameJam.currentPath[0][0]) {
+					// Move top if next tile is above current
+					if (GameJam.prisoner[0].nextTile[1] > GameJam.currentPath[0][1]) {
+						GameJam.prisoner[0].pos[1] = GameJam.currentPath[0][1] * GameJam.tileHeight + ((GameJam.tileHeight / GameJam.prisoner[0].steps) * GameJam.prisoner[0].currentStep);
+						GameJam.prisoner[0].sprite.pos[1] = 192;
+					// Move bottom if next tile is below current
+					} else if (GameJam.prisoner[0].nextTile[1] < GameJam.currentPath[0][1]){
+						GameJam.prisoner[0].pos[1] = GameJam.currentPath[0][1] * GameJam.tileHeight - ((GameJam.tileHeight / GameJam.prisoner[0].steps) * GameJam.prisoner[0].currentStep);
+						GameJam.prisoner[0].sprite.pos[1] = 0;
+					}
+
+				// Horizontal movement
+				} else{
+					// Move left if next tile is on the left side of the current
+					if (GameJam.prisoner[0].nextTile[0] > GameJam.currentPath[0][0]) {
+						GameJam.prisoner[0].pos[0] = GameJam.currentPath[0][0] * GameJam.tileWidth + ((GameJam.tileWidth / GameJam.prisoner[0].steps) * GameJam.prisoner[0].currentStep);
+						GameJam.prisoner[0].sprite.pos[1] = 64;
+					// Move right if next tile is on the right side of the current
+					} else if (GameJam.prisoner[0].nextTile[0] < GameJam.currentPath[0][0]) {
+						GameJam.prisoner[0].pos[0] = GameJam.currentPath[0][0] * GameJam.tileWidth - ((GameJam.tileWidth / GameJam.prisoner[0].steps) * GameJam.prisoner[0].currentStep);
+						GameJam.prisoner[0].sprite.pos[1] = 128;
+					}
 				}
 
-			// Horizontal movement
+				// End of an animation from tile to tile
+				if (GameJam.prisoner[0].currentStep === 1) {
+					GameJam.prisoner[0].nextTile = GameJam.currentPath[0];
+
+					// Remove the first tile in the array
+					GameJam.currentPath.splice(0,1);
+
+					// Reset to start animation for next tile 
+					GameJam.prisoner[0].currentStep = GameJam.prisoner[0].steps;
+				}	
+
+				GameJam.prisoner[0].currentStep--;		
 			} else{
-				// Move left if next tile is on the left side of the current
-				if (GameJam.prisoner[0].nextTile[0] > GameJam.currentPath[0][0]) {
-					GameJam.prisoner[0].pos[0] = GameJam.currentPath[0][0] * GameJam.tileWidth + ((GameJam.tileWidth / GameJam.prisoner[0].steps) * GameJam.prisoner[0].currentStep);
-					GameJam.prisoner[0].sprite.pos[1] = 64;
-				// Move right if next tile is on the right side of the current
-				} else if (GameJam.prisoner[0].nextTile[0] < GameJam.currentPath[0][0]) {
-					GameJam.prisoner[0].pos[0] = GameJam.currentPath[0][0] * GameJam.tileWidth - ((GameJam.tileWidth / GameJam.prisoner[0].steps) * GameJam.prisoner[0].currentStep);
-					GameJam.prisoner[0].sprite.pos[1] = 128;
+				GameJam.prisoner[0].sprite.pos[1] = 192;
+				GameJam.prisoner[0].sprite.speed = 0;
+
+				if (GameJam.gameStarted && !GameJam.gameEnded) {
+					endLevel();
 				}
 			}
 
-			// End of an animation from tile to tile
-			if (GameJam.prisoner[0].currentStep === 1) {
-				GameJam.prisoner[0].nextTile = GameJam.currentPath[0];
-
-				// Remove the first tile in the array
-				GameJam.currentPath.splice(0,1);
-
-				// Reset to start animation for next tile 
-				GameJam.prisoner[0].currentStep = GameJam.prisoner[0].steps;
-			}	
-
-			GameJam.prisoner[0].currentStep--;		
-		} else{
-			GameJam.prisoner[0].sprite.pos[1] = 192;
-			GameJam.prisoner[0].sprite.speed = 0;
-
-			if (GameJam.gameStarted && !GameJam.gameEnded) {
-				endLevel();
-			}
+			// Update timer
+			GameJam.timer.innerHTML = Math.round(GameJam.gameTime) + 's';
 		}
-		
-		// Items movements
-		/*if (GameJam.itemPath.length > 0) {
-			GameJam.items[0].pos[0] = GameJam.itemPath[0].x;
-
-			GameJam.items[0].pos[1] = GameJam.itemPath[0].y;
-			GameJam.itemPath.splice(0,1);
-		}*/
-
-		// Update timer
-		GameJam.timer.innerHTML = Math.round(GameJam.gameTime) + 's';
 
 		updateEntities(dt);
 	}
@@ -189,8 +183,10 @@ var core = function(document, window){
 	//////////////////////////////////////////////
 	function updateEntities(dt){
 	    // Update the prisoner sprite animation
-	    for (var i in GameJam.prisoner) {
-			GameJam.prisoner[i].sprite.update(dt);
+	    if (!GameJam.panning) {
+		    for (var i in GameJam.prisoner) {
+				GameJam.prisoner[i].sprite.update(dt);
+			}
 		}
 
 	    for (var i in GameJam.items) {

@@ -38,7 +38,7 @@ var interaction = function(document, window){
 
 			switch(e.type) {
 	            case 'panstart':
-	            	GameJam.paused = true;
+	            	GameJam.panning = true;
 
 	            	// Check if an item is at the dragstart cell
 					for (var i in GameJam.items) {
@@ -86,7 +86,7 @@ var interaction = function(document, window){
 
 	            case 'panend':
 	            	// Stop the dragging
-	            	GameJam.paused = false;
+	            	GameJam.panning = false;
 	            	GameJam.draggedItem = null;
 	            	break;
 	        }

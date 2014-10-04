@@ -47,5 +47,6 @@ window.GameJam = {
 	loadedInner: document.getElementById('loaded-inner'),
 	loadingPercentage: 0,
 	loadingPercentageElem: document.getElementById('percentage'),
-	paused: false
+	paused: false,
+	panning: false
 };
