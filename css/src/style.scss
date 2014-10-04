@@ -68,10 +68,12 @@ main {
     top: 0;
     opacity: 0;
     background-color: #000;
+    height: 0;
 
     &.visible {
     	@include transition(opacity 0.5s linear);
     	bottom: 0;
+    	height: auto;
     	opacity: 1;
     }
 }
@@ -97,11 +99,16 @@ canvas {
 #loading {
     position: absolute;
     left: 0;
-    right: 0;
+    width: 100%;
     top: 0;
     bottom: 0;
-    background-color: #000;
+    background-color: #32242c;
     text-align: center;
+
+    &.hidden {
+    	@include transition(all 0.3s ease-out);
+    	@include transform(translateX(-100%));
+    }
 }
 
 #loading-bar {
@@ -193,7 +200,7 @@ canvas {
     left: 100%;
     top: 0;
     bottom: 0;
-    background-color: #000;
+    background-color: #32242c;
     text-align: center;
     overflow: auto;
     width: 100%;
@@ -220,7 +227,7 @@ canvas {
     width: 100%;
     top: 0;
     bottom: 0;
-    background-color: #000;
+    background-color: #32242c;
     overflow: auto;
     -webkit-overflow-scrolling: touch; /* Enable momentum scrolling on iOS */
 
@@ -305,6 +312,32 @@ canvas {
 	&.visible {
     	display: block;
     }
+}
+
+#obstacles {
+    bottom: 5%;
+    left: 10px;
+    position: absolute;
+    top: 5%;
+    z-index: 1;
+
+    li {
+    	@include user-select(none);
+	    background: url("../img/level.png") no-repeat scroll 0 0 transparent;
+	    cursor: pointer;
+	    display: block;
+	    font-size: 24px;
+	    height: 74px;
+	    margin: 10px 10px 20px;
+	    padding-top: 34px;
+	    position: relative;
+	    text-align: center;
+	    width: 114px;
+
+	    &:hover, &:active {
+	    	background-position: 0 -108px;
+	    }
+	}
 }
 
 #timer {

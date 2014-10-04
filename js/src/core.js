@@ -66,8 +66,11 @@ var core = function(document, window){
 		window.setTimeout(function(){
 			GameJam.loadingPercentage = 100;
             core.Loading();
-			document.getElementById('main-menu').className = 'visible';
-		}, 500);
+            window.setTimeout(function(){
+	            document.getElementById('loading').className = 'hidden';
+				document.getElementById('main-menu').className = 'visible';
+			}, 100);
+		}, 300);
 
 		console.log('Game initialized.');
    	}   

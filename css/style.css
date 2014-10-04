@@ -56,7 +56,8 @@ main {
   right: 0;
   top: 0;
   opacity: 0;
-  background-color: #000; }
+  background-color: #000;
+  height: 0; }
   main.visible {
     -webkit-transition: opacity 0.5s linear;
     -moz-transition: opacity 0.5s linear;
@@ -64,6 +65,7 @@ main {
     -o-transition: opacity 0.5s linear;
     transition: opacity 0.5s linear;
     bottom: 0;
+    height: auto;
     opacity: 1; }
 
 canvas {
@@ -83,11 +85,22 @@ canvas {
 #loading {
   position: absolute;
   left: 0;
-  right: 0;
+  width: 100%;
   top: 0;
   bottom: 0;
-  background-color: #000;
+  background-color: #32242c;
   text-align: center; }
+  #loading.hidden {
+    -webkit-transition: all 0.3s ease-out;
+    -moz-transition: all 0.3s ease-out;
+    -ms-transition: all 0.3s ease-out;
+    -o-transition: all 0.3s ease-out;
+    transition: all 0.3s ease-out;
+    -webkit-transform: translateX(-100%);
+    -moz-transform: translateX(-100%);
+    -ms-transform: translateX(-100%);
+    -o-transform: translateX(-100%);
+    transform: translateX(-100%); }
 
 #loading-bar {
   height: 72px;
@@ -172,7 +185,7 @@ canvas {
   left: 100%;
   top: 0;
   bottom: 0;
-  background-color: #000;
+  background-color: #32242c;
   text-align: center;
   overflow: auto;
   width: 100%;
@@ -209,7 +222,7 @@ canvas {
   width: 100%;
   top: 0;
   bottom: 0;
-  background-color: #000;
+  background-color: #32242c;
   overflow: auto;
   -webkit-overflow-scrolling: touch;
   /* Enable momentum scrolling on iOS */ }
@@ -295,6 +308,32 @@ canvas {
   display: none; }
   #start-game.visible {
     display: block; }
+
+#obstacles {
+  bottom: 5%;
+  left: 10px;
+  position: absolute;
+  top: 5%;
+  z-index: 1; }
+  #obstacles li {
+    -moz-user-select: -moz- none;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    background: url("../img/level.png") no-repeat scroll 0 0 transparent;
+    cursor: pointer;
+    display: block;
+    font-size: 24px;
+    height: 74px;
+    margin: 10px 10px 20px;
+    padding-top: 34px;
+    position: relative;
+    text-align: center;
+    width: 114px; }
+    #obstacles li:hover, #obstacles li:active {
+      background-position: 0 -108px; }
 
 #timer {
   position: absolute;

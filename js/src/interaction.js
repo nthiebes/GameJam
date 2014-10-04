@@ -126,6 +126,16 @@ var interaction = function(document, window){
 
 				GameJam.createWorld();
 
+				// Create obstacle icons
+				var iconsHtml = '',
+					counter = 1;
+				for (var i in GameJam.levels[GameJam.currentLevel].items) {
+					iconsHtml += '<li class="obstacle" id="' + i + '">a</li>';
+					counter++;
+				}
+
+				document.getElementById('obstacles').innerHTML = iconsHtml;
+
 				document.getElementsByTagName('main')[0].className = 'visible';
 				document.getElementById('start-game').className = 'visible';
 			}
