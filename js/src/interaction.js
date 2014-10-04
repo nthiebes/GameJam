@@ -60,7 +60,9 @@ var interaction = function(document, window){
 	            case 'pan':
 	            	// Move the dragged item
 	            	if (GameJam.draggedItem) {
-	            		GameJam.items[GameJam.draggedItem].pos = [cell[0] * GameJam.tileWidth, cell[1] * GameJam.tileHeight];
+	            		var cellwidth = cell[0] - Math.floor((GameJam.items[GameJam.draggedItem].width)/GameJam.tileWidth) + 1 ,
+	            			cellheight = cell[1] - Math.floor((GameJam.items[GameJam.draggedItem].height)/GameJam.tileHeight) + 1;
+	            		GameJam.items[GameJam.draggedItem].pos = [cellwidth * GameJam.tileWidth, cellheight * GameJam.tileHeight];
 	            	} else{
 						// Map scrolling
 						var newMarginLeft = e.deltaX + startMarginLeft,
