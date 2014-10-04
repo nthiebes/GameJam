@@ -38,6 +38,8 @@ var interaction = function(document, window){
 
 			switch(e.type) {
 	            case 'panstart':
+	            	GameJam.paused = true;
+
 	            	// Check if an item is at the dragstart cell
 					for (var i in GameJam.items) {
 						var startwidth = Math.floor(GameJam.items[i].pos[0]/GameJam.tileWidth),
@@ -82,6 +84,7 @@ var interaction = function(document, window){
 
 	            case 'panend':
 	            	// Stop the dragging
+	            	GameJam.paused = false;
 	            	GameJam.draggedItem = null;
 	            	break;
 	        }
@@ -92,9 +95,11 @@ var interaction = function(document, window){
 		mcPlay.on("tap", function(e){
 
 			// Create level tiles
-			var levelHtml = '<ul>';
+			var levelHtml = '<ul>',
+				counter = 1;
 			for (var i in GameJam.levels) {
-				levelHtml += '<li class="level" id="' + i + '"><div class="bronze"></div><div class="silver"></div><div class="gold"></div></li>';
+				levelHtml += '<li class="level" id="' + i + '">' + counter +'<div class="bronze"></div><div class="silver"></div><div class="gold"></div></li>';
+				counter++;
 			}
 			levelHtml += '</ul>';
 

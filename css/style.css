@@ -57,6 +57,11 @@ main {
   top: 0;
   opacity: 0; }
   main.visible {
+    -webkit-transition: opacity 0.5s linear;
+    -moz-transition: opacity 0.5s linear;
+    -ms-transition: opacity 0.5s linear;
+    -o-transition: opacity 0.5s linear;
+    transition: opacity 0.5s linear;
     bottom: 0;
     opacity: 1; }
 
@@ -215,17 +220,31 @@ canvas {
     text-align: center; }
   #level-selection li {
     background: url("../img/level.png") no-repeat scroll 0 0 transparent;
-    display: inline-block;
-    height: 157px;
-    width: 114px;
-    margin: 10px;
     cursor: pointer;
-    position: relative; }
+    display: inline-block;
+    font-size: 36px;
+    height: 74px;
+    margin: 10px;
+    padding-top: 34px;
+    position: relative;
+    width: 114px;
+    margin-bottom: 70px;
+    -moz-user-select: -moz- none;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none; }
+    #level-selection li:hover, #level-selection li:active {
+      background-position: 0 -108px; }
     #level-selection li div {
       height: 50px;
       position: absolute;
       top: 107px;
-      width: 40px; }
+      width: 40px;
+      opacity: 0.25; }
+      #level-selection li div.unlocked {
+        opacity: 1; }
   #level-selection.visible {
     -webkit-transition: all 0.3s ease-out;
     -moz-transition: all 0.3s ease-out;

@@ -164,7 +164,7 @@ var core = function(document, window){
 			GameJam.prisoner[0].sprite.pos[1] = 192;
 			GameJam.prisoner[0].sprite.speed = 0;
 
-			if (GameJam.gameStarted) {
+			if (GameJam.gameStarted && !GameJam.gameEnded) {
 				endLevel();
 			}
 		}
@@ -178,7 +178,7 @@ var core = function(document, window){
 		}*/
 
 		// Update timer
-	    GameJam.timer.innerHTML = Math.round(GameJam.gameTime) + 's';
+		GameJam.timer.innerHTML = Math.round(GameJam.gameTime) + 's';
 
 		updateEntities(dt);
 	}
@@ -260,6 +260,7 @@ var core = function(document, window){
 	//////////////////////////////////////////////
 	function endLevel(){
 		console.log('Level done!');
+		GameJam.gameEnded = true;
 		GameJam.paused = true;
 	}
 	 

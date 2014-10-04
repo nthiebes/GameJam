@@ -43,7 +43,9 @@ window.GameJam = {
 	currentLevel: '',
 	timer: document.getElementById('timer'),
 	gameStarted: false,
+	gameEnded: false,
 	loadedInner: document.getElementById('loaded-inner'),
 	loadingPercentage: 0,
-	loadingPercentageElem: document.getElementById('percentage')
+	loadingPercentageElem: document.getElementById('percentage'),
+	paused: false
 };

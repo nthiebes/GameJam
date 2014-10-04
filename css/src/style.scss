@@ -69,7 +69,7 @@ main {
     opacity: 0;
 
     &.visible {
-    	//@include transition(opacity 1s linear);
+    	@include transition(opacity 0.5s linear);
     	bottom: 0;
     	opacity: 1;
     }
@@ -233,18 +233,31 @@ canvas {
 
     li {
     	background: url("../img/level.png") no-repeat scroll 0 0 transparent;
-	    display: inline-block;
-	    height: 157px;
-	    width: 114px;
-	    margin: 10px;
 	    cursor: pointer;
+	    display: inline-block;
+	    font-size: 36px;
+	    height: 74px;
+	    margin: 10px;
+	    padding-top: 34px;
 	    position: relative;
+	    width: 114px;
+	    margin-bottom: 70px;
+	    @include user-select(none);
+
+	    &:hover, &:active {
+	    	background-position: 0 -108px;
+	    }
 
 	    div {
 		    height: 50px;
 		    position: absolute;
 		    top: 107px;
 		    width: 40px;
+		    opacity: 0.25;
+
+		    &.unlocked {
+		    	opacity: 1;
+		    }
 		}
 	}
 
