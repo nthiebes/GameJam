@@ -42,5 +42,8 @@ window.GameJam = {
 	draggedItem: null,
 	currentLevel: '',
 	timer: document.getElementById('timer'),
-	gameStarted: false
+	gameStarted: false,
+	loadedInner: document.getElementById('loaded-inner'),
+	loadingPercentage: 0,
+	loadingPercentageElem: document.getElementById('percentage')
 };

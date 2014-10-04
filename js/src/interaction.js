@@ -98,13 +98,15 @@ var interaction = function(document, window){
 			}
 			levelHtml += '</ul>';
 
-			document.getElementById('level-selection').innerHTML = levelHtml + '<button id="back-main-menu">Back</button>';
+			document.getElementById('level-selection').innerHTML = '<button id="back-main-menu">Back</button>' + levelHtml;
 			document.getElementById('level-selection').className = 'visible';
+			document.getElementById('main-menu').className = 'hidden';
 
 			// Back to main menu button
 			var mcBackMain = new Hammer(document.getElementById('back-main-menu'));
 			mcBackMain.on("tap", function(e){
-				document.getElementById('level-selection').className = '';
+				document.getElementById('main-menu').className = 'visible';
+				document.getElementById('level-selection').className = 'hidden';
 			});
 		});
 

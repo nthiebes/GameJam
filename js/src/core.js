@@ -61,7 +61,11 @@ var core = function(document, window){
 		main();
 
 		// Hide loading screen
+		GameJam.loadingPercentage = 90;
+		core.Loading();
 		window.setTimeout(function(){
+			GameJam.loadingPercentage = 100;
+            core.Loading();
 			document.getElementById('main-menu').className = 'visible';
 		}, 500);
 
@@ -81,7 +85,16 @@ var core = function(document, window){
 			function(callback){
 				window.setTimeout(callback, 1000 / 60);
 			};
-	})();   
+	})();
+
+
+	//////////////////////////////////////////////
+	// Update loading bar    					//
+	//////////////////////////////////////////////
+	function loading(percentage){
+		GameJam.loadingPercentageElem.innerHTML = GameJam.loadingPercentage + '%';
+		GameJam.loadedInner.style.width = GameJam.loadingPercentage + '%';
+	}
 
 
 	//////////////////////////////////////////////
@@ -257,7 +270,8 @@ var core = function(document, window){
 	return {
 		Init: init,
 		InitGame: initGame,
-		StartGame: startGame
+		StartGame: startGame,
+		Loading: loading
 	}
 
 }(document, window);
