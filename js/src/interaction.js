@@ -12,13 +12,13 @@ var interaction = function(document, window){
 		 * Create a simple instance
 		 * by default, it only adds horizontal recognizers
 		 */
-		var mc = new Hammer(GameJam.canvasa);
+		var mcCanvas = new Hammer(GameJam.canvasa);
 
 		/**
 		 * Let the pan gesture support all directions
 		 * this will block the vertical scrolling on a touch-device while on the element
 		 */
-		mc.get('pan').set({
+		mcCanvas.get('pan').set({
 			direction: Hammer.DIRECTION_ALL
 		});
 
@@ -27,7 +27,7 @@ var interaction = function(document, window){
 			startMarginTop = 0;
 
 		/** Listen to pan events */
-		mc.on('pan panstart panend', function(e){
+		mcCanvas.on('pan panstart panend', function(e){
 			var boundings = GameJam.canvasa.getBoundingClientRect(),
 				boundingsMain = document.getElementsByTagName('main')[0].getBoundingClientRect(),
            		x,
@@ -117,6 +117,80 @@ var interaction = function(document, window){
 	        }
 		});
 
+		/** Listen to pan events */
+		var obstaclesList = document.querySelectorAll('.obstacle');
+		for (var i=0; i<obstaclesList.length; i++) {
+			var mcObstacle = new Hammer(obstaclesList[i]);
+			mcObstacle.get('pan').set({
+				direction: Hammer.DIRECTION_ALL
+			});
+			mcObstacle.on('pan panstart panend', function(e){
+				var boundings = GameJam.canvasa.getBoundingClientRect(),
+					boundingsMain = document.getElementsByTagName('main')[0].getBoundingClientRect(),
+	           		obstacle = e.target.className.match(/obstacle/g) ? e.target : e.target.parentElement,
+            		obstacleId = obstacle.getAttribute('data-icon'),
+            		item = GameJam.levels[GameJam.currentLevel].items[obstacleId],
+	           		x,
+	           		y,
+            		pos = [],
+            		cellwidth,
+	            	cellheight;
+
+				// Grab html page coords
+				x = e.center.x + document.body.scrollLeft + document.documentElement.scrollLeft;
+				y = e.center.y + document.body.scrollTop + document.documentElement.scrollTop;
+
+				// Make them relative to the canvas only
+				x -= GameJam.canvasa.offsetLeft;
+				y -= GameJam.canvasa.offsetTop;
+
+				// Return tile x,y that we dragged
+				var cell = [
+					Math.floor(x/(boundings.width / GameJam.worldWidth)),
+					Math.floor(y/(boundings.height / GameJam.worldHeight))
+				];
+
+				cellwidth = cell[0] - Math.floor((item.width)/GameJam.tileWidth) + 1 ,
+	            cellheight = cell[1] - Math.floor((item.height)/GameJam.tileHeight) + 1;
+
+				switch(e.type) {
+		            case 'panstart':
+		            	console.log('panstart', e);
+
+		            	// Hide obstacles list
+		            	document.getElementById('slider').className = 'show minimized';
+						document.getElementById('obstacles').className = 'show minimized';
+						document.getElementById('start-button-wrapper').className = 'show minimized';
+
+		                break;
+
+		            case 'pan':
+		            	
+		            	break;
+
+		            case 'panend':
+		            	console.log('panend', e);
+
+
+	            		pos.push(cellwidth * GameJam.tileWidth);
+	            		pos.push(cellheight * GameJam.tileHeight);
+
+		            	console.log( GameJam.world );
+
+		            	console.log( pos );
+
+		            	GameJam.levels[GameJam.currentLevel].items[obstacleId].pos = pos;
+
+		            	GameJam.items.push( GameJam.levels[GameJam.currentLevel].items[obstacleId] );
+
+
+
+		            	
+		            	break;
+		        }
+			});
+		}
+
 		/** Free the mouse ... */
 		var mcStart = new Hammer(document.getElementById('start-game'));
 		mcStart.on('tap', function(e){
@@ -131,11 +205,13 @@ var interaction = function(document, window){
 		var mcSlider = new Hammer(document.getElementById('slider'));
 		mcSlider.on('tap', function(e){
 			if (e.target.className.match(/minimized/g)) {
-				e.target.className = 'show';
-				document.getElementById('obstacles').className = 'show';
+				e.target.className = 'show expanded';
+				document.getElementById('obstacles').className = 'show expanded';
+				document.getElementById('start-button-wrapper').className = 'show expanded';
 			} else{
 				e.target.className = 'show minimized';
 				document.getElementById('obstacles').className = 'show minimized';
+				document.getElementById('start-button-wrapper').className = 'show minimized';
 			}
 		});
 
@@ -198,13 +274,16 @@ var interaction = function(document, window){
 					var item = GameJam.levels[GameJam.currentLevel].items[i];
 					iconsHtml += '<li class="obstacle" data-icon="' + item.id + '">' +
 									'<div class="size">' + item.width/32 + 'x' + item.height/32 + '</div>' +
-									'<div class="icon"></div>' +
+									'<div class="icon" style="background-position: 0px -' + item.icon + 'px;"></div>' +
 									'<div class="count">' + item.count + '</div>' +
 								 '</li>';
 					counter++;
 				}
-
 				document.getElementById('obstacles-list').innerHTML = iconsHtml;
+
+				// Register game event handlers
+				interaction.GameEvents();
+				console.log('-- Game events initialized');
 
 				requestTimeout(function(){
 					document.getElementById('obstacles').className = 'show';

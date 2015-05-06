@@ -34,7 +34,7 @@ window.GameJam = {
 	currentPath: [],
 
 	// Time
-	gameTime: null,
+	tileCounter: 0,
 	lastTime: null,
 
 	// Objects
@@ -149,34 +149,27 @@ window.GameJam.levels = {
 		unlocked: true,
 		items: [
 			{
-				id: 1,
+				id: 0,
 				count: 3,
 				width: 32,
 				height: 32,
-				pos: [32, 128],
+				icon: 0,
 				sprite: new Sprite('img/animatedTiles.png', [0, 32], [32, 32], 8, [0, 1, 2, 3, 4, 5], 'horizontal', false, false) // url, pos, size, speed, frames, dir, once, inProgress
-			}, 
-			// {
-			// 	id: 2,
-			// 	pos: [32, 128],
-			// 	width: 32,
-			// 	height: 32,
-			// 	sprite: new Sprite('img/animatedTiles.png', [0, 32], [32, 32], 8, [0, 1, 2, 3, 4, 5], 'horizontal', false, false) // url, pos, size, speed, frames, dir, once, inProgress
-			// },
+			},
 			{
-				id: 2,
+				id: 1,
 				count: 1,
 				width: 32,
 				height: 64,
-				pos: [32, 64],
+				icon: 50,
 				sprite: new Sprite('img/animatedTiles.png', [0, 0], [32, 64], 8, [0, 1, 2, 3, 4, 5], 'horizontal', false, false) // url, pos, size, speed, frames, dir, once, inProgress
 			},
 			{
-				id: 3,
+				id: 2,
 				count: 1,
 				width: 64,
 				height: 32,
-				pos: [32, 192],
+				icon: 150,
 				sprite: new Sprite('img/animatedTiles.png', [0, 32], [64, 32], 8, [0, 1, 2, 3, 4, 5], 'horizontal', false, false) // url, pos, size, speed, frames, dir, once, inProgress
 			}
 		]
@@ -218,6 +211,13 @@ var core = function(document, window){
 			GameJam.resources.load([
 				'img/animatedTiles.png',
 				'img/walk.png',
+				'img/loading.png',
+				'img/tileset.png',
+				'img/ui.png',
+				'img/window.png',
+				'img/window-bg.jpg',
+				'img/window-vert.png',
+				'img/icons.png',
 				'img/spritesheet.png'
 			]);
 			GameJam.resources.onReady(initMenu);
@@ -279,10 +279,6 @@ var core = function(document, window){
 			pos: [Math.floor((GameJam.worldWidth-1) / 2) * GameJam.tileWidth, (GameJam.worldHeight-1) * GameJam.tileHeight],
 			sprite: new Sprite('img/walk.png', [0, 192], [32, 50], 5, [0, 1, 2, 3, 4, 5], 'horizontal', false, false) // url, pos, size, speed, frames, dir, once, inProgress
 		});
-		
-		// Register game event handlers
-		interaction.GameEvents();
-		console.log('-- Game events initialized');
 
 		// Main game loop
 		main();
@@ -290,6 +286,7 @@ var core = function(document, window){
 		// Hide menu
 		GameJam.body.className = 'in-game';
 		document.getElementById('levels').className = 'window hide';
+		document.getElementById('fog').className = '';
 
 		console.log('-- Game initialized');
    	}
@@ -384,8 +381,6 @@ var core = function(document, window){
 	 * @param {integer} dt The time that has changed since the last update
 	 */
 	function update(dt){
-		GameJam.gameTime += dt;
-
 		// Only move if a path exists and no pan is in progress
 		if (!GameJam.panning) {
 			if (GameJam.currentPath.length > 0) {
@@ -423,6 +418,8 @@ var core = function(document, window){
 
 					// Reset to start animation for next tile 
 					GameJam.prisoner[0].currentStep = GameJam.prisoner[0].steps;
+
+					GameJam.tileCounter++;
 				}	
 
 				GameJam.prisoner[0].currentStep--;		
@@ -435,9 +432,9 @@ var core = function(document, window){
 				}
 			}
 
-			// Update timer
+			// Update tile counter
 			if (GameJam.gameStarted && !GameJam.gameEnded) {
-				GameJam.timer.innerHTML = Math.round(GameJam.gameTime) + 's';
+				GameJam.timer.innerHTML = Math.round(GameJam.tileCounter);
 			}
 		}
 
@@ -492,10 +489,12 @@ var core = function(document, window){
 	 * @param {object} entity An object in the game
 	 */
 	function renderEntity(entity){
-		GameJam.ctxa.save();
-		GameJam.ctxa.translate(entity.pos[0], entity.pos[1]);
-		entity.sprite.render(GameJam.ctxa);
-		GameJam.ctxa.restore();
+		if (entity.pos) {
+			GameJam.ctxa.save();
+			GameJam.ctxa.translate(entity.pos[0], entity.pos[1]);
+			entity.sprite.render(GameJam.ctxa);
+			GameJam.ctxa.restore();
+		}
 	}
    	
 
@@ -516,10 +515,11 @@ var core = function(document, window){
 		GameJam.prisoner[0].sprite.speed = 5;
 
 		// Reset game time
-		GameJam.gameTime = 0;
+		GameJam.tileCounter = 0;
 		GameJam.timer.className = 'show';
 		//document.getElementsByTagName('main')[0].className = 'show';
 		document.getElementById('obstacles').className = 'hide';
+		document.getElementById('slider').className = 'hide';
 		document.getElementById('start-button-wrapper').className = 'hide';
 
 		// Game has started
@@ -606,7 +606,7 @@ window.GameJam.createWorld = function(){
     console.log('Creating world ...');
 
     GameJam.world = GameJam.levels[GameJam.currentLevel].map;
-    GameJam.items = GameJam.levels[GameJam.currentLevel].items;
+    //GameJam.items = GameJam.levels[GameJam.currentLevel].items;
 
     // Calculate initial possible path
     GameJam.pathEnd = [Math.floor((GameJam.worldHeight-1) / 2), 0];
@@ -1017,13 +1017,13 @@ var interaction = function(document, window){
 		 * Create a simple instance
 		 * by default, it only adds horizontal recognizers
 		 */
-		var mc = new Hammer(GameJam.canvasa);
+		var mcCanvas = new Hammer(GameJam.canvasa);
 
 		/**
 		 * Let the pan gesture support all directions
 		 * this will block the vertical scrolling on a touch-device while on the element
 		 */
-		mc.get('pan').set({
+		mcCanvas.get('pan').set({
 			direction: Hammer.DIRECTION_ALL
 		});
 
@@ -1032,7 +1032,7 @@ var interaction = function(document, window){
 			startMarginTop = 0;
 
 		/** Listen to pan events */
-		mc.on('pan panstart panend', function(e){
+		mcCanvas.on('pan panstart panend', function(e){
 			var boundings = GameJam.canvasa.getBoundingClientRect(),
 				boundingsMain = document.getElementsByTagName('main')[0].getBoundingClientRect(),
            		x,
@@ -1122,6 +1122,80 @@ var interaction = function(document, window){
 	        }
 		});
 
+		/** Listen to pan events */
+		var obstaclesList = document.querySelectorAll('.obstacle');
+		for (var i=0; i<obstaclesList.length; i++) {
+			var mcObstacle = new Hammer(obstaclesList[i]);
+			mcObstacle.get('pan').set({
+				direction: Hammer.DIRECTION_ALL
+			});
+			mcObstacle.on('pan panstart panend', function(e){
+				var boundings = GameJam.canvasa.getBoundingClientRect(),
+					boundingsMain = document.getElementsByTagName('main')[0].getBoundingClientRect(),
+	           		obstacle = e.target.className.match(/obstacle/g) ? e.target : e.target.parentElement,
+            		obstacleId = obstacle.getAttribute('data-icon'),
+            		item = GameJam.levels[GameJam.currentLevel].items[obstacleId],
+	           		x,
+	           		y,
+            		pos = [],
+            		cellwidth,
+	            	cellheight;
+
+				// Grab html page coords
+				x = e.center.x + document.body.scrollLeft + document.documentElement.scrollLeft;
+				y = e.center.y + document.body.scrollTop + document.documentElement.scrollTop;
+
+				// Make them relative to the canvas only
+				x -= GameJam.canvasa.offsetLeft;
+				y -= GameJam.canvasa.offsetTop;
+
+				// Return tile x,y that we dragged
+				var cell = [
+					Math.floor(x/(boundings.width / GameJam.worldWidth)),
+					Math.floor(y/(boundings.height / GameJam.worldHeight))
+				];
+
+				cellwidth = cell[0] - Math.floor((item.width)/GameJam.tileWidth) + 1 ,
+	            cellheight = cell[1] - Math.floor((item.height)/GameJam.tileHeight) + 1;
+
+				switch(e.type) {
+		            case 'panstart':
+		            	console.log('panstart', e);
+
+		            	// Hide obstacles list
+		            	document.getElementById('slider').className = 'show minimized';
+						document.getElementById('obstacles').className = 'show minimized';
+						document.getElementById('start-button-wrapper').className = 'show minimized';
+
+		                break;
+
+		            case 'pan':
+		            	
+		            	break;
+
+		            case 'panend':
+		            	console.log('panend', e);
+
+
+	            		pos.push(cellwidth * GameJam.tileWidth);
+	            		pos.push(cellheight * GameJam.tileHeight);
+
+		            	console.log( GameJam.world );
+
+		            	console.log( pos );
+
+		            	GameJam.levels[GameJam.currentLevel].items[obstacleId].pos = pos;
+
+		            	GameJam.items.push( GameJam.levels[GameJam.currentLevel].items[obstacleId] );
+
+
+
+		            	
+		            	break;
+		        }
+			});
+		}
+
 		/** Free the mouse ... */
 		var mcStart = new Hammer(document.getElementById('start-game'));
 		mcStart.on('tap', function(e){
@@ -1136,11 +1210,13 @@ var interaction = function(document, window){
 		var mcSlider = new Hammer(document.getElementById('slider'));
 		mcSlider.on('tap', function(e){
 			if (e.target.className.match(/minimized/g)) {
-				e.target.className = 'show';
-				document.getElementById('obstacles').className = 'show';
+				e.target.className = 'show expanded';
+				document.getElementById('obstacles').className = 'show expanded';
+				document.getElementById('start-button-wrapper').className = 'show expanded';
 			} else{
 				e.target.className = 'show minimized';
 				document.getElementById('obstacles').className = 'show minimized';
+				document.getElementById('start-button-wrapper').className = 'show minimized';
 			}
 		});
 
@@ -1203,13 +1279,16 @@ var interaction = function(document, window){
 					var item = GameJam.levels[GameJam.currentLevel].items[i];
 					iconsHtml += '<li class="obstacle" data-icon="' + item.id + '">' +
 									'<div class="size">' + item.width/32 + 'x' + item.height/32 + '</div>' +
-									'<div class="icon"></div>' +
+									'<div class="icon" style="background-position: 0px -' + item.icon + 'px;"></div>' +
 									'<div class="count">' + item.count + '</div>' +
 								 '</li>';
 					counter++;
 				}
-
 				document.getElementById('obstacles-list').innerHTML = iconsHtml;
+
+				// Register game event handlers
+				interaction.GameEvents();
+				console.log('-- Game events initialized');
 
 				requestTimeout(function(){
 					document.getElementById('obstacles').className = 'show';

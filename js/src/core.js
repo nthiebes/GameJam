@@ -13,6 +13,13 @@ var core = function(document, window){
 			GameJam.resources.load([
 				'img/animatedTiles.png',
 				'img/walk.png',
+				'img/loading.png',
+				'img/tileset.png',
+				'img/ui.png',
+				'img/window.png',
+				'img/window-bg.jpg',
+				'img/window-vert.png',
+				'img/icons.png',
 				'img/spritesheet.png'
 			]);
 			GameJam.resources.onReady(initMenu);
@@ -74,10 +81,6 @@ var core = function(document, window){
 			pos: [Math.floor((GameJam.worldWidth-1) / 2) * GameJam.tileWidth, (GameJam.worldHeight-1) * GameJam.tileHeight],
 			sprite: new Sprite('img/walk.png', [0, 192], [32, 50], 5, [0, 1, 2, 3, 4, 5], 'horizontal', false, false) // url, pos, size, speed, frames, dir, once, inProgress
 		});
-		
-		// Register game event handlers
-		interaction.GameEvents();
-		console.log('-- Game events initialized');
 
 		// Main game loop
 		main();
@@ -85,6 +88,7 @@ var core = function(document, window){
 		// Hide menu
 		GameJam.body.className = 'in-game';
 		document.getElementById('levels').className = 'window hide';
+		document.getElementById('fog').className = '';
 
 		console.log('-- Game initialized');
    	}
@@ -179,8 +183,6 @@ var core = function(document, window){
 	 * @param {integer} dt The time that has changed since the last update
 	 */
 	function update(dt){
-		GameJam.gameTime += dt;
-
 		// Only move if a path exists and no pan is in progress
 		if (!GameJam.panning) {
 			if (GameJam.currentPath.length > 0) {
@@ -218,6 +220,8 @@ var core = function(document, window){
 
 					// Reset to start animation for next tile 
 					GameJam.prisoner[0].currentStep = GameJam.prisoner[0].steps;
+
+					GameJam.tileCounter++;
 				}	
 
 				GameJam.prisoner[0].currentStep--;		
@@ -230,9 +234,9 @@ var core = function(document, window){
 				}
 			}
 
-			// Update timer
+			// Update tile counter
 			if (GameJam.gameStarted && !GameJam.gameEnded) {
-				GameJam.timer.innerHTML = Math.round(GameJam.gameTime) + 's';
+				GameJam.timer.innerHTML = Math.round(GameJam.tileCounter);
 			}
 		}
 
@@ -287,10 +291,12 @@ var core = function(document, window){
 	 * @param {object} entity An object in the game
 	 */
 	function renderEntity(entity){
-		GameJam.ctxa.save();
-		GameJam.ctxa.translate(entity.pos[0], entity.pos[1]);
-		entity.sprite.render(GameJam.ctxa);
-		GameJam.ctxa.restore();
+		if (entity.pos) {
+			GameJam.ctxa.save();
+			GameJam.ctxa.translate(entity.pos[0], entity.pos[1]);
+			entity.sprite.render(GameJam.ctxa);
+			GameJam.ctxa.restore();
+		}
 	}
    	
 
@@ -311,10 +317,11 @@ var core = function(document, window){
 		GameJam.prisoner[0].sprite.speed = 5;
 
 		// Reset game time
-		GameJam.gameTime = 0;
+		GameJam.tileCounter = 0;
 		GameJam.timer.className = 'show';
 		//document.getElementsByTagName('main')[0].className = 'show';
 		document.getElementById('obstacles').className = 'hide';
+		document.getElementById('slider').className = 'hide';
 		document.getElementById('start-button-wrapper').className = 'hide';
 
 		// Game has started

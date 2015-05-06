@@ -32,6 +32,14 @@ canvas {
     &.hide {
         @include animation(slideOut 0.3s forwards ease);
     }
+
+    &.minimized {
+        @include animation(minimized 0.3s forwards ease);
+    }
+
+    &.expanded {
+        @include animation(expanded 0.3s forwards ease);
+    }
 }
 
 #start-game {
@@ -92,10 +100,15 @@ canvas {
 
     &.minimized {
         background-position: -130px -283px;
+        @include animation(minimized 0.3s forwards ease);
 
         &:active {
             background-position: -175px -283px;
         }
+    }
+
+    &.expanded {
+        @include animation(expanded 0.3s forwards ease);
     }
 }
 
@@ -108,6 +121,8 @@ canvas {
     margin-left: -50px;
     display: none;
     top: 10px;
+    color: #fff;
+    font-size: 30px;
 
     &.show {
         display: block;
@@ -131,6 +146,14 @@ canvas {
 
     &.hide {
         @include animation(slideOut 0.3s forwards ease);
+    }
+
+    &.minimized {
+        @include animation(minimized 0.3s forwards ease);
+    }
+
+    &.expanded {
+        @include animation(expanded 0.3s forwards ease);
     }
 
     .frame {
@@ -222,13 +245,13 @@ canvas {
     }
 
     .icon {
-        background: url("../img/spritesheet.png") no-repeat scroll 0 0 transparent;
-        height: 32px;
-        left: 31px;
+        background: url("../img/icons.png") no-repeat scroll 0 0 transparent;
+        height: 50px;
+        left: 21px;
         position: absolute;
         text-align: center;
-        width: 32px;
-        top: 44px;
+        top: 35px;
+        width: 50px;
     }
 
     .count {
@@ -256,5 +279,23 @@ canvas {
     }
     100% {
         @include transform( translateX(-140px) );
+    }
+}
+
+@include keyframe(minimized) {
+    0%  {
+        @include transform( translateX(0) );
+    }
+    100% {
+        @include transform( translateX(-110px) );
+    }
+}
+
+@include keyframe(expanded) {
+    0%  {
+        @include transform( translateX(-110px) );
+    }
+    100% {
+        @include transform( translateX(0) );
     }
 }

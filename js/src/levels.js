@@ -26,34 +26,27 @@ window.GameJam.levels = {
 		unlocked: true,
 		items: [
 			{
-				id: 1,
+				id: 0,
 				count: 3,
 				width: 32,
 				height: 32,
-				pos: [32, 128],
+				icon: 0,
 				sprite: new Sprite('img/animatedTiles.png', [0, 32], [32, 32], 8, [0, 1, 2, 3, 4, 5], 'horizontal', false, false) // url, pos, size, speed, frames, dir, once, inProgress
-			}, 
-			// {
-			// 	id: 2,
-			// 	pos: [32, 128],
-			// 	width: 32,
-			// 	height: 32,
-			// 	sprite: new Sprite('img/animatedTiles.png', [0, 32], [32, 32], 8, [0, 1, 2, 3, 4, 5], 'horizontal', false, false) // url, pos, size, speed, frames, dir, once, inProgress
-			// },
+			},
 			{
-				id: 2,
+				id: 1,
 				count: 1,
 				width: 32,
 				height: 64,
-				pos: [32, 64],
+				icon: 50,
 				sprite: new Sprite('img/animatedTiles.png', [0, 0], [32, 64], 8, [0, 1, 2, 3, 4, 5], 'horizontal', false, false) // url, pos, size, speed, frames, dir, once, inProgress
 			},
 			{
-				id: 3,
+				id: 2,
 				count: 1,
 				width: 64,
 				height: 32,
-				pos: [32, 192],
+				icon: 150,
 				sprite: new Sprite('img/animatedTiles.png', [0, 32], [64, 32], 8, [0, 1, 2, 3, 4, 5], 'horizontal', false, false) // url, pos, size, speed, frames, dir, once, inProgress
 			}
 		]

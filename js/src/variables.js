@@ -34,7 +34,7 @@ window.GameJam = {
 	currentPath: [],
 
 	// Time
-	gameTime: null,
+	tileCounter: 0,
 	lastTime: null,
 
 	// Objects
