@@ -1,6 +1,7 @@
-// Fill the world with walls
-window.GameJam.createWorld = function() {
-
+/**
+ * Fill the world with walls
+ */
+window.GameJam.createWorld = function(){
     console.log('Creating world ...');
 
     GameJam.world = GameJam.levels[GameJam.currentLevel].map;

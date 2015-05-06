@@ -1,20 +1,29 @@
 var interaction = function(document, window){
 
-	function init(){
-		// create a simple instance
-		// by default, it only adds horizontal recognizers
+	/**
+	 * Register the game events
+	 */
+	function gameEvents(){
+		/**
+		 * Create a simple instance
+		 * by default, it only adds horizontal recognizers
+		 */
 		var mc = new Hammer(GameJam.canvasa);
 
-		// let the pan gesture support all directions.
-		// this will block the vertical scrolling on a touch-device while on the element
-		mc.get('pan').set({ direction: Hammer.DIRECTION_ALL });
+		/**
+		 * Let the pan gesture support all directions
+		 * this will block the vertical scrolling on a touch-device while on the element
+		 */
+		mc.get('pan').set({
+			direction: Hammer.DIRECTION_ALL
+		});
 
 		var canvas = document.getElementsByTagName('canvas'),
 			startMarginLeft = 0,
 			startMarginTop = 0;
 
-		// listen to events...
-		mc.on("pan panstart panend", function(e) {
+		/** Listen to pan events */
+		mc.on('pan panstart panend', function(e){
 			var boundings = GameJam.canvasa.getBoundingClientRect(),
 				boundingsMain = document.getElementsByTagName('main')[0].getBoundingClientRect(),
            		x,
@@ -22,15 +31,15 @@ var interaction = function(document, window){
            		xScroll,
            		yScroll;
 
-			// grab html page coords
+			// Grab html page coords
 			x = e.center.x + document.body.scrollLeft + document.documentElement.scrollLeft;
 			y = e.center.y + document.body.scrollTop + document.documentElement.scrollTop;
 
-			// make them relative to the canvas only
+			// Make them relative to the canvas only
 			x -= GameJam.canvasa.offsetLeft;
 			y -= GameJam.canvasa.offsetTop;
 
-			// return tile x,y that we dragged
+			// Return tile x,y that we dragged
 			var cell = [
 				Math.floor(x/(boundings.width / GameJam.worldWidth)),
 				Math.floor(y/(boundings.height / GameJam.worldHeight))
@@ -103,63 +112,30 @@ var interaction = function(document, window){
 	            	break;
 	        }
 		});
-		
-		// Main menu play button
-		var mcPlay = new Hammer(document.getElementById('play'));
-		mcPlay.on("tap", function(e){
 
-			// Create level tiles
-			var levelHtml = '<ul>',
-				counter = 1;
-			for (var i in GameJam.levels) {
-				levelHtml += '<li class="level" id="' + i + '">' + counter +'<div class="bronze"></div><div class="silver"></div><div class="gold"></div></li>';
-				counter++;
-			}
-			levelHtml += '</ul>';
-
-			document.getElementById('level-selection').innerHTML = '<button id="back-main-menu">Back</button>' + levelHtml;
-			document.getElementById('level-selection').className = 'visible';
-			document.getElementById('main-menu').className = 'hidden';
-
-			// Back to main menu button
-			var mcBackMain = new Hammer(document.getElementById('back-main-menu'));
-			mcBackMain.on("tap", function(e){
-				document.getElementById('main-menu').className = 'visible';
-				document.getElementById('level-selection').className = 'hidden';
-			});
-		});
-
-		// Level selection buttons
-		var selectLevel = new Hammer(document.getElementById('level-selection'));
-		selectLevel.on("tap", function(e){
-
-			if (e.target.className === 'level') {
-				GameJam.currentLevel = e.target.id;
-
-				GameJam.createWorld();
-
-				// Create obstacle icons
-				var iconsHtml = '',
-					counter = 1;
-				for (var i in GameJam.levels[GameJam.currentLevel].items) {
-					iconsHtml += '<li class="obstacle" id="' + i + '">a</li>';
-					counter++;
-				}
-
-				document.getElementById('obstacles').innerHTML = iconsHtml;
-
-				document.getElementsByTagName('main')[0].className = 'visible';
-				document.getElementById('start-game').className = 'visible';
-			}
-		});
-
-		// Free the mouse ...
+		/** Free the mouse ... */
 		var mcStart = new Hammer(document.getElementById('start-game'));
-		mcStart.on("tap", function(e){
+		mcStart.on('tap', function(e){
+			if (e.target.className.match(/disabled/g)) {
+				return false;
+			}
+
 			core.StartGame();
 		});
 
-		// Reset margin on resize
+		/** Expand/minimize the item list */
+		var mcSlider = new Hammer(document.getElementById('slider'));
+		mcSlider.on('tap', function(e){
+			if (e.target.className.match(/minimized/g)) {
+				e.target.className = 'show';
+				document.getElementById('obstacles').className = 'show';
+			} else{
+				e.target.className = 'show minimized';
+				document.getElementById('obstacles').className = 'show minimized';
+			}
+		});
+
+		/** Reset margin on resize */
 		window.onresize = function(e){
 		    for (var i=0; i < canvas.length; i++) {
 		    	canvas[i].style.marginLeft = '0px';
@@ -168,8 +144,81 @@ var interaction = function(document, window){
 		};
 	}
 
+
+	/**
+	 * Register general events
+	 */
+	function generalEvents(){
+		/** Elements that change the view */
+		var viewList = document.querySelectorAll('.view');
+		for (var i=0; i<viewList.length; i++) {
+			var mcView = new Hammer(viewList[i]);
+
+			mcView.on('tap', function(e){
+				var newView = e.target.getAttribute('data-view');
+				core.ChangeView(newView);
+			});
+		}
+
+		/** Checkboxes */
+		var checkboxList = document.querySelectorAll('.checkbox');
+		for (var i=0; i<checkboxList.length; i++) {
+			var mcCheckbox = new Hammer(checkboxList[i]);
+
+			mcCheckbox.on('tap', function(e){
+				var checked = e.target.getAttribute('data-checked');
+				if (checked === 'true') {
+					e.target.className = 'checkbox';
+					e.target.setAttribute('data-checked', 'false');
+				} else{
+					e.target.className = 'checkbox checked';
+					e.target.setAttribute('data-checked', 'true');
+				}
+			});
+		}
+
+		/** Level selection buttons */
+		var levelList = document.querySelectorAll('.level.unlocked');
+		for (var i=0; i<levelList.length; i++) {
+			var mcLevel = new Hammer(levelList[i]);
+
+			mcLevel.on('tap', function(e){
+				GameJam.currentLevel = e.target.parentElement.id;
+				core.InitGame();
+				GameJam.createWorld();
+
+				// Create obstacle icons
+				var iconsHtml = '',
+					counter = 1;
+				for (var i in GameJam.levels[GameJam.currentLevel].items) {
+					var item = GameJam.levels[GameJam.currentLevel].items[i];
+					iconsHtml += '<li class="obstacle" data-icon="' + item.id + '">' +
+									'<div class="size">' + item.width/32 + 'x' + item.height/32 + '</div>' +
+									'<div class="icon"></div>' +
+									'<div class="count">' + item.count + '</div>' +
+								 '</li>';
+					counter++;
+				}
+
+				document.getElementById('obstacles-list').innerHTML = iconsHtml;
+
+				requestTimeout(function(){
+					document.getElementById('obstacles').className = 'show';
+					document.getElementById('start-button-wrapper').className = 'show';
+					document.getElementById('slider').className = 'show';
+				}, 300);
+				
+			});
+		}
+	}
+
+
+	/**
+	 * Return public functions
+	 */
 	return {
-		Init: init
+		GameEvents: gameEvents,
+		GeneralEvents: generalEvents
 	}
 
 }(document, window);

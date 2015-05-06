@@ -1,60 +1,74 @@
 window.GameJam.levels = {
 	level1: {
 		name: 'Brot',
-		map: [[0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-			  [0, 1, 1, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-			  [0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1, 1, 0, 0],
-			  [0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0],
-			  [0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 1, 0, 0],
-			  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0],
-			  [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1],
-			  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0],
-			  [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0],
-			  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0],
-			  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0],
-			  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0],
-			  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1],
-			  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-			  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-			  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]],
-		medals: {
-			bronze: {
-				time: 10,
-				unlocked: false
-			},
-			silver: {
-				time: 15,
-				unlocked: false
-			},
-			gold: {
-				time: 20,
-				unlocked: false
-			}
-		},
+		map: [[20, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 22],
+			  [23, 25, 25, 25, 0, 0, 25, 0, 0, 0, 0, 0, 0, 0, 0, 23],
+			  [23, 0, 0, 0, 0, 0, 25, 0, 25, 25, 25, 25, 25, 25, 0, 23],
+			  [23, 0, 0, 0, 0, 0, 25, 0, 0, 0, 0, 0, 0, 0, 0, 23],
+			  [23, 0, 0, 0, 0, 0, 25, 25, 25, 25, 25, 0, 0, 25, 0, 23],
+			  [23, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 25, 0, 23],
+			  [24, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 25, 0, 24],
+			  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 25, 0, 0],
+			  [22, 0, 0, 0, 0, 0, 25, 0, 0, 0, 0, 0, 0, 25, 0, 22],
+			  [23, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 25, 0, 23],
+			  [23, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 25, 0, 23],
+			  [23, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 25, 0, 23],
+			  [23, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 25, 23],
+			  [23, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 23],
+			  [23, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 23],
+			  [20, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 24]],
+		time: 25,
+		stars: [10, 15, 20],
+		unlocked: true,
 		items: [
 			{
-				pos: [32, 64],
+				id: 1,
+				count: 3,
 				width: 32,
 				height: 32,
+				pos: [32, 128],
 				sprite: new Sprite('img/animatedTiles.png', [0, 32], [32, 32], 8, [0, 1, 2, 3, 4, 5], 'horizontal', false, false) // url, pos, size, speed, frames, dir, once, inProgress
 			}, 
+			// {
+			// 	id: 2,
+			// 	pos: [32, 128],
+			// 	width: 32,
+			// 	height: 32,
+			// 	sprite: new Sprite('img/animatedTiles.png', [0, 32], [32, 32], 8, [0, 1, 2, 3, 4, 5], 'horizontal', false, false) // url, pos, size, speed, frames, dir, once, inProgress
+			// },
 			{
-				pos: [32, 128],
-				width: 32,
-				height: 32,
-				sprite: new Sprite('img/animatedTiles.png', [0, 32], [32, 32], 8, [0, 1, 2, 3, 4, 5], 'horizontal', false, false) // url, pos, size, speed, frames, dir, once, inProgress
-			},
-			{
-				pos: [32, 192],
+				id: 2,
+				count: 1,
 				width: 32,
 				height: 64,
+				pos: [32, 64],
 				sprite: new Sprite('img/animatedTiles.png', [0, 0], [32, 64], 8, [0, 1, 2, 3, 4, 5], 'horizontal', false, false) // url, pos, size, speed, frames, dir, once, inProgress
+			},
+			{
+				id: 3,
+				count: 1,
+				width: 64,
+				height: 32,
+				pos: [32, 192],
+				sprite: new Sprite('img/animatedTiles.png', [0, 32], [64, 32], 8, [0, 1, 2, 3, 4, 5], 'horizontal', false, false) // url, pos, size, speed, frames, dir, once, inProgress
 			}
 		]
 	},
-	level2: [],
-	level3: [],
-	level4: [],
+	level2: {
+		time: 17,
+		stars: [10, 15, 20],
+		unlocked: true
+	},
+	level3: {
+		time: 13,
+		stars: [10, 15, 20],
+		unlocked: true
+	},
+	level4: {
+		time: 7,
+		stars: [10, 15, 20],
+		unlocked: true
+	},
 	level5: [],
 	level6: [],
 	level7: [],

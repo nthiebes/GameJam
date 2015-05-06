@@ -1,0 +1,213 @@
+/* Effect: 3D flip horizontal */
+.window {
+    @include backface-visibility(hidden);
+    @include perspective(1300px);
+    position: absolute;
+    visibility: hidden;
+    z-index: 1;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    top: 20px;
+    min-width: 300px;
+    min-height: 290px;
+
+    &.show {
+        visibility: visible;
+        z-index: 10;
+
+        .content {
+            @include transform(rotateY(0deg));
+            opacity: 1;
+        }
+    }
+
+    &.hide {
+        overflow: hidden;
+    }
+
+    .content {
+        @include transform(rotateY(-70deg));
+        @include transform-style(preserve-3d);
+        @include transition(all 0.3s);
+        background: url("../img/window-bg.jpg") repeat scroll 0 0 #171512;
+        background-size: 97px 97px;
+        bottom: 15px;
+        left: 10px;
+        opacity: 0;
+        position: absolute;
+        right: 10px;
+        text-align: left;
+        top: 10px;
+    }
+
+    .inner-content {
+        overflow-x: hidden;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch; /* Enable momentum scrolling on iOS */
+        bottom: 15px;
+        left: 25px;
+        padding: 20px 0px;
+        position: absolute;
+        right: 25px;
+        top: 15px;
+    }
+
+    .frame {
+        position: absolute;
+        pointer-events: none;
+
+        &.window-top-left {
+            background: url("../img/window.png") no-repeat scroll 0 -50px transparent;
+            background-size: 328px 104px;
+            height: 36px;
+            left: -2px;
+            top: -2px;
+            width: 37px;
+        }
+
+        &.window-top-center {
+            background: url("../img/window.png") repeat-x scroll 0 -1px transparent;
+            background-size: 328px 104px;
+            height: 26px;
+            left: 35px;
+            right: 27px;
+            top: -1px;
+        }
+
+        &.window-top-right {
+            background: url("../img/window.png") no-repeat scroll -40px -50px transparent;
+            background-size: 328px 104px;
+            height: 28px;
+            right: -2px;
+            top: -2px;
+            width: 29px;
+        }
+
+        &.window-left {
+            background: url("../img/window-vert.png") repeat-y scroll -1px 0 transparent;
+            background-size: 52px 265px;
+            bottom: 53px;
+            left: -1px;
+            top: 34px;
+            width: 22px;
+        }
+
+        &.window-right {
+            background: url("../img/window-vert.png") repeat-y scroll -21px 0 transparent;
+            background-size: 52px 265px;
+            bottom: 30px;
+            right: -1px;
+            top: 26px;
+            width: 30px;
+        }
+
+        &.window-bottom-left {
+            background: url("../img/window.png") no-repeat scroll -75px -51px transparent;
+            background-size: 328px 104px;
+            bottom: -2px;
+            height: 53px;
+            left: -2px;
+            width: 28px;
+        }
+
+        &.window-bottom-center {
+            background: url("../img/window.png") repeat-x scroll 0 -26px transparent;
+            background-size: 328px 104px;
+            bottom: -1px;
+            height: 21px;
+            left: 26px;
+            right: 29px;
+        }
+
+        &.window-bottom-right {
+            background: url("../img/window.png") no-repeat scroll -106px -50px transparent;
+            background-size: 328px 104px;
+            bottom: -2px;
+            height: 32px;
+            right: -2px;
+            width: 31px;
+        }
+    }
+
+    h1 {
+        background: url("../img/ui.png") no-repeat scroll 0 0 transparent;
+        background-size: $size-ui;
+        color: #ffdfa8;
+        font-size: 16px;
+        height: 54px;
+        line-height: 40px;
+        position: absolute;
+        text-shadow: 1px 0 1px rgba(0, 0, 0, 0.35), 0 0 4px rgba(0, 0, 0, 0.2);
+        text-transform: uppercase;
+        width: 302px;
+        top: -21px;
+        margin-left: -151px;
+        left: 50%;
+        text-align: center;
+    }
+
+    .close {
+        background: url("../img/ui.png") no-repeat scroll 0 -60px transparent;
+        background-size: $size-ui;
+        height: 18px;
+        left: 50%;
+        margin-left: 88px;
+        position: absolute;
+        top: -8px;
+        width: 18px;
+        cursor: pointer;
+
+        &:active {
+            background-position: -20px -60px;
+        }
+    }
+
+    .buttons {
+        position: absolute;
+        bottom: -13px;
+        left: 50%;
+        @include transform(translateX(-50%));
+    }
+
+    .button {
+        cursor: pointer;
+        height: 40px;
+        width: 40px;
+        display: inline-block;
+    }
+}
+
+.back-btn {
+    background: url("../img/ui.png") no-repeat scroll -130px -199px transparent;
+    background-size: $size-ui;
+    
+    &:active {
+        background-position: -175px -199px;
+    }
+}
+
+.replay-btn {
+    background: url("../img/ui.png") no-repeat scroll -130px -159px transparent;
+    background-size: $size-ui;
+    
+    &:active {
+        background-position: -175px -159px;
+    }
+}
+
+@media (min-width: 520px) {
+    .main .window {
+        margin-left: -260px;
+        left: 50%;
+        width: 520px;
+    }
+}
+
+@media (min-height: 500px) {
+    .main .window {
+        top: 50%;
+        height: 480px;
+        margin-top: -230px;
+    }
+}

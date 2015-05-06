@@ -7,38 +7,139 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
 
 	<!--link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon"-->
-	<link href='http://fonts.googleapis.com/css?family=Press+Start+2P' rel='stylesheet' type='text/css'>
 	<link rel="stylesheet" href="css/style.css" type="text/css">
+
+	<link rel="manifest" href="manifest.json">
+	<meta name="mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="GameJam">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+	<link rel="apple-touch-icon" href="models/site-templates/images/touch-icon-iphone.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="models/site-templates/images/touch-icon-ipad.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="models/site-templates/images/touch-icon-iphone-retina.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="models/site-templates/images/touch-icon-ipad-retina.png">
+    <link rel="icon" sizes="192x192" href="icon.png">
 </head>
 
-<body>
-	<div id="loading">
-		<div id="loading-bar">
-			<span class="left"></span><span class="center"></span><span class="right"></span>
-			<div id="loaded-outer">
-				<div id="loaded-inner"></div>
-			</div>
-			<div id="percentage">0%</div>
-		</div>
+<body class="view-loading" ontouchstart="">
+
+	<div id="fog">
+		<div id="fog-inner"></div>
 	</div>
 
-	<section id="main-menu">
-		<ul class="menu">
-			<li id="play">Play</li>
-			<li id="help">Help</li>
-			<li id="options">Options</li>
-			<li id="credits">Credits</li>
-		</ul>
-	</section>
+	<main class="main">
+		<section id="loading-wrapper">
+			<div id="loading-outer">
+				<span class="outer-left"></span><span class="outer-center"></span><span class="outer-right"></span>
+				<div id="loading-inner">
+					<span class="inner-left"></span><span class="inner-center"></span><span class="inner-right"></span>
+				</div>
+				<div class="outer-text">Loading</div>
+			</div>
+		</section>
 
-	<section id="level-selection"></section>
+		<section class="window" id="menu">
+			<div class="content">
+				<div class="menu-top"></div>
+				<ul class="menu">
+					<li class="view" id="play-btn" data-view="levels">Play</li>
+					<li class="view" id="help-btn" data-view="help">Help</li>
+					<li class="view" id="options-btn" data-view="options">Options</li>
+					<li class="view" id="credits-btn" data-view="credits">Credits</li>
+				</ul>
+				<div class="menu-bottom"></div>
+			</div>
+		</section>
 
-	<main>
-		<ul id="obstacles"></ul>
+		<section class="window hide" id="levels">
+			<div class="content">
+				<div class="frame window-top-left"></div><div class="frame window-top-center"></div><div class="frame window-top-right"></div>
+				<div class="frame window-left"></div><div class="frame window-right"></div>
+				<div class="frame window-bottom-left"></div><div class="frame window-bottom-center"></div><div class="frame window-bottom-right"></div>
+
+				<div class="inner-content"></div>
+
+				<h1>Levels</h1>
+				<div class="close view" data-view="menu"></div>
+				<div class="buttons">
+					<div class="button view back-btn" data-view="menu"></div>
+				</div>
+			</div>
+		</section>
+
+		<section class="window hide" id="help">
+			<div class="content">
+				<div class="frame window-top-left"></div><div class="frame window-top-center"></div><div class="frame window-top-right"></div>
+				<div class="frame window-left"></div><div class="frame window-right"></div>
+				<div class="frame window-bottom-left"></div><div class="frame window-bottom-center"></div><div class="frame window-bottom-right"></div>
+
+				<div class="inner-content">
+					
+				</div>
+
+				<h1>Help</h1>
+				<div class="close view" data-view="menu"></div>
+				<div class="buttons">
+					<div class="button view back-btn" data-view="menu"></div>
+				</div>
+			</div>
+		</section>
+
+		<section class="window hide" id="options">
+			<div class="content">
+				<div class="frame window-top-left"></div><div class="frame window-top-center"></div><div class="frame window-top-right"></div>
+				<div class="frame window-left"></div><div class="frame window-right"></div>
+				<div class="frame window-bottom-left"></div><div class="frame window-bottom-center"></div><div class="frame window-bottom-right"></div>
+
+				<div class="inner-content">
+					<label>Music</label><span class="checkbox checked" data-checked="true"></span><br>
+					<label>Sound</label><span class="checkbox checked" data-checked="true"></span><br>
+				</div>
+
+				<h1>Options</h1>
+				<div class="close view" data-view="menu"></div>
+				<div class="buttons">
+					<div class="button view back-btn" data-view="menu"></div>
+				</div>
+			</div>
+		</section>
+
+		<section class="window hide" id="credits">
+			<div class="content">
+				<div class="frame window-top-left"></div><div class="frame window-top-center"></div><div class="frame window-top-right"></div>
+				<div class="frame window-left"></div><div class="frame window-right"></div>
+				<div class="frame window-bottom-left"></div><div class="frame window-bottom-center"></div><div class="frame window-bottom-right"></div>
+
+				<div class="inner-content">
+					<h2>The team</h2>
+					<p></p>
+				</div>
+
+				<h1>Credits</h1>
+				<div class="close view" data-view="menu"></div>
+				<div class="buttons">
+					<div class="button view back-btn" data-view="menu"></div>
+				</div>
+			</div>
+		</section>
+
+		<div id="obstacles">
+			<div class="frame window-top-center"></div><div class="frame window-top-right"></div>
+			<div class="frame window-right"></div>
+			<div class="frame window-bottom-center"></div><div class="frame window-bottom-right"></div>
+			<ul id="obstacles-list"></ul>
+		</div>
+
 		<div id="timer"></div>
-	</main>
 
-	<button id="start-game">Start</button>
+		<div id="start-button-wrapper">
+			<div class="button" id="start-game">Start</div>
+			<!-- <div class="button disabled" id="start-game">Done!</div> -->
+		</div>
+		
+		<div id="slider"></div>
+	</main>
 
 	<script type="text/javascript" src="js/dest/compiled.js"></script>
 </body>

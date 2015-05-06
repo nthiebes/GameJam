@@ -1,0 +1,41 @@
+#fog {
+    @include transition(opacity 0.3s 0.3s);
+    opacity: 0;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    overflow: hidden;
+}
+
+#fog-inner {
+    background: url("../img/fog.png") repeat-x scroll 0 0 transparent;
+    background-size: cover;
+    bottom: 0;
+    position: absolute;
+    top: 0;
+    width: 200%;
+}
+
+@include keyframe(fog) {
+    0% {
+        @include transform(translate3d(0, 0, 0));
+    }
+    100% {
+        @include transform(translate3d(-50%, 0, 0));
+    }
+}
+
+@media (min-height: 481px) {
+    #fog {
+        &.show {
+            @include transition(opacity 4s);
+            opacity: 0.5;
+
+            #fog-inner {
+                @include animation(fog 100s linear infinite alternate);
+            }
+        }
+    }
+}

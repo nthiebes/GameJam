@@ -1,28 +1,48 @@
-//////////////////////////////////////////////
-// Main part of the game   					//
-//////////////////////////////////////////////
+/**
+ * The heart of the game
+ */
 var core = function(document, window){
 
+	/**
+	 * General initialization
+	 */
 	function init(){
 		window.onload = function(){
 			// Initialize game if all ressources are loaded
 			GameJam.resources.load([
 				'img/animatedTiles.png',
-				'img/tileset.png',
 				'img/walk.png',
 				'img/spritesheet.png'
 			]);
-			GameJam.resources.onReady(core.InitGame);
-		};   
+			GameJam.resources.onReady(initMenu);
+		};
+
+		getLevels();
    	}
 
 
-   	//////////////////////////////////////////////
-	// Game initialization    					//
-	//////////////////////////////////////////////
+   	/**
+   	 * Initialize the main menu
+   	 */
+   	function initMenu(){
+   		loading(100);
+   		console.log('-- Loading done');
+
+   		requestTimeout(function(){
+			changeView('menu');
+			document.getElementById('fog').className = 'show';
+			console.log('-- Menu initialized');
+		}, 700);
+
+		interaction.GeneralEvents();
+		console.log('-- Events initialized');
+   	}
+
+
+	/**
+	 * Game initialization
+	 */
    	function initGame(){
-		console.log('Resources loaded.');
-		
 		GameJam.lastTime = Date.now();
 		
 		// Static canvas
@@ -54,55 +74,90 @@ var core = function(document, window){
 			sprite: new Sprite('img/walk.png', [0, 192], [32, 50], 5, [0, 1, 2, 3, 4, 5], 'horizontal', false, false) // url, pos, size, speed, frames, dir, once, inProgress
 		});
 		
-		// Register interactions (event handlers)
-		interaction.Init();
+		// Register game event handlers
+		interaction.GameEvents();
+		console.log('-- Game events initialized');
 
 		// Main game loop
 		main();
 
-		// Hide loading screen
-		GameJam.loadingPercentage = 90;
-		core.Loading();
-		window.setTimeout(function(){
-			GameJam.loadingPercentage = 100;
-            core.Loading();
-            window.setTimeout(function(){
-	            document.getElementById('loading').className = 'hidden';
-				document.getElementById('main-menu').className = 'visible';
-			}, 100);
-		}, 300);
+		// Hide menu
+		GameJam.body.className = 'in-game';
+		document.getElementById('levels').className = 'window hide';
 
-		console.log('Game initialized.');
-   	}   
+		console.log('-- Game initialized');
+   	}
 
 
-	//////////////////////////////////////////////
-	// A cross-browser requestAnimationFrame    //
-	//////////////////////////////////////////////
-	var requestAnimFrame = (function(){
-		return window.requestAnimationFrame    ||
-			window.webkitRequestAnimationFrame ||
-			window.mozRequestAnimationFrame    ||
-			window.oRequestAnimationFrame      ||
-			window.msRequestAnimationFrame     ||
-			function(callback){
-				window.setTimeout(callback, 1000 / 60);
-			};
-	})();
+   	/**
+   	 * Create level tiles
+   	 */
+   	function getLevels(){
+		var levelHtml = '<ul>',
+			counter = 1;
+		for (var level in GameJam.levels) {
+			var unlocked = GameJam.levels[level]['unlocked'],
+				time = GameJam.levels[level]['time'],
+				stars = GameJam.levels[level]['stars'],
+				star = 0;
+
+			for (var i in stars) {
+				if (time >= stars[i]) {
+					star++;
+				}
+			}
+
+			levelHtml += '<li class="level' + (unlocked ? ' unlocked' : '') + '" id="' + level + '">' +
+							(unlocked ? '<div class="counter">' + counter + '</div>' : '<div class="locked"></div>') +
+							(unlocked ? '<div class="stars star' + star + '"></div>' : '') +
+						  '</li>';
+			counter++;
+		}
+		levelHtml += '</ul>';
+
+		document.querySelectorAll('#levels .inner-content')[0].innerHTML = levelHtml;
+   	}
 
 
-	//////////////////////////////////////////////
-	// Update loading bar    					//
-	//////////////////////////////////////////////
+	/**
+	 * Update loading bar
+	 * @param {integer} percentage Loading percentage
+	 */
 	function loading(percentage){
-		GameJam.loadingPercentageElem.innerHTML = GameJam.loadingPercentage + '%';
-		GameJam.loadedInner.style.width = GameJam.loadingPercentage + '%';
+		GameJam.loadingInner.style.width = percentage + '%';
+
+		if (percentage === 100) {
+			window.setTimeout(function(){
+				GameJam.loadingWrapper.className = 'hide';
+			}, 600);
+		}
 	}
 
 
-	//////////////////////////////////////////////
-	// Main game loop   	 					//
-	//////////////////////////////////////////////
+	/**
+	 * Change the view
+	 * @param {string} newView The new view that should be shown
+	 */
+	function changeView(newView){
+		if (document.querySelectorAll('.window.show').length) {
+			GameJam.body.className = '';
+			var current = document.querySelectorAll('.window.show')[0];
+			current.className = 'window';
+
+			requestTimeout(function(){
+				current.className = 'window hide';
+			}, 300);
+		}
+		requestTimeout(function(){
+			GameJam.body.className = 'view-' + newView;
+			document.querySelectorAll('#' + newView)[0].className = 'window show';
+		}, 300);
+	}
+
+
+   	/**
+   	 * Main game loop
+   	 */
    	function main(){
 		var now = Date.now();
 		var dt = (now - GameJam.lastTime) / 1000.0;
@@ -118,9 +173,10 @@ var core = function(document, window){
 	}
 
 
-	//////////////////////////////////////////////
-	// Update sprite positions 					//
-	//////////////////////////////////////////////
+	/**
+	 * Update sprite positions
+	 * @param {integer} dt The time that has changed since the last update
+	 */
 	function update(dt){
 		GameJam.gameTime += dt;
 
@@ -174,16 +230,19 @@ var core = function(document, window){
 			}
 
 			// Update timer
-			GameJam.timer.innerHTML = Math.round(GameJam.gameTime) + 's';
+			if (GameJam.gameStarted && !GameJam.gameEnded) {
+				GameJam.timer.innerHTML = Math.round(GameJam.gameTime) + 's';
+			}
 		}
 
 		updateEntities(dt);
 	}
 
 
-	//////////////////////////////////////////////
-	// Update entities   	 					//
-	//////////////////////////////////////////////
+	/**
+	 * Update entities
+	 * @param {integer} dt The time that has changed since the last update
+	 */
 	function updateEntities(dt){
 	    // Update the prisoner sprite animation
 	    if (!GameJam.panning) {
@@ -198,9 +257,9 @@ var core = function(document, window){
 	}
 
 
-	//////////////////////////////////////////////
-	// Draw everything    						//
-	//////////////////////////////////////////////
+	/**
+	 * Draw everything
+	 */
 	function render(){
 		GameJam.canvasa.width = GameJam.canvasa.width;
 	    renderEntities(GameJam.prisoner);
@@ -208,15 +267,24 @@ var core = function(document, window){
 	}
 
 
-	//////////////////////////////////////////////
-	// Render entities    						//
-	//////////////////////////////////////////////
+	/**
+	 * Render entities
+	 * @param {array} list A list of entities
+	 */
 	function renderEntities(list){
+		if (!list.pos) {
+			//return false;
+		}
 		for(var i=0; i<list.length; i++) {
 			renderEntity(list[i]);
 		}    
 	}
 
+
+	/**
+	 * Render a single entity
+	 * @param {object} entity An object in the game
+	 */
 	function renderEntity(entity){
 		GameJam.ctxa.save();
 		GameJam.ctxa.translate(entity.pos[0], entity.pos[1]);
@@ -225,9 +293,9 @@ var core = function(document, window){
 	}
    	
 
-   	//////////////////////////////////////////////
-	// Start the second stage of the game		//
-	//////////////////////////////////////////////
+   	/**
+   	 * Start the second stage of the game
+   	 */
    	function startGame(){
 		// Put the items to the world map
 		var list = GameJam.items;
@@ -243,34 +311,82 @@ var core = function(document, window){
 
 		// Reset game time
 		GameJam.gameTime = 0;
-		GameJam.timer.className = 'visible';
-		document.getElementById('start-game').className = '';
+		GameJam.timer.className = 'show';
+		//document.getElementsByTagName('main')[0].className = 'show';
+		document.getElementById('obstacles').className = 'hide';
+		document.getElementById('start-button-wrapper').className = 'hide';
 
 		// Game has started
 		GameJam.gameStarted = true;
 
 		// Create the prisoner path
 		GameJam.movePrisoner();
+
+		console.log('-- Game started');
 	}
 
 
-	//////////////////////////////////////////////
-	// End of the level    						//
-	//////////////////////////////////////////////
+	/**
+	 * End of the level
+	 */
 	function endLevel(){
-		console.log('Level done!');
 		GameJam.gameEnded = true;
 		GameJam.paused = true;
+		console.log('-- Level done!');
 	}
+
+
+	/**
+	 * A cross-browser requestAnimationFrame
+	 */
+	var requestAnimFrame = (function(){
+		return window.requestAnimationFrame    ||
+			window.webkitRequestAnimationFrame ||
+			window.mozRequestAnimationFrame    ||
+			window.oRequestAnimationFrame      ||
+			window.msRequestAnimationFrame     ||
+			function(callback){
+				window.setTimeout(callback, 1000 / 60);
+			};
+	})();
+
+
+	/**
+	 * Behaves the same as setTimeout except uses requestAnimationFrame() where possible for better performance
+	 * @param {function} 	fn 		The callback function
+	 * @param {int} 		delay 	The delay in milliseconds
+	 */
+	window.requestTimeout = function(fn, delay){
+	    if( !window.requestAnimationFrame       && 
+	        !window.webkitRequestAnimationFrame && 
+	        !(window.mozRequestAnimationFrame && window.mozCancelRequestAnimationFrame) && // Firefox 5 ships without cancel support
+	        !window.oRequestAnimationFrame      && 
+	        !window.msRequestAnimationFrame)
+	            return window.setTimeout(fn, delay);
+	            
+	    var start = new Date().getTime(),
+	        handle = new Object();
+	        
+	    function loop(){
+	        var current = new Date().getTime(),
+	            delta = current - start;
+	            
+	        delta >= delay ? fn.call() : handle.value = requestAnimFrame(loop);
+	    };
+	    
+	    handle.value = requestAnimFrame(loop);
+	    return handle;
+	};
 	 
 
-	//////////////////////////////////////////////
-	// Public functions    						//
-	//////////////////////////////////////////////
+	/**
+	 * Return public function
+	 */
 	return {
 		Init: init,
 		InitGame: initGame,
 		StartGame: startGame,
+		ChangeView: changeView,
 		Loading: loading
 	}
 

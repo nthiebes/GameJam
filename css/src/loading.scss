@@ -1,0 +1,111 @@
+#loading-wrapper {
+    background-color: #171717;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+
+    &.hide {
+        @include transition(opacity 0.7s ease);
+        opacity: 0;
+    }
+}
+
+#loading-outer {
+    height: 34px;
+    left: 10%;
+    margin-top: -17px;
+    padding: 0 14px 0 13px;
+    position: absolute;
+    right: 10%;
+    top: 50%;
+
+    span {
+        position: absolute;
+        height: 34px;
+    }
+
+    .outer-left {
+        background: url("../img/loading.png") no-repeat scroll 0 0 transparent;
+        background-size: 292px 113px;
+        width: 35px;
+        left: 0;
+    }
+
+    .outer-center {
+        background: url("../img/loading.png") repeat scroll 0 -40px transparent;
+        background-size: 292px 113px;
+        left: 35px;
+        right: 38px;
+    }
+
+    .outer-right {
+        background: url("../img/loading.png") no-repeat scroll -40px 0 transparent;
+        background-size: 292px 113px;
+        right: 0;
+        width: 38px;
+    }
+
+    .outer-text {
+        font-family: Verdana,Geneva,sans-serif;
+        font-size: 10px;
+        font-weight: bold;
+        position: absolute;
+        text-align: center;
+        text-transform: uppercase;
+        top: 9px;
+        left: 0;
+        right: 0;
+        color: #ccb099;
+    }
+}
+
+#loading-inner {
+    height: 16px;
+    position: relative;
+    top: 9px;
+    width: 0%;
+    min-width: 77px;
+    @include transition(width 0.5s ease);
+
+    span {
+        position: absolute;
+        height: 16px;
+    }
+
+    .inner-left {
+        background: url("../img/loading.png") no-repeat scroll 0 -78px transparent;
+        background-size: 292px 113px;
+        width: 39px;
+    }
+
+    .inner-center {
+        background: url("../img/loading.png") repeat scroll 0 -97px transparent;
+        background-size: 292px 113px;
+        left: 39px;
+        right: 38px;
+    }
+
+    .inner-right {
+        background: url("../img/loading.png") no-repeat scroll -41px -78px transparent;
+        background-size: 292px 113px;
+        right: 0;
+        width: 38px;
+    }
+}
+
+.view-loading {
+    .window {
+        min-height: auto;
+        height: 0;
+    }
+
+    #menu {
+        height: 0;
+    }
+
+    .menu {
+        display: none;
+    }
+}

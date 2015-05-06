@@ -1,0 +1,260 @@
+canvas {
+    display: block;
+    position: absolute;
+    height: 100%;
+    width: auto;
+    min-height: 512px;
+    min-width: 512px;
+    // max-height: 1024px;
+    // max-width: 1024px;
+}
+
+@media screen and (min-aspect-ratio: 1/1) {
+	canvas {
+		width: 100%;
+    	height: auto;
+	}
+}
+
+#start-button-wrapper {
+    bottom: 0;
+    @include transform(translateX(-140px));
+    left: 0;
+    position: absolute;
+    width: 0;
+    z-index: 2;
+    width: 140px;
+
+    &.show {
+        @include animation(slideIn 0.3s forwards ease);
+    }
+
+    &.hide {
+        @include animation(slideOut 0.3s forwards ease);
+    }
+}
+
+#start-game {
+	bottom: 47px;
+    left: 6px;
+    position: absolute;
+    background: url("../img/ui.png") no-repeat scroll 0 -249px transparent;
+    background-size: $size-ui;
+    cursor: pointer;
+    height: 35px;
+    color: $button;
+    width: 116px;
+    font-weight: bold;
+    text-transform: uppercase;
+    line-height: 34px;
+    text-align: center;
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.45), 0 0 2px rgba(0, 0, 0, 0.35);
+
+    &:active {
+        background-position: 0 -289px;
+        color: $button-active;
+    }
+
+    &.disabled, &.disabled:active {
+        background-position: 0 -249px;
+        opacity: 0.5;
+        cursor: default;
+        color: $button;
+    }
+}
+
+#slider {
+    background: url("../img/ui.png") no-repeat scroll -175px -240px transparent;
+    background-size: $size-ui;
+    @include transform(translateX(-140px));
+    height: 42px;
+    position: absolute;
+    left: 114px;
+    top: 50%;
+    margin-top: -21px;
+    width: 42px;
+    z-index: 3;
+    cursor: pointer;
+    display: none;
+
+    &:active {
+        background-position: -130px -240px;
+    }
+
+    &.show {
+        display: block;
+        @include animation(slideIn 0.3s forwards ease);
+    }
+
+    &.hide {
+        @include animation(slideOut 0.3s forwards ease);
+    }
+
+    &.minimized {
+        background-position: -130px -283px;
+
+        &:active {
+            background-position: -175px -283px;
+        }
+    }
+}
+
+#timer {
+    position: absolute;
+    z-index: 1;
+    left: 50%;
+    width: 100px;
+    text-align: center;
+    margin-left: -50px;
+    display: none;
+    top: 10px;
+
+    &.show {
+        display: block;
+    }
+}
+
+#obstacles {
+    background: url("../img/window-bg.jpg") repeat scroll 0 0 #171512;
+    background-size: 97px 97px;
+    bottom: 30px;
+    @include transform(translateX(-140px));
+    left: 0;
+    position: absolute;
+    top: 30px;
+    z-index: 1;
+    width: 140px;
+
+	&.show {
+        @include animation(slideIn 0.3s forwards ease);
+	}
+
+    &.hide {
+        @include animation(slideOut 0.3s forwards ease);
+    }
+
+    .frame {
+        position: absolute;
+        pointer-events: none;
+
+        &.window-top-center {
+            background: url("../img/window.png") repeat-x scroll 0 -1px transparent;
+            background-size: 328px 104px;
+            height: 26px;
+            left: 0;
+            right: 27px;
+            top: -1px;
+        }
+
+        &.window-top-right {
+            background: url("../img/window.png") no-repeat scroll -40px -50px transparent;
+            background-size: 328px 104px;
+            height: 28px;
+            right: -2px;
+            top: -2px;
+            width: 29px;
+        }
+
+        &.window-right {
+            background: url("../img/window-vert.png") repeat-y scroll -21px 0 transparent;
+            background-size: 52px 265px;
+            bottom: 30px;
+            right: -1px;
+            top: 26px;
+            width: 30px;
+        }
+
+        &.window-bottom-center {
+            background: url("../img/window.png") repeat-x scroll 0 -26px transparent;
+            background-size: 328px 104px;
+            bottom: -1px;
+            height: 21px;
+            left: 0;
+            right: 29px;
+        }
+
+        &.window-bottom-right {
+            background: url("../img/window.png") no-repeat scroll -106px -50px transparent;
+            background-size: 328px 104px;
+            bottom: -2px;
+            height: 32px;
+            right: -2px;
+            width: 31px;
+        }
+    }
+}
+
+#obstacles-list {
+    overflow: hidden;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch; /* Enable momentum scrolling on iOS */
+    bottom: 52px;
+    left: 10px;
+    position: absolute;
+    right: 20px;
+    top: 16px;
+    padding-top: 10px;
+    text-align: center;
+
+    li {
+        background: url("../img/ui.png") no-repeat scroll -216px -182px transparent;
+        background-size: $size-ui;
+        cursor: pointer;
+        display: inline-block;
+        font-weight: bold;
+        height: 126px;
+        margin-bottom: 10px;
+        position: relative;
+        text-align: center;
+        width: 92px;
+
+        div {
+            position: absolute;
+        }
+    }
+
+    .size {
+        text-shadow: 1px 0 0 #605043, 0 0 3px rgba(0,0,0,0.5);
+        color: #b0937c;
+        left: 0;
+        right: 0;
+        top: 8px;
+    }
+
+    .icon {
+        background: url("../img/spritesheet.png") no-repeat scroll 0 0 transparent;
+        height: 32px;
+        left: 31px;
+        position: absolute;
+        text-align: center;
+        width: 32px;
+        top: 44px;
+    }
+
+    .count {
+        text-shadow: 1px 0 1px rgba(0,0,0,0.4);
+        text-transform: uppercase;
+        color: #a47239;
+        left: 0;
+        right: 0;
+        bottom: 12px;
+    }
+}
+
+@include keyframe(slideIn) {
+    0%  {
+        @include transform( translateX(-140px) );
+    }
+    100% {
+        @include transform( translateX(0) );
+    }
+}
+
+@include keyframe(slideOut) {
+    0%  {
+        @include transform( translateX(0) );
+    }
+    100% {
+        @include transform( translateX(-140px) );
+    }
+}

@@ -1,52 +1,56 @@
+/**
+ * Global game variables
+ */
 window.GameJam = {
-    // the game's canvas element (animated)
+    // The game canvas element (animated)
 	canvasa: null,
 
-	// the canvas 2d context
+	// The canvas 2d context
 	ctxa: null,
 
-	 // the game's canvas element (static)
+	// The game canvas element (static)
 	canvass: null,
 
-	// the canvas 2d context
+	// The canvas 2d context
 	ctxs: null,
 
-	// an image containing all sprites
+	// An image containing all sprites
 	tileset: null,
 	 
-	// the world grid: a 2d array of tiles
+	// The world grid: a 2d array of tiles
 	world: [[]],
 	 
-	// size in the world in sprite tiles
+	// Size in the world in sprite tiles
 	worldWidth: 16,
 	worldHeight: 16,
 	 
-	// size of a tile in pixels
+	// Size of a tile in pixels
 	tileWidth: 32,
 	tileHeight: 32,
 	 
-	// start and end of path
+	// Start and end of path
 	pathStart: [0, 0],
 	pathEnd: [0,0],
 	currentPath: [],
 
-	// time
+	// Time
 	gameTime: null,
 	lastTime: null,
 
-	// objects
+	// Objects
 	prisoner: [],
 	items: [],
 
-	// misc
+	// Misc
 	draggedItem: null,
 	currentLevel: '',
 	timer: document.getElementById('timer'),
 	gameStarted: false,
 	gameEnded: false,
-	loadedInner: document.getElementById('loaded-inner'),
-	loadingPercentage: 0,
-	loadingPercentageElem: document.getElementById('percentage'),
+	html: document.getElementsByTagName('html')[0],
+	body: document.getElementsByTagName('body')[0],
+	loadingWrapper: document.getElementById('loading-wrapper'),
+	loadingInner: document.getElementById('loading-inner'),
 	paused: false,
 	panning: false
 };

@@ -9,23 +9,22 @@ window.GameJam.redraw = function(){
  
 	for (var x=0; x < GameJam.worldWidth; x++){
 		for (var y=0; y < GameJam.worldHeight; y++){
-  		// choose a sprite to draw
-  		switch(GameJam.world[x][y]){
-  			case 1: 
-  			spriteNum = 1; 
-  			break;
-  			default:
-  			spriteNum = 0; 
-  			break;
-  		}
+  			// choose a sprite to draw
+	  		switch(GameJam.world[x][y]){
+	  			//case 1: 
+	  			//spriteNum = 1;
+	  			//break;
+	  			default:
+	  			spriteNum = GameJam.world[x][y];
+	  			break;
+  			}
   
   		// draw it
-  		// ctx.drawImage(img,sx,sy,swidth,sheight,x,y,width,height);
   		GameJam.ctxs.drawImage(GameJam.tileset, 
     		spriteNum*GameJam.tileWidth, 0, 
     		GameJam.tileWidth, GameJam.tileHeight,
-  	  	x*GameJam.tileWidth, y*GameJam.tileHeight,
-  		  GameJam.tileWidth, GameJam.tileHeight);
+  	  		x*GameJam.tileWidth, y*GameJam.tileHeight,
+  		  	GameJam.tileWidth, GameJam.tileHeight);
 		}
 	}
  
@@ -34,16 +33,17 @@ window.GameJam.redraw = function(){
 	for (var rp=0; rp<GameJam.currentPath.length; rp++){
 		switch(rp){
 			case 0:
-  			spriteNum = 2; // start
+  			spriteNum = 17; // start
   			break;
 			case GameJam.currentPath.length-1:
-	  		spriteNum = 3; // end
+	  		spriteNum = 18; // end
   			break;
 			default:
-  			spriteNum = 4; // path node
+  			spriteNum = 19; // path node
   			break;
 		}
- 
+ 		
+ 		// draw it
 		GameJam.ctxs.drawImage(GameJam.tileset, 
 			spriteNum*GameJam.tileWidth, 0, 
 			GameJam.tileWidth, GameJam.tileHeight,

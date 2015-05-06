@@ -1,5 +1,10 @@
-// world is a 2d array of integers (eg world[10][15] = 0)
-// pathStart and pathEnd are arrays like [5,10]
+/**
+ * Find a path to 
+ * @param  {array}	world     	World is a 2d array of integers (e.g. world[10][15] = 0)
+ * @param  {array}  pathStart	e.g. [5,10]
+ * @param  {array}  pathEnd   	e.g. [5,10]
+ * @return {array}           	this returns an array of coordinates that is empty if no path is possible
+ */
 window.GameJam.findPath = function(world, pathStart, pathEnd){
 	// shortcuts for speed
 	var	abs = Math.abs;
@@ -9,9 +14,9 @@ window.GameJam.findPath = function(world, pathStart, pathEnd){
 
 	// the world data are integers:
 	// anything higher than this number is considered blocked
-	// this is handy is you use numbered sprites, more than one
+	// this is handy if you use numbered sprites, more than one
 	// of which is walkable road, grass, mud, etc
-	var maxWalkableTileNum = 0;
+	var maxWalkableTileNum = 20;
 
 	// keep track of the world dimensions
     // Note that this A-star implementation expects the world array to be square: 

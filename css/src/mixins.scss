@@ -7,7 +7,7 @@
     	  -ms-user-select: $select;
 }
 
-@mixin transition($transition){
+@mixin transition($transition) {
 	-webkit-transition: $transition;
 	   -moz-transition: $transition;
 		-ms-transition: $transition;
@@ -15,10 +15,71 @@
 			transition: $transition;
 }
 
-@mixin transform($transform){
+@mixin transform($transform) {
 	-webkit-transform: $transform;
 	   -moz-transform: $transform;
 		-ms-transform: $transform;
 		 -o-transform: $transform;
 			transform: $transform;
+}
+
+@mixin transform-style($transform) {
+	-webkit-transform-style: $transform;
+	   -moz-transform-style: $transform;
+		-ms-transform-style: $transform;
+		 -o-transform-style: $transform;
+			transform-style: $transform;
+}
+
+@mixin box-shadow($shadow) {
+	-webkit-box-shadow: $shadow;
+	   -moz-box-shadow: $shadow;
+			box-shadow: $shadow;
+}
+
+@mixin backface-visibility($visibility) {
+	-webkit-backface-visibility: $visibility;
+	   -moz-backface-visibility: $visibility;
+			backface-visibility: $visibility;
+}
+
+@mixin perspective($perspective) {
+	-webkit-perspective: $perspective;
+	   -moz-perspective: $perspective;
+			perspective: $perspective;
+}
+
+@mixin keyframe($animation_name) {
+	@-webkit-keyframes $animation_name {
+		@content;
+	}
+	 
+	@-moz-keyframes $animation_name {
+		@content;
+	}
+	 
+	@-o-keyframes $animation_name {
+		@content;
+	}
+	 
+	@keyframes $animation_name {
+		@content;
+	}
+}
+
+@mixin animation($animation){
+	-webkit-animation: $animation;
+	   -moz-animation: $animation;
+		 -o-animation: $animation;
+			animation: $animation;
+}
+
+@mixin bg-gradient(){
+	background: #e0dbd7; /* Old browsers */
+	background: -moz-radial-gradient(center, ellipse cover, #e0dbd7 50%, #eaeaea 100%); /* FF3.6+ */
+	background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(50%,#e0dbd7), color-stop(100%,#eaeaea)); /* Chrome,Safari4+ */
+	background: -webkit-radial-gradient(center, ellipse cover, #e0dbd7 50%,#eaeaea 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-radial-gradient(center, ellipse cover, #e0dbd7 50%,#eaeaea 100%); /* Opera 12+ */
+	background: -ms-radial-gradient(center, ellipse cover, #e0dbd7 50%,#eaeaea 100%); /* IE10+ */
+	background: radial-gradient(ellipse at center, #e0dbd7 50%,#eaeaea 100%); /* W3C */
 }
