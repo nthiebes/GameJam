@@ -1,3 +1,7 @@
+/**
+ * Includes all game interactions (tap/pan events etc.)
+ * @return {object} Public functions
+ */
 var interaction = function(document, window){
 
 	/**

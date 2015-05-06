@@ -1,5 +1,6 @@
 /**
  * The heart of the game
+ * @return {object} Public functions
  */
 var core = function(document, window){
 

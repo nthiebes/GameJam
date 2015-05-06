@@ -1,4 +1,7 @@
-window.GameJam.movePrisoner = function() {
+/**
+ * Find a path through the maze
+ */
+window.GameJam.movePrisoner = function(){
 	// Create a path
 	GameJam.currentPath = [];
     GameJam.currentPath = GameJam.findPath(GameJam.world, [GameJam.prisoner[0].pos[0] / GameJam.tileWidth, GameJam.prisoner[0].pos[1] / GameJam.tileHeight], GameJam.pathEnd);

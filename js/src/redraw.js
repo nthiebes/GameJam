@@ -1,3 +1,6 @@
+/**
+ * Draw the path through the maze
+ */
 window.GameJam.redraw = function(){ 
 	console.log('Redrawing ...');
  

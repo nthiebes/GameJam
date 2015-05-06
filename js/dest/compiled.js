@@ -121,6 +121,10 @@ window.GameJam = {
 
     window.Sprite = Sprite;
 })();
+/**
+ * All levels of the game
+ * @type {Object}
+ */
 window.GameJam.levels = {
 	level1: {
 		name: 'Brot',
@@ -201,6 +205,7 @@ window.GameJam.levels = {
 };
 /**
  * The heart of the game
+ * @return {object} Public functions
  */
 var core = function(document, window){
 
@@ -941,6 +946,9 @@ window.GameJam.findPath = function(world, pathStart, pathEnd){
 	return calculatePath();
 
 };
+/**
+ * Draw the path through the maze
+ */
 window.GameJam.redraw = function(){ 
 	console.log('Redrawing ...');
  
@@ -995,6 +1003,10 @@ window.GameJam.redraw = function(){
 			GameJam.tileWidth, GameJam.tileHeight);
 	}		
 };
+/**
+ * Includes all game interactions (tap/pan events etc.)
+ * @return {object} Public functions
+ */
 var interaction = function(document, window){
 
 	/**
@@ -1219,7 +1231,10 @@ var interaction = function(document, window){
 	}
 
 }(document, window);
-window.GameJam.movePrisoner = function() {
+/**
+ * Find a path through the maze
+ */
+window.GameJam.movePrisoner = function(){
 	// Create a path
 	GameJam.currentPath = [];
     GameJam.currentPath = GameJam.findPath(GameJam.world, [GameJam.prisoner[0].pos[0] / GameJam.tileWidth, GameJam.prisoner[0].pos[1] / GameJam.tileHeight], GameJam.pathEnd);

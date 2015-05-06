@@ -1,3 +1,7 @@
+/**
+ * All levels of the game
+ * @type {Object}
+ */
 window.GameJam.levels = {
 	level1: {
 		name: 'Brot',
