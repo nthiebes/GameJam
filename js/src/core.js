@@ -20,7 +20,8 @@ var core = function(document, window){
 				'img/window-bg.jpg',
 				'img/window-vert.png',
 				'img/icons.png',
-				'img/spritesheet.png'
+				'img/level.png',
+				'img/obstacles.png'
 			]);
 			GameJam.resources.onReady(initMenu);
 		};
@@ -70,7 +71,8 @@ var core = function(document, window){
 		GameJam.canvasa.id = 'animation-canvas';
 
 		// Set map tileset
-		GameJam.tileset = GameJam.resources.get('img/spritesheet.png');
+		GameJam.tilesetLevel = GameJam.resources.get('img/level.png');
+		GameJam.tilesetObstacles = GameJam.resources.get('img/obstacles.png');
 		 
 		// Create the priosoner object
 		GameJam.prisoner.push({
@@ -78,7 +80,7 @@ var core = function(document, window){
 			steps: 20,			// The speed of the walk animation
 			currentStep: 20,	// Current position in the way from one tile to another
 			nextTile: [],
-			pos: [Math.floor((GameJam.worldWidth-1) / 2) * GameJam.tileWidth, (GameJam.worldHeight-1) * GameJam.tileHeight],
+			pos: [Math.floor((GameJam.worldWidth-1) / 2) * GameJam.tileWidth, (GameJam.worldHeight-1) * GameJam.tileHeight - 32],
 			sprite: new Sprite('img/walk.png', [0, 192], [32, 50], 5, [0, 1, 2, 3, 4, 5], 'horizontal', false, false) // url, pos, size, speed, frames, dir, once, inProgress
 		});
 
@@ -157,6 +159,28 @@ var core = function(document, window){
 			GameJam.body.className = 'view-' + newView;
 			document.querySelectorAll('#' + newView)[0].className = 'window show';
 		}, 300);
+	}
+
+
+	/**
+	 * Hide obstacles list
+	 */
+	function hideObstacles(){
+    	document.getElementById('slider').className = 'show minimized';
+		document.getElementById('obstacles').className = 'show minimized';
+		document.getElementById('start-button-wrapper').className = 'show minimized';
+		document.getElementById('start-game').className = 'button disabled';
+	}
+
+
+	/**
+	 * Show obstacles list
+	 */
+	function showObstacles(){
+    	document.getElementById('slider').className = 'show expanded';
+		document.getElementById('obstacles').className = 'show expanded';
+		document.getElementById('start-button-wrapper').className = 'show expanded';
+		document.getElementById('start-game').className = 'button';
 	}
 
 
@@ -307,7 +331,7 @@ var core = function(document, window){
 		// Put the items to the world map
 		var list = GameJam.items;
 		for(var i=0; i<list.length; i++){
-			GameJam.world[GameJam.items[i].pos[0]/32][GameJam.items[i].pos[1]/32] = 1;
+			GameJam.obstacles[GameJam.items[i].pos[0]/32][GameJam.items[i].pos[1]/32] = 2;
 		}
 
 		// Reset items, we dont want the user to be able to drag and drop them
@@ -319,7 +343,6 @@ var core = function(document, window){
 		// Reset game time
 		GameJam.tileCounter = 0;
 		GameJam.timer.className = 'show';
-		//document.getElementsByTagName('main')[0].className = 'show';
 		document.getElementById('obstacles').className = 'hide';
 		document.getElementById('slider').className = 'hide';
 		document.getElementById('start-button-wrapper').className = 'hide';
@@ -395,7 +418,9 @@ var core = function(document, window){
 		InitGame: initGame,
 		StartGame: startGame,
 		ChangeView: changeView,
-		Loading: loading
+		Loading: loading,
+		HideObstacles: hideObstacles,
+		ShowObstacles: showObstacles
 	}
 
 }(document, window);

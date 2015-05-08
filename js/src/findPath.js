@@ -16,7 +16,7 @@ window.GameJam.findPath = function(world, pathStart, pathEnd){
 	// anything higher than this number is considered blocked
 	// this is handy if you use numbered sprites, more than one
 	// of which is walkable road, grass, mud, etc
-	var maxWalkableTileNum = 20;
+	var maxWalkableTileNum = 1;
 
 	// keep track of the world dimensions
     // Note that this A-star implementation expects the world array to be square: 

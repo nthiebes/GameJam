@@ -14,11 +14,15 @@ window.GameJam = {
 	// The canvas 2d context
 	ctxs: null,
 
-	// An image containing all sprites
-	tileset: null,
+	// Tilesets
+	tilesetLevel: null,
+	tilesetObstacles: null,
 	 
 	// The world grid: a 2d array of tiles
 	world: [[]],
+	obstacles: [[]],
+	imageNumTiles: 16,
+	tileSize: 32,
 	 
 	// Size in the world in sprite tiles
 	worldWidth: 16,
@@ -30,7 +34,7 @@ window.GameJam = {
 	 
 	// Start and end of path
 	pathStart: [0, 0],
-	pathEnd: [0,0],
+	pathEnd: [0, 0],
 	currentPath: [],
 
 	// Time

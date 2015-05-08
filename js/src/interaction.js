@@ -78,7 +78,8 @@ var interaction = function(document, window){
 	            			newxpos = cellwidth * GameJam.tileWidth,
 	            			newypos = cellheight * GameJam.tileHeight,
 	            			posHasItem = false;
-	            		if (GameJam.world[cellwidth][cellheight] === 0 ){
+
+	            		if (GameJam.obstacles[cellwidth][cellheight] === 0 ){
 		            		for (var i=0; i < GameJam.items.length; i++) {
 									if (GameJam.items[i].pos[0] === newxpos && GameJam.items[i].pos[1] === newypos){
 										posHasItem = true;
@@ -158,9 +159,7 @@ var interaction = function(document, window){
 		            	console.log('panstart', e);
 
 		            	// Hide obstacles list
-		            	document.getElementById('slider').className = 'show minimized';
-						document.getElementById('obstacles').className = 'show minimized';
-						document.getElementById('start-button-wrapper').className = 'show minimized';
+		            	core.HideObstacles();
 
 		                break;
 
@@ -175,15 +174,12 @@ var interaction = function(document, window){
 	            		pos.push(cellwidth * GameJam.tileWidth);
 	            		pos.push(cellheight * GameJam.tileHeight);
 
-		            	console.log( GameJam.world );
-
-		            	console.log( pos );
+		            	// console.log( GameJam.obstacles[cell[0]][cell[1]] );
+		            	// console.log( pos );
 
 		            	GameJam.levels[GameJam.currentLevel].items[obstacleId].pos = pos;
 
 		            	GameJam.items.push( GameJam.levels[GameJam.currentLevel].items[obstacleId] );
-
-
 
 		            	
 		            	break;
@@ -205,13 +201,9 @@ var interaction = function(document, window){
 		var mcSlider = new Hammer(document.getElementById('slider'));
 		mcSlider.on('tap', function(e){
 			if (e.target.className.match(/minimized/g)) {
-				e.target.className = 'show expanded';
-				document.getElementById('obstacles').className = 'show expanded';
-				document.getElementById('start-button-wrapper').className = 'show expanded';
+				core.ShowObstacles();
 			} else{
-				e.target.className = 'show minimized';
-				document.getElementById('obstacles').className = 'show minimized';
-				document.getElementById('start-button-wrapper').className = 'show minimized';
+		        core.HideObstacles();
 			}
 		});
 
