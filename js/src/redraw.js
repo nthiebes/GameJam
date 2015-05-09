@@ -4,7 +4,8 @@
 window.GameJam.redraw = function(){ 
 	console.log('Redrawing ...');
  
-	var spriteNum = 0;
+	var spriteNum = 0,
+		spriteRow = 0;
  
 	// Clear the screen
 	GameJam.ctxs.fillStyle = '#000000';
@@ -35,22 +36,23 @@ window.GameJam.redraw = function(){
  	// Draw the default obstacles
 	for (var x=0; x < GameJam.worldWidth; x++){
 		for (var y=0; y < GameJam.worldHeight; y++){
-  			// choose a sprite to draw
-	  		switch(GameJam.world[x][y]){
-	  			//case 1: 
-	  			//spriteNum = 1;
-	  			//break;
-	  			default:
-	  			spriteNum = GameJam.obstacles[x][y];
-	  			break;
-  			}
+			spriteNum = GameJam.obstacles[x][y];
+			if (spriteNum > 30) {
+				spriteRow = 2;
+				spriteNum = spriteNum-32;
+			} else if (spriteNum > 15) {
+				spriteRow = 1;
+				spriteNum = spriteNum-16;
+			} else {
+				spriteRow = 0;
+			}
   
-  		// draw it
-  		GameJam.ctxs.drawImage(GameJam.tilesetObstacles, 
-    		spriteNum*GameJam.tileWidth, 0, 
-    		GameJam.tileWidth, GameJam.tileHeight,
-  	  		x*GameJam.tileWidth, y*GameJam.tileHeight,
-  		  	GameJam.tileWidth, GameJam.tileHeight);
+	  		// Draw it
+	  		GameJam.ctxs.drawImage(GameJam.tilesetObstacles,
+	    		spriteNum*GameJam.tileWidth, spriteRow*GameJam.tileHeight,
+	    		GameJam.tileWidth, GameJam.tileHeight,
+	  	  		x*GameJam.tileWidth, y*GameJam.tileHeight,
+	  		  	GameJam.tileWidth, GameJam.tileHeight);
 		}
 	}
 

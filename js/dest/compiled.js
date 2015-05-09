@@ -150,27 +150,27 @@ window.GameJam.levels = {
 			  [240, 241, 242, 243, 244, 245, 246, 247, 248, 249, 250, 251, 252, 253, 254, 255]],
 		time: 25,
 		obstacles: [[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-				  [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-				  [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-				  [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-				  [1, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 1],
-				  [1, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 1],
-				  [1, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 1],
-				  [1, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 1],
-				  [1, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 1],
-				  [1, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 1],
-				  [1, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 1],
-				  [1, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 1],
-				  [1, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 1],
-				  [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-				  [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-				  [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]],
+				    [1, 1, 0, 0, 0, 0, 0, 8, 24, 0, 0, 0, 0, 0, 0, 1],
+				    [1, 0, 0, 0, 0, 0, 13, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+				    [1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 22, 0, 0, 0, 1],
+				    [1, 1, 0, 0, 0, 0, 0, 6, 0, 0, 0, 23, 0, 0, 0, 1],
+				    [1, 1, 0, 0, 0, 0, 0, 7, 0, 0, 13, 0, 0, 0, 0, 1],
+				  	[1, 1, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 2, 1],
+				  	[1, 1, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 1, 1],
+				  	[1, 1, 0, 0, 0, 0, 0, 11, 0, 0, 0, 0, 0, 0, 4, 1],
+				  	[1, 1, 0, 0, 0, 0, 0, 10, 0, 0, 0, 0, 0, 0, 5, 1],
+				  	[1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+				  	[1, 1, 0, 0, 0, 0, 12, 28, 44, 0, 0, 0, 0, 0, 0, 1],
+				  	[1, 1, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 1],
+				  	[1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+				  	[1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+				  	[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]],
 		stars: [10, 15, 20],
 		unlocked: true,
 		items: [
 			{
 				id: 0,
-				count: 3,
+				count: 2,
 				width: 32,
 				height: 32,
 				icon: 0,
@@ -750,7 +750,7 @@ window.GameJam.findPath = function(world, pathStart, pathEnd){
 	// anything higher than this number is considered blocked
 	// this is handy if you use numbered sprites, more than one
 	// of which is walkable road, grass, mud, etc
-	var maxWalkableTileNum = 1;
+	var maxWalkableTileNum = 0;
 
 	// keep track of the world dimensions
     // Note that this A-star implementation expects the world array to be square: 
@@ -997,7 +997,8 @@ window.GameJam.findPath = function(world, pathStart, pathEnd){
 window.GameJam.redraw = function(){ 
 	console.log('Redrawing ...');
  
-	var spriteNum = 0;
+	var spriteNum = 0,
+		spriteRow = 0;
  
 	// Clear the screen
 	GameJam.ctxs.fillStyle = '#000000';
@@ -1028,22 +1029,23 @@ window.GameJam.redraw = function(){
  	// Draw the default obstacles
 	for (var x=0; x < GameJam.worldWidth; x++){
 		for (var y=0; y < GameJam.worldHeight; y++){
-  			// choose a sprite to draw
-	  		switch(GameJam.world[x][y]){
-	  			//case 1: 
-	  			//spriteNum = 1;
-	  			//break;
-	  			default:
-	  			spriteNum = GameJam.obstacles[x][y];
-	  			break;
-  			}
+			spriteNum = GameJam.obstacles[x][y];
+			if (spriteNum > 30) {
+				spriteRow = 2;
+				spriteNum = spriteNum-32;
+			} else if (spriteNum > 15) {
+				spriteRow = 1;
+				spriteNum = spriteNum-16;
+			} else {
+				spriteRow = 0;
+			}
   
-  		// draw it
-  		GameJam.ctxs.drawImage(GameJam.tilesetObstacles, 
-    		spriteNum*GameJam.tileWidth, 0, 
-    		GameJam.tileWidth, GameJam.tileHeight,
-  	  		x*GameJam.tileWidth, y*GameJam.tileHeight,
-  		  	GameJam.tileWidth, GameJam.tileHeight);
+	  		// Draw it
+	  		GameJam.ctxs.drawImage(GameJam.tilesetObstacles,
+	    		spriteNum*GameJam.tileWidth, spriteRow*GameJam.tileHeight,
+	    		GameJam.tileWidth, GameJam.tileHeight,
+	  	  		x*GameJam.tileWidth, y*GameJam.tileHeight,
+	  		  	GameJam.tileWidth, GameJam.tileHeight);
 		}
 	}
 
@@ -1152,7 +1154,7 @@ var interaction = function(document, window){
 	            			newypos = cellheight * GameJam.tileHeight,
 	            			posHasItem = false;
 
-	            		if (GameJam.obstacles[cellwidth][cellheight] === 0 ){
+	            		if (GameJam.obstacles[cellwidth] && GameJam.obstacles[cellwidth][cellheight] === 0 ){
 		            		for (var i=0; i < GameJam.items.length; i++) {
 									if (GameJam.items[i].pos[0] === newxpos && GameJam.items[i].pos[1] === newypos){
 										posHasItem = true;

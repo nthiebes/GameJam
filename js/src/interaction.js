@@ -79,7 +79,7 @@ var interaction = function(document, window){
 	            			newypos = cellheight * GameJam.tileHeight,
 	            			posHasItem = false;
 
-	            		if (GameJam.obstacles[cellwidth][cellheight] === 0 ){
+	            		if (GameJam.obstacles[cellwidth] && GameJam.obstacles[cellwidth][cellheight] === 0 ){
 		            		for (var i=0; i < GameJam.items.length; i++) {
 									if (GameJam.items[i].pos[0] === newxpos && GameJam.items[i].pos[1] === newypos){
 										posHasItem = true;
