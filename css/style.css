@@ -23,7 +23,7 @@ body {
   color: #50483e;
   text-shadow: 1px 0 1px #380f06;
   font-family: "Trebuchet MS","Lucida Grande","Lucida Sans Unicode","Lucida Sans",Tahoma,sans-serif;
-  background: url("../img/tileset.png") no-repeat scroll center 0 transparent;
+  background: url("../img/background.png") no-repeat scroll center 0 transparent;
   background-size: cover; }
   body.in-game {
     background: #171717; }
@@ -783,6 +783,17 @@ canvas {
     cursor: default;
     color: #bc976e; }
 
+#dragged-icon {
+  background: url("../img/icons.png") no-repeat scroll 0 0 transparent;
+  height: 50px;
+  position: absolute;
+  width: 50px;
+  display: none;
+  z-index: 3;
+  cursor: move; }
+  #dragged-icon.show {
+    display: block; }
+
 #slider {
   background: url("../img/ui.png") no-repeat scroll -175px -240px transparent;
   background-size: 335px 327px;
@@ -929,7 +940,7 @@ canvas {
   #obstacles-list li {
     background: url("../img/ui.png") no-repeat scroll -216px -182px transparent;
     background-size: 335px 327px;
-    cursor: pointer;
+    cursor: move;
     display: inline-block;
     font-weight: bold;
     height: 126px;
@@ -950,7 +961,6 @@ canvas {
     height: 50px;
     left: 21px;
     position: absolute;
-    text-align: center;
     top: 35px;
     width: 50px; }
   #obstacles-list .count {

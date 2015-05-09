@@ -1,3 +1,6 @@
+/**
+ * Sprite handling
+ */
 (function(){
     function Sprite( url, pos, size, speed, frames, dir, once, inProgress ){
         this.pos = pos;
@@ -55,7 +58,7 @@
                 x += frame * this.size[0];
             }
 
-            ctx.drawImage(GameJam.resources.get(this.url),
+            ctx.drawImage(resources.get(this.url),
                           x, y,
                           this.size[0], this.size[1],
                           0, 0,

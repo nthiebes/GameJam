@@ -41,23 +41,46 @@ window.GameJam = {
 	tileCounter: 0,
 	lastTime: null,
 
-	// Objects
+	// Map
 	prisoner: [],
 	items: [],
+	map: [[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
+		  [16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31],
+		  [32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47],
+		  [48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63],
+		  [64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79],
+		  [80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95],
+		  [96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111],
+		  [112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124, 125, 126, 127],
+		  [128, 129, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143],
+		  [144, 145, 146, 147, 148, 149, 150, 151, 152, 153, 154, 155, 156, 157, 158, 159],
+		  [160, 161, 162, 163, 164, 165, 166, 167, 168, 169, 170, 171, 172, 173, 174, 175],
+		  [176, 177, 178, 179, 180, 181, 182, 183, 184, 185, 186, 187, 188, 189, 190, 191],
+		  [192, 193, 194, 195, 196, 197, 198, 199, 200, 201, 202, 203, 204, 205, 206, 207],
+		  [208, 209, 210, 211, 212, 213, 214, 215, 216, 217, 218, 219, 220, 221, 222, 223],
+		  [224, 225, 226, 227, 228, 229, 230, 231, 232, 233, 234, 235, 236, 237, 238, 239],
+		  [240, 241, 242, 243, 244, 245, 246, 247, 248, 249, 250, 251, 252, 253, 254, 255]],
 
 	// Misc
 	draggedItem: null,
 	currentLevel: '',
-	timer: document.getElementById('timer'),
 	gameStarted: false,
 	gameEnded: false,
+	paused: false,
+	panning: false,
+	loadingPercentage: 30,
+
+	// Html elements
+	timer: document.getElementById('timer'),
 	html: document.getElementsByTagName('html')[0],
 	body: document.getElementsByTagName('body')[0],
 	loadingWrapper: document.getElementById('loading-wrapper'),
 	loadingInner: document.getElementById('loading-inner'),
-	paused: false,
-	panning: false
+	draggedIcon: document.getElementById('dragged-icon')
 };
+/**
+ * Sprite handling
+ */
 (function(){
     function Sprite( url, pos, size, speed, frames, dir, once, inProgress ){
         this.pos = pos;
@@ -115,7 +138,7 @@ window.GameJam = {
                 x += frame * this.size[0];
             }
 
-            ctx.drawImage(GameJam.resources.get(this.url),
+            ctx.drawImage(resources.get(this.url),
                           x, y,
                           this.size[0], this.size[1],
                           0, 0,
@@ -132,22 +155,6 @@ window.GameJam = {
 window.GameJam.levels = {
 	level1: {
 		name: 'Brot',
-		map: [[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
-			  [16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31],
-			  [32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47],
-			  [48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63],
-			  [64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79],
-			  [80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95],
-			  [96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111],
-			  [112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124, 125, 126, 127],
-			  [128, 129, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143],
-			  [144, 145, 146, 147, 148, 149, 150, 151, 152, 153, 154, 155, 156, 157, 158, 159],
-			  [160, 161, 162, 163, 164, 165, 166, 167, 168, 169, 170, 171, 172, 173, 174, 175],
-			  [176, 177, 178, 179, 180, 181, 182, 183, 184, 185, 186, 187, 188, 189, 190, 191],
-			  [192, 193, 194, 195, 196, 197, 198, 199, 200, 201, 202, 203, 204, 205, 206, 207],
-			  [208, 209, 210, 211, 212, 213, 214, 215, 216, 217, 218, 219, 220, 221, 222, 223],
-			  [224, 225, 226, 227, 228, 229, 230, 231, 232, 233, 234, 235, 236, 237, 238, 239],
-			  [240, 241, 242, 243, 244, 245, 246, 247, 248, 249, 250, 251, 252, 253, 254, 255]],
 		time: 25,
 		obstacles: [[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
 				    [1, 1, 0, 0, 0, 0, 0, 8, 24, 0, 0, 0, 0, 0, 0, 1],
@@ -226,13 +233,15 @@ var core = function(document, window){
 	 * General initialization
 	 */
 	function init(){
+		loading(GameJam.loadingPercentage);
+
 		window.onload = function(){
 			// Initialize game if all ressources are loaded
-			GameJam.resources.load([
-				'img/animatedTiles.png',
+			resources.load([
 				'img/walk.png',
+				'img/fog.png',
 				'img/loading.png',
-				'img/tileset.png',
+				'img/background.png',
 				'img/ui.png',
 				'img/window.png',
 				'img/window-bg.jpg',
@@ -241,7 +250,7 @@ var core = function(document, window){
 				'img/level.png',
 				'img/obstacles.png'
 			]);
-			GameJam.resources.onReady(initMenu);
+			resources.onReady(initMenu);
 		};
 
 		getLevels();
@@ -289,8 +298,8 @@ var core = function(document, window){
 		GameJam.canvasa.id = 'animation-canvas';
 
 		// Set map tileset
-		GameJam.tilesetLevel = GameJam.resources.get('img/level.png');
-		GameJam.tilesetObstacles = GameJam.resources.get('img/obstacles.png');
+		GameJam.tilesetLevel = resources.get('img/level.png');
+		GameJam.tilesetObstacles = resources.get('img/obstacles.png');
 		 
 		// Create the priosoner object
 		GameJam.prisoner.push({
@@ -350,6 +359,7 @@ var core = function(document, window){
 	 */
 	function loading(percentage){
 		GameJam.loadingInner.style.width = percentage + '%';
+		GameJam.loadingPercentage = percentage;
 
 		if (percentage === 100) {
 			window.setTimeout(function(){
@@ -384,10 +394,12 @@ var core = function(document, window){
 	 * Hide obstacles list
 	 */
 	function hideObstacles(){
-    	document.getElementById('slider').className = 'show minimized';
-		document.getElementById('obstacles').className = 'show minimized';
-		document.getElementById('start-button-wrapper').className = 'show minimized';
-		document.getElementById('start-game').className = 'button disabled';
+		if (!document.getElementById('slider').className.match(/hide/g)) {
+	    	document.getElementById('slider').className = 'show minimized';
+			document.getElementById('obstacles').className = 'show minimized';
+			document.getElementById('start-button-wrapper').className = 'show minimized';
+			document.getElementById('start-game').className = 'button disabled';
+		}
 	}
 
 
@@ -548,8 +560,25 @@ var core = function(document, window){
    	function startGame(){
 		// Put the items to the world map
 		var list = GameJam.items;
-		for(var i=0; i<list.length; i++){
-			GameJam.obstacles[GameJam.items[i].pos[0]/32][GameJam.items[i].pos[1]/32] = 2;
+		for (var i=0; i<list.length; i++) {
+			var item = GameJam.items[i],
+				itemPos = item.sprite.pos,
+				obstacleX = itemPos[0]/32,
+				obstacleY = itemPos[1]/32,
+				rows = item.height/32,
+				cols = item.width/32,
+				offset = obstacleY;
+			
+			if (cols >= rows) {
+				for (var c=0; c<cols; c++) {
+					GameJam.obstacles[GameJam.items[i].pos[0]/32 + c][GameJam.items[i].pos[1]/32] = obstacleX + c;
+				}
+			} else {
+				for (var r=0; r<rows; r++) {
+					GameJam.obstacles[GameJam.items[i].pos[0]/32][GameJam.items[i].pos[1]/32 + r] = obstacleX + offset;
+					offset = offset + GameJam.imageNumTiles;
+				}
+			}
 		}
 
 		// Reset items, we dont want the user to be able to drag and drop them
@@ -639,7 +668,7 @@ var core = function(document, window){
 		Loading: loading,
 		HideObstacles: hideObstacles,
 		ShowObstacles: showObstacles
-	}
+	};
 
 }(document, window);
 
@@ -650,44 +679,49 @@ core.Init();
 window.GameJam.createWorld = function(){
     console.log('Creating world ...');
 
-    GameJam.world = GameJam.levels[GameJam.currentLevel].map;
+    GameJam.world = GameJam.map;
     GameJam.obstacles = GameJam.levels[GameJam.currentLevel].obstacles;
 
-    // Calculate initial possible path
-    GameJam.pathEnd = [2, 1]; // Math.floor((GameJam.worldHeight-1) / 2 + 0)
+    GameJam.pathEnd = [2, 1];
 
     GameJam.redraw();
 };
-(function() {
+/**
+ * Handle resources
+ * @return {object} Public functions
+ */
+var resources = function(document, window){
+
     var resourceCache = {};
     var loading = [];
     var readyCallbacks = [];
 
-    // Load an image url or an array of image urls
-    function load(urlOrArr) {
-        if(urlOrArr instanceof Array) {
+    /**
+     * Load an image url or an array of image urls
+     * @param {array} urlOrArr Array of image urls
+     */
+    function load(urlOrArr){
+        if (urlOrArr instanceof Array) {
             urlOrArr.forEach(function(url) {
                 _load(url);
             });
-        }
-        else {
+        } else {
             _load(urlOrArr);
         }
     }
 
-    function _load(url) {
+    function _load(url){
         if(resourceCache[url]) {
             return resourceCache[url];
-        }
-        else {
+        } else {
             var img = new Image();
-            img.onload = function() {
+            img.onload = function(){
                 resourceCache[url] = img;
                 
-                GameJam.loadingPercentage += 10;
-                core.Loading();
+                GameJam.loadingPercentage += 5;
+                core.Loading(GameJam.loadingPercentage);
 
-                if(isReady()) {
+                if (isReady()) {
                     readyCallbacks.forEach(function(func) { func(); });
                 }
             };
@@ -696,32 +730,52 @@ window.GameJam.createWorld = function(){
         }
     }
 
-    function get(url) {
+
+    /**
+     * [get description]
+     * @param  {string} url Image url
+     * @return {image} The image object
+     */
+    function get(url){
         return resourceCache[url];
     }
 
-    function isReady() {
+
+    /**
+     * Check if all resources are loaded
+     * @return {boolean}
+     */
+    function isReady(){
         var ready = true;
-        for(var k in resourceCache) {
-            if(resourceCache.hasOwnProperty(k) &&
-               !resourceCache[k]) {
+        for (var k in resourceCache) {
+            if (resourceCache.hasOwnProperty(k) && !resourceCache[k]) {
                 ready = false;
             }
         }
         return ready;
     }
 
-    function onReady(func) {
+
+    /**
+     * Push callback functions to a callback array
+     * @param {function} func Callback function
+     */
+    function onReady(func){
         readyCallbacks.push(func);
     }
 
-    window.GameJam.resources = { 
+
+    /**
+     * Return public functions
+     */
+    return { 
         load: load,
         get: get,
         onReady: onReady,
         isReady: isReady
     };
-})();
+
+}(document, window);
 /*! Hammer.JS - v2.0.3 - 2014-09-10
  * http://hammerjs.github.io/
  *
@@ -1128,6 +1182,9 @@ var interaction = function(document, window){
 	            case 'panstart':
 	            	GameJam.panning = true;
 
+	            	// Hide obstacles list
+		            core.HideObstacles();
+
 	            	// Check if an item is at the dragstart cell
 					for (var i in GameJam.items) {
 						var startwidth = Math.floor(GameJam.items[i].pos[0]/GameJam.tileWidth),
@@ -1231,7 +1288,9 @@ var interaction = function(document, window){
 
 				switch(e.type) {
 		            case 'panstart':
-		            	console.log('panstart', e);
+		            	// Show icon
+		            	GameJam.draggedIcon.setAttribute('style', 'background-position: 0px -' + item.icon + 'px;');
+		            	GameJam.draggedIcon.className = 'show';
 
 		            	// Hide obstacles list
 		            	core.HideObstacles();
@@ -1239,23 +1298,41 @@ var interaction = function(document, window){
 		                break;
 
 		            case 'pan':
+		            	// Move icon
+		            	GameJam.draggedIcon.style.left = x-25 + 'px';
+		            	GameJam.draggedIcon.style.top = y-25 + 'px';
 		            	
 		            	break;
 
 		            case 'panend':
-		            	console.log('panend', e);
+		            	// Hide icon
+		            	GameJam.draggedIcon.className = '';
 
-
+		            	// Add obstacle to item array
 	            		pos.push(cellwidth * GameJam.tileWidth);
 	            		pos.push(cellheight * GameJam.tileHeight);
+
+	            		// Remove obstacle from obstacle window
+	            		item.count = item.count - 1;
+	            		if (item.count <= 0) {
+	            			obstacle.remove();
+	            		} else {
+	            			obstacle.querySelectorAll('.count')[0].innerHTML = item.count;
+	            		}
 
 		            	// console.log( GameJam.obstacles[cell[0]][cell[1]] );
 		            	// console.log( pos );
 
 		            	GameJam.levels[GameJam.currentLevel].items[obstacleId].pos = pos;
 
-		            	GameJam.items.push( GameJam.levels[GameJam.currentLevel].items[obstacleId] );
+		            	var newItem = {};
+		            	newItem.width = item.width;
+		            	newItem.height = item.height;
+		            	newItem.icon = item.icon;
 
+		            	GameJam.items.push( item );
+
+		            	console.log(GameJam.items);
 		            	
 		            	break;
 		        }
@@ -1369,7 +1446,7 @@ var interaction = function(document, window){
 	return {
 		GameEvents: gameEvents,
 		GeneralEvents: generalEvents
-	}
+	};
 
 }(document, window);
 /**
@@ -1378,7 +1455,6 @@ var interaction = function(document, window){
 window.GameJam.movePrisoner = function(){
 	// Create a path
 	GameJam.currentPath = [];
-    //GameJam.currentPath = GameJam.findPath(GameJam.world, [GameJam.prisoner[0].pos[0] / GameJam.tileWidth, GameJam.prisoner[0].pos[1] / GameJam.tileHeight], GameJam.pathEnd);
     GameJam.currentPath = GameJam.findPath(GameJam.obstacles, [GameJam.prisoner[0].pos[0] / GameJam.tileWidth, GameJam.prisoner[0].pos[1] / GameJam.tileHeight], GameJam.pathEnd);
 
     // Break the wall if no path is possible
@@ -1391,4 +1467,4 @@ window.GameJam.movePrisoner = function(){
     	// Define the next tile for the animation
     	GameJam.nextTile = [GameJam.currentPath[0]]
     }
-}
+};

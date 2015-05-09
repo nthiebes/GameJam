@@ -53,6 +53,9 @@ var interaction = function(document, window){
 	            case 'panstart':
 	            	GameJam.panning = true;
 
+	            	// Hide obstacles list
+		            core.HideObstacles();
+
 	            	// Check if an item is at the dragstart cell
 					for (var i in GameJam.items) {
 						var startwidth = Math.floor(GameJam.items[i].pos[0]/GameJam.tileWidth),
@@ -156,7 +159,9 @@ var interaction = function(document, window){
 
 				switch(e.type) {
 		            case 'panstart':
-		            	console.log('panstart', e);
+		            	// Show icon
+		            	GameJam.draggedIcon.setAttribute('style', 'background-position: 0px -' + item.icon + 'px;');
+		            	GameJam.draggedIcon.className = 'show';
 
 		            	// Hide obstacles list
 		            	core.HideObstacles();
@@ -164,23 +169,41 @@ var interaction = function(document, window){
 		                break;
 
 		            case 'pan':
+		            	// Move icon
+		            	GameJam.draggedIcon.style.left = x-25 + 'px';
+		            	GameJam.draggedIcon.style.top = y-25 + 'px';
 		            	
 		            	break;
 
 		            case 'panend':
-		            	console.log('panend', e);
+		            	// Hide icon
+		            	GameJam.draggedIcon.className = '';
 
-
+		            	// Add obstacle to item array
 	            		pos.push(cellwidth * GameJam.tileWidth);
 	            		pos.push(cellheight * GameJam.tileHeight);
+
+	            		// Remove obstacle from obstacle window
+	            		item.count = item.count - 1;
+	            		if (item.count <= 0) {
+	            			obstacle.remove();
+	            		} else {
+	            			obstacle.querySelectorAll('.count')[0].innerHTML = item.count;
+	            		}
 
 		            	// console.log( GameJam.obstacles[cell[0]][cell[1]] );
 		            	// console.log( pos );
 
 		            	GameJam.levels[GameJam.currentLevel].items[obstacleId].pos = pos;
 
-		            	GameJam.items.push( GameJam.levels[GameJam.currentLevel].items[obstacleId] );
+		            	var newItem = {};
+		            	newItem.width = item.width;
+		            	newItem.height = item.height;
+		            	newItem.icon = item.icon;
 
+		            	GameJam.items.push( item );
+
+		            	console.log(GameJam.items);
 		            	
 		            	break;
 		        }
@@ -294,6 +317,6 @@ var interaction = function(document, window){
 	return {
 		GameEvents: gameEvents,
 		GeneralEvents: generalEvents
-	}
+	};
 
 }(document, window);

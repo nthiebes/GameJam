@@ -71,6 +71,20 @@ canvas {
     }
 }
 
+#dragged-icon {
+    background: url("../img/icons.png") no-repeat scroll 0 0 transparent;
+    height: 50px;
+    position: absolute;
+    width: 50px;
+    display: none;
+    z-index: 3;
+    cursor: move;
+
+    &.show {
+        display: block;
+    }
+}
+
 #slider {
     background: url("../img/ui.png") no-repeat scroll -175px -240px transparent;
     background-size: $size-ui;
@@ -222,7 +236,7 @@ canvas {
     li {
         background: url("../img/ui.png") no-repeat scroll -216px -182px transparent;
         background-size: $size-ui;
-        cursor: pointer;
+        cursor: move;
         display: inline-block;
         font-weight: bold;
         height: 126px;
@@ -249,7 +263,6 @@ canvas {
         height: 50px;
         left: 21px;
         position: absolute;
-        text-align: center;
         top: 35px;
         width: 50px;
     }

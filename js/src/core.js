@@ -8,13 +8,15 @@ var core = function(document, window){
 	 * General initialization
 	 */
 	function init(){
+		loading(GameJam.loadingPercentage);
+
 		window.onload = function(){
 			// Initialize game if all ressources are loaded
-			GameJam.resources.load([
-				'img/animatedTiles.png',
+			resources.load([
 				'img/walk.png',
+				'img/fog.png',
 				'img/loading.png',
-				'img/tileset.png',
+				'img/background.png',
 				'img/ui.png',
 				'img/window.png',
 				'img/window-bg.jpg',
@@ -23,7 +25,7 @@ var core = function(document, window){
 				'img/level.png',
 				'img/obstacles.png'
 			]);
-			GameJam.resources.onReady(initMenu);
+			resources.onReady(initMenu);
 		};
 
 		getLevels();
@@ -71,8 +73,8 @@ var core = function(document, window){
 		GameJam.canvasa.id = 'animation-canvas';
 
 		// Set map tileset
-		GameJam.tilesetLevel = GameJam.resources.get('img/level.png');
-		GameJam.tilesetObstacles = GameJam.resources.get('img/obstacles.png');
+		GameJam.tilesetLevel = resources.get('img/level.png');
+		GameJam.tilesetObstacles = resources.get('img/obstacles.png');
 		 
 		// Create the priosoner object
 		GameJam.prisoner.push({
@@ -132,6 +134,7 @@ var core = function(document, window){
 	 */
 	function loading(percentage){
 		GameJam.loadingInner.style.width = percentage + '%';
+		GameJam.loadingPercentage = percentage;
 
 		if (percentage === 100) {
 			window.setTimeout(function(){
@@ -166,10 +169,12 @@ var core = function(document, window){
 	 * Hide obstacles list
 	 */
 	function hideObstacles(){
-    	document.getElementById('slider').className = 'show minimized';
-		document.getElementById('obstacles').className = 'show minimized';
-		document.getElementById('start-button-wrapper').className = 'show minimized';
-		document.getElementById('start-game').className = 'button disabled';
+		if (!document.getElementById('slider').className.match(/hide/g)) {
+	    	document.getElementById('slider').className = 'show minimized';
+			document.getElementById('obstacles').className = 'show minimized';
+			document.getElementById('start-button-wrapper').className = 'show minimized';
+			document.getElementById('start-game').className = 'button disabled';
+		}
 	}
 
 
@@ -330,8 +335,25 @@ var core = function(document, window){
    	function startGame(){
 		// Put the items to the world map
 		var list = GameJam.items;
-		for(var i=0; i<list.length; i++){
-			GameJam.obstacles[GameJam.items[i].pos[0]/32][GameJam.items[i].pos[1]/32] = 2;
+		for (var i=0; i<list.length; i++) {
+			var item = GameJam.items[i],
+				itemPos = item.sprite.pos,
+				obstacleX = itemPos[0]/32,
+				obstacleY = itemPos[1]/32,
+				rows = item.height/32,
+				cols = item.width/32,
+				offset = obstacleY;
+			
+			if (cols >= rows) {
+				for (var c=0; c<cols; c++) {
+					GameJam.obstacles[GameJam.items[i].pos[0]/32 + c][GameJam.items[i].pos[1]/32] = obstacleX + c;
+				}
+			} else {
+				for (var r=0; r<rows; r++) {
+					GameJam.obstacles[GameJam.items[i].pos[0]/32][GameJam.items[i].pos[1]/32 + r] = obstacleX + offset;
+					offset = offset + GameJam.imageNumTiles;
+				}
+			}
 		}
 
 		// Reset items, we dont want the user to be able to drag and drop them
@@ -421,7 +443,7 @@ var core = function(document, window){
 		Loading: loading,
 		HideObstacles: hideObstacles,
 		ShowObstacles: showObstacles
-	}
+	};
 
 }(document, window);
 

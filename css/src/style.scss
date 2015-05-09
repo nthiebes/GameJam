@@ -38,7 +38,7 @@ body {
     color: $primary-text;
     text-shadow: 1px 0 1px $primary-shadow;
     font-family: "Trebuchet MS","Lucida Grande","Lucida Sans Unicode","Lucida Sans",Tahoma,sans-serif;
-    background: url("../img/tileset.png") no-repeat scroll center 0 transparent;
+    background: url("../img/background.png") no-repeat scroll center 0 transparent;
     background-size: cover;
 
     &.in-game {
