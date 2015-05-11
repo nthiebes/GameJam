@@ -191,19 +191,15 @@ var interaction = function(document, window){
 	            			obstacle.querySelectorAll('.count')[0].innerHTML = item.count;
 	            		}
 
-		            	// console.log( GameJam.obstacles[cell[0]][cell[1]] );
-		            	// console.log( pos );
-
-		            	GameJam.levels[GameJam.currentLevel].items[obstacleId].pos = pos;
-
+	            		// Create a new item and add it to the global items list
 		            	var newItem = {};
 		            	newItem.width = item.width;
 		            	newItem.height = item.height;
 		            	newItem.icon = item.icon;
-
-		            	GameJam.items.push( item );
-
-		            	console.log(GameJam.items);
+		            	newItem.id = GameJam.levels[GameJam.currentLevel].items.length;
+		            	newItem.pos = pos;
+		            	newItem.sprite = item.sprite;
+		            	GameJam.items.push( newItem );
 		            	
 		            	break;
 		        }
