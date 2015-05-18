@@ -5,7 +5,7 @@
 window.GameJam.levels = {
 	level1: {
 		name: 'Brot',
-		time: 25,
+		time: 0,
 		obstacles: [[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
 				    [1, 1, 0, 0, 0, 0, 0, 8, 24, 0, 0, 0, 0, 0, 0, 1],
 				    [1, 0, 0, 0, 0, 0, 13, 0, 0, 0, 0, 0, 0, 0, 0, 1],
@@ -54,17 +54,17 @@ window.GameJam.levels = {
 	level2: {
 		time: 17,
 		stars: [10, 15, 20],
-		unlocked: true
+		unlocked: false
 	},
 	level3: {
 		time: 13,
 		stars: [10, 15, 20],
-		unlocked: true
+		unlocked: false
 	},
 	level4: {
 		time: 7,
 		stars: [10, 15, 20],
-		unlocked: true
+		unlocked: false
 	},
 	level5: [],
 	level6: [],

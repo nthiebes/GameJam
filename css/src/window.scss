@@ -196,6 +196,24 @@
     }
 }
 
+.menu-btn {
+    background: url("../img/ui.png") no-repeat scroll -235px -354px transparent;
+    background-size: $size-ui;
+    
+    &:active {
+        background-position: -280px -354px;
+    }
+}
+
+.next-btn {
+    background: url("../img/ui.png") no-repeat scroll -235px -314px transparent;
+    background-size: $size-ui;
+    
+    &:active {
+        background-position: -280px -314px;
+    }
+}
+
 @media (min-width: 520px) {
     .main .window {
         margin-left: -260px;

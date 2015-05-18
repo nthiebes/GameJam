@@ -279,7 +279,7 @@ canvas {
 
 @include keyframe(slideIn) {
     0%  {
-        @include transform( translateX(-140px) );
+        @include transform( translateX(-142px) );
     }
     100% {
         @include transform( translateX(0) );
@@ -291,7 +291,7 @@ canvas {
         @include transform( translateX(0) );
     }
     100% {
-        @include transform( translateX(-140px) );
+        @include transform( translateX(-142px) );
     }
 }
 

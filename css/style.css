@@ -160,7 +160,7 @@ ul {
   width: 124px; }
   .menu li {
     background: url("../img/ui.png") no-repeat scroll 0 -160px transparent;
-    background-size: 335px 327px;
+    background-size: 335px 540px;
     border-top: 1px solid #1b1814;
     cursor: pointer;
     height: 40px;
@@ -183,7 +183,7 @@ ul {
 
 .menu-top {
   background: url("../img/ui.png") no-repeat scroll -99px -65px transparent;
-  background-size: 335px 327px;
+  background-size: 335px 540px;
   height: 13px;
   left: 50%;
   margin-left: -35px;
@@ -197,7 +197,7 @@ ul {
 
 .menu-bottom {
   background: url("../img/ui.png") no-repeat scroll -175px -65px transparent;
-  background-size: 335px 327px;
+  background-size: 335px 540px;
   height: 13px;
   left: 50%;
   margin-left: -35px;
@@ -477,7 +477,7 @@ ul {
       width: 31px; }
   .window h1 {
     background: url("../img/ui.png") no-repeat scroll 0 0 transparent;
-    background-size: 335px 327px;
+    background-size: 335px 540px;
     color: #ffdfa8;
     font-size: 16px;
     height: 54px;
@@ -492,7 +492,7 @@ ul {
     text-align: center; }
   .window .close {
     background: url("../img/ui.png") no-repeat scroll 0 -60px transparent;
-    background-size: 335px 327px;
+    background-size: 335px 540px;
     height: 18px;
     left: 50%;
     margin-left: 88px;
@@ -519,15 +519,27 @@ ul {
 
 .back-btn {
   background: url("../img/ui.png") no-repeat scroll -130px -199px transparent;
-  background-size: 335px 327px; }
+  background-size: 335px 540px; }
   .back-btn:active {
     background-position: -175px -199px; }
 
 .replay-btn {
   background: url("../img/ui.png") no-repeat scroll -130px -159px transparent;
-  background-size: 335px 327px; }
+  background-size: 335px 540px; }
   .replay-btn:active {
     background-position: -175px -159px; }
+
+.menu-btn {
+  background: url("../img/ui.png") no-repeat scroll -235px -354px transparent;
+  background-size: 335px 540px; }
+  .menu-btn:active {
+    background-position: -280px -354px; }
+
+.next-btn {
+  background: url("../img/ui.png") no-repeat scroll -235px -314px transparent;
+  background-size: 335px 540px; }
+  .next-btn:active {
+    background-position: -280px -314px; }
 
 @media (min-width: 520px) {
   .main .window {
@@ -545,7 +557,7 @@ ul {
   margin-bottom: 20px; }
 #levels li {
   background: url("../img/ui.png") no-repeat scroll -1px -84px transparent;
-  background-size: 335px 327px;
+  background-size: 335px 540px;
   display: inline-block;
   height: 70px;
   margin: 10px;
@@ -557,7 +569,7 @@ ul {
       background-position: -71px -84px; }
 #levels .locked {
   background: url("../img/ui.png") no-repeat scroll -143px -86px transparent;
-  background-size: 335px 327px;
+  background-size: 335px 540px;
   height: 35px;
   left: 23px;
   position: absolute;
@@ -574,7 +586,7 @@ ul {
   width: 100%; }
 #levels .stars {
   background: url("../img/ui.png") no-repeat scroll -254px -123px transparent;
-  background-size: 335px 327px;
+  background-size: 335px 540px;
   height: 32px;
   left: -1px;
   position: absolute;
@@ -694,7 +706,7 @@ label {
 
 .checkbox {
   background: url("../img/ui.png") no-repeat scroll -274px -159px #171717;
-  background-size: 335px 327px;
+  background-size: 335px 540px;
   display: inline-block;
   cursor: pointer;
   height: 20px;
@@ -764,7 +776,7 @@ canvas {
   left: 6px;
   position: absolute;
   background: url("../img/ui.png") no-repeat scroll 0 -249px transparent;
-  background-size: 335px 327px;
+  background-size: 335px 540px;
   cursor: pointer;
   height: 35px;
   color: #bc976e;
@@ -796,7 +808,7 @@ canvas {
 
 #slider {
   background: url("../img/ui.png") no-repeat scroll -175px -240px transparent;
-  background-size: 335px 327px;
+  background-size: 335px 540px;
   -webkit-transform: translateX(-140px);
   -moz-transform: translateX(-140px);
   -ms-transform: translateX(-140px);
@@ -939,7 +951,7 @@ canvas {
   text-align: center; }
   #obstacles-list li {
     background: url("../img/ui.png") no-repeat scroll -216px -182px transparent;
-    background-size: 335px 327px;
+    background-size: 335px 540px;
     cursor: move;
     display: inline-block;
     font-weight: bold;
@@ -973,11 +985,11 @@ canvas {
 
 @-webkit-keyframes slideIn {
   0% {
-    -webkit-transform: translateX(-140px);
-    -moz-transform: translateX(-140px);
-    -ms-transform: translateX(-140px);
-    -o-transform: translateX(-140px);
-    transform: translateX(-140px); }
+    -webkit-transform: translateX(-142px);
+    -moz-transform: translateX(-142px);
+    -ms-transform: translateX(-142px);
+    -o-transform: translateX(-142px);
+    transform: translateX(-142px); }
 
   100% {
     -webkit-transform: translateX(0);
@@ -988,11 +1000,11 @@ canvas {
 
 @-moz-keyframes slideIn {
   0% {
-    -webkit-transform: translateX(-140px);
-    -moz-transform: translateX(-140px);
-    -ms-transform: translateX(-140px);
-    -o-transform: translateX(-140px);
-    transform: translateX(-140px); }
+    -webkit-transform: translateX(-142px);
+    -moz-transform: translateX(-142px);
+    -ms-transform: translateX(-142px);
+    -o-transform: translateX(-142px);
+    transform: translateX(-142px); }
 
   100% {
     -webkit-transform: translateX(0);
@@ -1003,11 +1015,11 @@ canvas {
 
 @-o-keyframes slideIn {
   0% {
-    -webkit-transform: translateX(-140px);
-    -moz-transform: translateX(-140px);
-    -ms-transform: translateX(-140px);
-    -o-transform: translateX(-140px);
-    transform: translateX(-140px); }
+    -webkit-transform: translateX(-142px);
+    -moz-transform: translateX(-142px);
+    -ms-transform: translateX(-142px);
+    -o-transform: translateX(-142px);
+    transform: translateX(-142px); }
 
   100% {
     -webkit-transform: translateX(0);
@@ -1018,11 +1030,11 @@ canvas {
 
 @keyframes slideIn {
   0% {
-    -webkit-transform: translateX(-140px);
-    -moz-transform: translateX(-140px);
-    -ms-transform: translateX(-140px);
-    -o-transform: translateX(-140px);
-    transform: translateX(-140px); }
+    -webkit-transform: translateX(-142px);
+    -moz-transform: translateX(-142px);
+    -ms-transform: translateX(-142px);
+    -o-transform: translateX(-142px);
+    transform: translateX(-142px); }
 
   100% {
     -webkit-transform: translateX(0);
@@ -1040,11 +1052,11 @@ canvas {
     transform: translateX(0); }
 
   100% {
-    -webkit-transform: translateX(-140px);
-    -moz-transform: translateX(-140px);
-    -ms-transform: translateX(-140px);
-    -o-transform: translateX(-140px);
-    transform: translateX(-140px); } }
+    -webkit-transform: translateX(-142px);
+    -moz-transform: translateX(-142px);
+    -ms-transform: translateX(-142px);
+    -o-transform: translateX(-142px);
+    transform: translateX(-142px); } }
 
 @-moz-keyframes slideOut {
   0% {
@@ -1055,11 +1067,11 @@ canvas {
     transform: translateX(0); }
 
   100% {
-    -webkit-transform: translateX(-140px);
-    -moz-transform: translateX(-140px);
-    -ms-transform: translateX(-140px);
-    -o-transform: translateX(-140px);
-    transform: translateX(-140px); } }
+    -webkit-transform: translateX(-142px);
+    -moz-transform: translateX(-142px);
+    -ms-transform: translateX(-142px);
+    -o-transform: translateX(-142px);
+    transform: translateX(-142px); } }
 
 @-o-keyframes slideOut {
   0% {
@@ -1070,11 +1082,11 @@ canvas {
     transform: translateX(0); }
 
   100% {
-    -webkit-transform: translateX(-140px);
-    -moz-transform: translateX(-140px);
-    -ms-transform: translateX(-140px);
-    -o-transform: translateX(-140px);
-    transform: translateX(-140px); } }
+    -webkit-transform: translateX(-142px);
+    -moz-transform: translateX(-142px);
+    -ms-transform: translateX(-142px);
+    -o-transform: translateX(-142px);
+    transform: translateX(-142px); } }
 
 @keyframes slideOut {
   0% {
@@ -1085,11 +1097,11 @@ canvas {
     transform: translateX(0); }
 
   100% {
-    -webkit-transform: translateX(-140px);
-    -moz-transform: translateX(-140px);
-    -ms-transform: translateX(-140px);
-    -o-transform: translateX(-140px);
-    transform: translateX(-140px); } }
+    -webkit-transform: translateX(-142px);
+    -moz-transform: translateX(-142px);
+    -ms-transform: translateX(-142px);
+    -o-transform: translateX(-142px);
+    transform: translateX(-142px); } }
 
 @-webkit-keyframes minimized {
   0% {

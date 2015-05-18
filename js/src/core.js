@@ -13,7 +13,7 @@ var core = function(document, window){
 		window.onload = function(){
 			// Initialize game if all ressources are loaded
 			resources.load([
-				'img/walk.png',
+				'img/mouse.png',
 				'img/fog.png',
 				'img/loading.png',
 				'img/background.png',
@@ -83,7 +83,7 @@ var core = function(document, window){
 			currentStep: 20,	// Current position in the way from one tile to another
 			nextTile: [],
 			pos: [Math.floor((GameJam.worldWidth-1) / 2) * GameJam.tileWidth, (GameJam.worldHeight-1) * GameJam.tileHeight - 32],
-			sprite: new Sprite('img/walk.png', [0, 192], [32, 50], 5, [0, 1, 2, 3, 4, 5], 'horizontal', false, false) // url, pos, size, speed, frames, dir, once, inProgress
+			sprite: new Sprite('img/mouse.png', [0, 0], [32, 32], 5, [0, 1], 'horizontal', false, false) // url, pos, size, speed, frames, dir, once, inProgress
 		});
 
 		// Main game loop
@@ -220,11 +220,11 @@ var core = function(document, window){
 					// Move top if next tile is above current
 					if (GameJam.prisoner[0].nextTile[1] > GameJam.currentPath[0][1]) {
 						GameJam.prisoner[0].pos[1] = GameJam.currentPath[0][1] * GameJam.tileHeight + ((GameJam.tileHeight / GameJam.prisoner[0].steps) * GameJam.prisoner[0].currentStep);
-						GameJam.prisoner[0].sprite.pos[1] = 192;
+						GameJam.prisoner[0].sprite.pos[1] = 0;
 					// Move bottom if next tile is below current
 					} else if (GameJam.prisoner[0].nextTile[1] < GameJam.currentPath[0][1]){
 						GameJam.prisoner[0].pos[1] = GameJam.currentPath[0][1] * GameJam.tileHeight - ((GameJam.tileHeight / GameJam.prisoner[0].steps) * GameJam.prisoner[0].currentStep);
-						GameJam.prisoner[0].sprite.pos[1] = 0;
+						GameJam.prisoner[0].sprite.pos[1] = 32;
 					}
 
 				// Horizontal movement
@@ -236,7 +236,7 @@ var core = function(document, window){
 					// Move right if next tile is on the right side of the current
 					} else if (GameJam.prisoner[0].nextTile[0] < GameJam.currentPath[0][0]) {
 						GameJam.prisoner[0].pos[0] = GameJam.currentPath[0][0] * GameJam.tileWidth - ((GameJam.tileWidth / GameJam.prisoner[0].steps) * GameJam.prisoner[0].currentStep);
-						GameJam.prisoner[0].sprite.pos[1] = 128;
+						GameJam.prisoner[0].sprite.pos[1] = 96;
 					}
 				}
 
@@ -255,7 +255,7 @@ var core = function(document, window){
 
 				GameJam.prisoner[0].currentStep--;		
 			} else{
-				GameJam.prisoner[0].sprite.pos[1] = 192;
+				GameJam.prisoner[0].sprite.pos[1] = 0;
 				GameJam.prisoner[0].sprite.speed = 0;
 
 				if (GameJam.gameStarted && !GameJam.gameEnded) {
@@ -386,6 +386,7 @@ var core = function(document, window){
 		GameJam.gameEnded = true;
 		GameJam.paused = true;
 		console.log('-- Level done!');
+		//changeView('complete');
 	}
 
 
