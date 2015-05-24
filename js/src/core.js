@@ -385,8 +385,40 @@ var core = function(document, window){
 	function endLevel(){
 		GameJam.gameEnded = true;
 		GameJam.paused = true;
+
+		var stars = GameJam.levels[GameJam.currentLevel].stars,
+			steps = Math.round(GameJam.tileCounter);
+
+		for (var i in stars) {
+			document.querySelectorAll('#steps' + i)[0].innerHTML = stars[i];
+			if (steps >= stars[i]) {
+				showStar(i);
+				var nextLevel = 'level' + (parseInt(GameJam.currentLevel.replace(/level/g, '')) + 1);
+				if (GameJam.levels[nextLevel]) {
+					GameJam.levels[nextLevel].unlocked = true;
+				}
+			}
+		}
+
+		function showStar(star){
+			requestTimeout(function(){
+				document.querySelectorAll('#star-big' + star)[0].className = 'star show';
+			}, star*500 + 500);
+		}
+
+		GameJam.levels[GameJam.currentLevel].time = steps;
+		document.querySelectorAll('#complete .steps')[0].innerHTML = steps;
+
+		GameJam.canvasa.style.display = 'none';
+		GameJam.canvass.style.display = 'none';
+
+		document.getElementById('fog').className = 'show';
+
+		getLevels();
+
+		changeView('complete');
+
 		console.log('-- Level done!');
-		//changeView('complete');
 	}
 
 

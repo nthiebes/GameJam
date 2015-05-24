@@ -202,26 +202,437 @@ window.GameJam.levels = {
 		]
 	},
 	level2: {
-		time: 17,
-		stars: [10, 15, 20],
-		unlocked: false
+		name: 'Brot',
+		time: 0,
+		obstacles: [[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+				    [1, 1, 0, 0, 0, 0, 0, 8, 24, 0, 0, 0, 0, 0, 0, 1],
+				    [1, 0, 0, 0, 0, 0, 13, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+				    [1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 22, 0, 0, 0, 1],
+				    [1, 1, 0, 0, 0, 0, 0, 6, 0, 0, 0, 23, 0, 0, 0, 1],
+				    [1, 1, 0, 0, 0, 0, 0, 7, 0, 0, 13, 0, 0, 0, 0, 1],
+				  	[1, 1, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 2, 1],
+				  	[1, 1, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 1, 1],
+				  	[1, 1, 0, 0, 0, 0, 0, 11, 0, 0, 0, 0, 0, 0, 4, 1],
+				  	[1, 1, 0, 0, 0, 0, 0, 10, 0, 0, 0, 0, 0, 0, 5, 1],
+				  	[1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+				  	[1, 1, 0, 0, 0, 0, 12, 28, 44, 0, 0, 0, 0, 0, 0, 1],
+				  	[1, 1, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 1],
+				  	[1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+				  	[1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+				  	[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]],
+		stars: [20, 30, 40],
+		unlocked: false,
+		items: [
+			{
+				id: 0,
+				count: 2,
+				width: 32,
+				height: 32,
+				icon: 0,
+				sprite: new Sprite('img/obstacles.png', [64, 0], [32, 32], 8, [0], 'horizontal', false, false) // url, pos, size, speed, frames, dir, once, inProgress
+			},
+			{
+				id: 1,
+				count: 1,
+				width: 32,
+				height: 64,
+				icon: 50,
+				sprite: new Sprite('img/obstacles.png', [96, 0], [32, 64], 8, [0], 'horizontal', false, false) // url, pos, size, speed, frames, dir, once, inProgress
+			},
+			{
+				id: 2,
+				count: 1,
+				width: 64,
+				height: 32,
+				icon: 150,
+				sprite: new Sprite('img/obstacles.png', [128, 0], [64, 32], 8, [0], 'horizontal', false, false) // url, pos, size, speed, frames, dir, once, inProgress
+			}
+		]
 	},
 	level3: {
-		time: 13,
-		stars: [10, 15, 20],
-		unlocked: false
+		name: 'Brot',
+		time: 0,
+		obstacles: [[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+				    [1, 1, 0, 0, 0, 0, 0, 8, 24, 0, 0, 0, 0, 0, 0, 1],
+				    [1, 0, 0, 0, 0, 0, 13, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+				    [1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 22, 0, 0, 0, 1],
+				    [1, 1, 0, 0, 0, 0, 0, 6, 0, 0, 0, 23, 0, 0, 0, 1],
+				    [1, 1, 0, 0, 0, 0, 0, 7, 0, 0, 13, 0, 0, 0, 0, 1],
+				  	[1, 1, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 2, 1],
+				  	[1, 1, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 1, 1],
+				  	[1, 1, 0, 0, 0, 0, 0, 11, 0, 0, 0, 0, 0, 0, 4, 1],
+				  	[1, 1, 0, 0, 0, 0, 0, 10, 0, 0, 0, 0, 0, 0, 5, 1],
+				  	[1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+				  	[1, 1, 0, 0, 0, 0, 12, 28, 44, 0, 0, 0, 0, 0, 0, 1],
+				  	[1, 1, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 1],
+				  	[1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+				  	[1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+				  	[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]],
+		stars: [20, 30, 40],
+		unlocked: false,
+		items: [
+			{
+				id: 0,
+				count: 2,
+				width: 32,
+				height: 32,
+				icon: 0,
+				sprite: new Sprite('img/obstacles.png', [64, 0], [32, 32], 8, [0], 'horizontal', false, false) // url, pos, size, speed, frames, dir, once, inProgress
+			},
+			{
+				id: 1,
+				count: 1,
+				width: 32,
+				height: 64,
+				icon: 50,
+				sprite: new Sprite('img/obstacles.png', [96, 0], [32, 64], 8, [0], 'horizontal', false, false) // url, pos, size, speed, frames, dir, once, inProgress
+			},
+			{
+				id: 2,
+				count: 1,
+				width: 64,
+				height: 32,
+				icon: 150,
+				sprite: new Sprite('img/obstacles.png', [128, 0], [64, 32], 8, [0], 'horizontal', false, false) // url, pos, size, speed, frames, dir, once, inProgress
+			}
+		]
 	},
 	level4: {
-		time: 7,
-		stars: [10, 15, 20],
-		unlocked: false
+		name: 'Brot',
+		time: 0,
+		obstacles: [[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+				    [1, 1, 0, 0, 0, 0, 0, 8, 24, 0, 0, 0, 0, 0, 0, 1],
+				    [1, 0, 0, 0, 0, 0, 13, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+				    [1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 22, 0, 0, 0, 1],
+				    [1, 1, 0, 0, 0, 0, 0, 6, 0, 0, 0, 23, 0, 0, 0, 1],
+				    [1, 1, 0, 0, 0, 0, 0, 7, 0, 0, 13, 0, 0, 0, 0, 1],
+				  	[1, 1, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 2, 1],
+				  	[1, 1, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 1, 1],
+				  	[1, 1, 0, 0, 0, 0, 0, 11, 0, 0, 0, 0, 0, 0, 4, 1],
+				  	[1, 1, 0, 0, 0, 0, 0, 10, 0, 0, 0, 0, 0, 0, 5, 1],
+				  	[1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+				  	[1, 1, 0, 0, 0, 0, 12, 28, 44, 0, 0, 0, 0, 0, 0, 1],
+				  	[1, 1, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 1],
+				  	[1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+				  	[1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+				  	[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]],
+		stars: [20, 30, 40],
+		unlocked: false,
+		items: [
+			{
+				id: 0,
+				count: 2,
+				width: 32,
+				height: 32,
+				icon: 0,
+				sprite: new Sprite('img/obstacles.png', [64, 0], [32, 32], 8, [0], 'horizontal', false, false) // url, pos, size, speed, frames, dir, once, inProgress
+			},
+			{
+				id: 1,
+				count: 1,
+				width: 32,
+				height: 64,
+				icon: 50,
+				sprite: new Sprite('img/obstacles.png', [96, 0], [32, 64], 8, [0], 'horizontal', false, false) // url, pos, size, speed, frames, dir, once, inProgress
+			},
+			{
+				id: 2,
+				count: 1,
+				width: 64,
+				height: 32,
+				icon: 150,
+				sprite: new Sprite('img/obstacles.png', [128, 0], [64, 32], 8, [0], 'horizontal', false, false) // url, pos, size, speed, frames, dir, once, inProgress
+			}
+		]
 	},
-	level5: [],
-	level6: [],
-	level7: [],
-	level8: [],
-	level9: [],
-	leve10: []
+	level5: {
+		name: 'Brot',
+		time: 0,
+		obstacles: [[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+				    [1, 1, 0, 0, 0, 0, 0, 8, 24, 0, 0, 0, 0, 0, 0, 1],
+				    [1, 0, 0, 0, 0, 0, 13, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+				    [1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 22, 0, 0, 0, 1],
+				    [1, 1, 0, 0, 0, 0, 0, 6, 0, 0, 0, 23, 0, 0, 0, 1],
+				    [1, 1, 0, 0, 0, 0, 0, 7, 0, 0, 13, 0, 0, 0, 0, 1],
+				  	[1, 1, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 2, 1],
+				  	[1, 1, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 1, 1],
+				  	[1, 1, 0, 0, 0, 0, 0, 11, 0, 0, 0, 0, 0, 0, 4, 1],
+				  	[1, 1, 0, 0, 0, 0, 0, 10, 0, 0, 0, 0, 0, 0, 5, 1],
+				  	[1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+				  	[1, 1, 0, 0, 0, 0, 12, 28, 44, 0, 0, 0, 0, 0, 0, 1],
+				  	[1, 1, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 1],
+				  	[1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+				  	[1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+				  	[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]],
+		stars: [20, 30, 40],
+		unlocked: false,
+		items: [
+			{
+				id: 0,
+				count: 2,
+				width: 32,
+				height: 32,
+				icon: 0,
+				sprite: new Sprite('img/obstacles.png', [64, 0], [32, 32], 8, [0], 'horizontal', false, false) // url, pos, size, speed, frames, dir, once, inProgress
+			},
+			{
+				id: 1,
+				count: 1,
+				width: 32,
+				height: 64,
+				icon: 50,
+				sprite: new Sprite('img/obstacles.png', [96, 0], [32, 64], 8, [0], 'horizontal', false, false) // url, pos, size, speed, frames, dir, once, inProgress
+			},
+			{
+				id: 2,
+				count: 1,
+				width: 64,
+				height: 32,
+				icon: 150,
+				sprite: new Sprite('img/obstacles.png', [128, 0], [64, 32], 8, [0], 'horizontal', false, false) // url, pos, size, speed, frames, dir, once, inProgress
+			}
+		]
+	},
+	level6: {
+		name: 'Brot',
+		time: 0,
+		obstacles: [[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+				    [1, 1, 0, 0, 0, 0, 0, 8, 24, 0, 0, 0, 0, 0, 0, 1],
+				    [1, 0, 0, 0, 0, 0, 13, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+				    [1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 22, 0, 0, 0, 1],
+				    [1, 1, 0, 0, 0, 0, 0, 6, 0, 0, 0, 23, 0, 0, 0, 1],
+				    [1, 1, 0, 0, 0, 0, 0, 7, 0, 0, 13, 0, 0, 0, 0, 1],
+				  	[1, 1, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 2, 1],
+				  	[1, 1, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 1, 1],
+				  	[1, 1, 0, 0, 0, 0, 0, 11, 0, 0, 0, 0, 0, 0, 4, 1],
+				  	[1, 1, 0, 0, 0, 0, 0, 10, 0, 0, 0, 0, 0, 0, 5, 1],
+				  	[1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+				  	[1, 1, 0, 0, 0, 0, 12, 28, 44, 0, 0, 0, 0, 0, 0, 1],
+				  	[1, 1, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 1],
+				  	[1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+				  	[1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+				  	[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]],
+		stars: [20, 30, 40],
+		unlocked: false,
+		items: [
+			{
+				id: 0,
+				count: 2,
+				width: 32,
+				height: 32,
+				icon: 0,
+				sprite: new Sprite('img/obstacles.png', [64, 0], [32, 32], 8, [0], 'horizontal', false, false) // url, pos, size, speed, frames, dir, once, inProgress
+			},
+			{
+				id: 1,
+				count: 1,
+				width: 32,
+				height: 64,
+				icon: 50,
+				sprite: new Sprite('img/obstacles.png', [96, 0], [32, 64], 8, [0], 'horizontal', false, false) // url, pos, size, speed, frames, dir, once, inProgress
+			},
+			{
+				id: 2,
+				count: 1,
+				width: 64,
+				height: 32,
+				icon: 150,
+				sprite: new Sprite('img/obstacles.png', [128, 0], [64, 32], 8, [0], 'horizontal', false, false) // url, pos, size, speed, frames, dir, once, inProgress
+			}
+		]
+	},
+	level7: {
+		name: 'Brot',
+		time: 0,
+		obstacles: [[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+				    [1, 1, 0, 0, 0, 0, 0, 8, 24, 0, 0, 0, 0, 0, 0, 1],
+				    [1, 0, 0, 0, 0, 0, 13, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+				    [1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 22, 0, 0, 0, 1],
+				    [1, 1, 0, 0, 0, 0, 0, 6, 0, 0, 0, 23, 0, 0, 0, 1],
+				    [1, 1, 0, 0, 0, 0, 0, 7, 0, 0, 13, 0, 0, 0, 0, 1],
+				  	[1, 1, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 2, 1],
+				  	[1, 1, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 1, 1],
+				  	[1, 1, 0, 0, 0, 0, 0, 11, 0, 0, 0, 0, 0, 0, 4, 1],
+				  	[1, 1, 0, 0, 0, 0, 0, 10, 0, 0, 0, 0, 0, 0, 5, 1],
+				  	[1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+				  	[1, 1, 0, 0, 0, 0, 12, 28, 44, 0, 0, 0, 0, 0, 0, 1],
+				  	[1, 1, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 1],
+				  	[1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+				  	[1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+				  	[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]],
+		stars: [20, 30, 40],
+		unlocked: false,
+		items: [
+			{
+				id: 0,
+				count: 2,
+				width: 32,
+				height: 32,
+				icon: 0,
+				sprite: new Sprite('img/obstacles.png', [64, 0], [32, 32], 8, [0], 'horizontal', false, false) // url, pos, size, speed, frames, dir, once, inProgress
+			},
+			{
+				id: 1,
+				count: 1,
+				width: 32,
+				height: 64,
+				icon: 50,
+				sprite: new Sprite('img/obstacles.png', [96, 0], [32, 64], 8, [0], 'horizontal', false, false) // url, pos, size, speed, frames, dir, once, inProgress
+			},
+			{
+				id: 2,
+				count: 1,
+				width: 64,
+				height: 32,
+				icon: 150,
+				sprite: new Sprite('img/obstacles.png', [128, 0], [64, 32], 8, [0], 'horizontal', false, false) // url, pos, size, speed, frames, dir, once, inProgress
+			}
+		]
+	},
+	level8: {
+		name: 'Brot',
+		time: 0,
+		obstacles: [[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+				    [1, 1, 0, 0, 0, 0, 0, 8, 24, 0, 0, 0, 0, 0, 0, 1],
+				    [1, 0, 0, 0, 0, 0, 13, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+				    [1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 22, 0, 0, 0, 1],
+				    [1, 1, 0, 0, 0, 0, 0, 6, 0, 0, 0, 23, 0, 0, 0, 1],
+				    [1, 1, 0, 0, 0, 0, 0, 7, 0, 0, 13, 0, 0, 0, 0, 1],
+				  	[1, 1, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 2, 1],
+				  	[1, 1, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 1, 1],
+				  	[1, 1, 0, 0, 0, 0, 0, 11, 0, 0, 0, 0, 0, 0, 4, 1],
+				  	[1, 1, 0, 0, 0, 0, 0, 10, 0, 0, 0, 0, 0, 0, 5, 1],
+				  	[1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+				  	[1, 1, 0, 0, 0, 0, 12, 28, 44, 0, 0, 0, 0, 0, 0, 1],
+				  	[1, 1, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 1],
+				  	[1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+				  	[1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+				  	[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]],
+		stars: [20, 30, 40],
+		unlocked: false,
+		items: [
+			{
+				id: 0,
+				count: 2,
+				width: 32,
+				height: 32,
+				icon: 0,
+				sprite: new Sprite('img/obstacles.png', [64, 0], [32, 32], 8, [0], 'horizontal', false, false) // url, pos, size, speed, frames, dir, once, inProgress
+			},
+			{
+				id: 1,
+				count: 1,
+				width: 32,
+				height: 64,
+				icon: 50,
+				sprite: new Sprite('img/obstacles.png', [96, 0], [32, 64], 8, [0], 'horizontal', false, false) // url, pos, size, speed, frames, dir, once, inProgress
+			},
+			{
+				id: 2,
+				count: 1,
+				width: 64,
+				height: 32,
+				icon: 150,
+				sprite: new Sprite('img/obstacles.png', [128, 0], [64, 32], 8, [0], 'horizontal', false, false) // url, pos, size, speed, frames, dir, once, inProgress
+			}
+		]
+	},
+	level9: {
+		name: 'Brot',
+		time: 0,
+		obstacles: [[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+				    [1, 1, 0, 0, 0, 0, 0, 8, 24, 0, 0, 0, 0, 0, 0, 1],
+				    [1, 0, 0, 0, 0, 0, 13, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+				    [1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 22, 0, 0, 0, 1],
+				    [1, 1, 0, 0, 0, 0, 0, 6, 0, 0, 0, 23, 0, 0, 0, 1],
+				    [1, 1, 0, 0, 0, 0, 0, 7, 0, 0, 13, 0, 0, 0, 0, 1],
+				  	[1, 1, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 2, 1],
+				  	[1, 1, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 1, 1],
+				  	[1, 1, 0, 0, 0, 0, 0, 11, 0, 0, 0, 0, 0, 0, 4, 1],
+				  	[1, 1, 0, 0, 0, 0, 0, 10, 0, 0, 0, 0, 0, 0, 5, 1],
+				  	[1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+				  	[1, 1, 0, 0, 0, 0, 12, 28, 44, 0, 0, 0, 0, 0, 0, 1],
+				  	[1, 1, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 1],
+				  	[1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+				  	[1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+				  	[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]],
+		stars: [20, 30, 40],
+		unlocked: false,
+		items: [
+			{
+				id: 0,
+				count: 2,
+				width: 32,
+				height: 32,
+				icon: 0,
+				sprite: new Sprite('img/obstacles.png', [64, 0], [32, 32], 8, [0], 'horizontal', false, false) // url, pos, size, speed, frames, dir, once, inProgress
+			},
+			{
+				id: 1,
+				count: 1,
+				width: 32,
+				height: 64,
+				icon: 50,
+				sprite: new Sprite('img/obstacles.png', [96, 0], [32, 64], 8, [0], 'horizontal', false, false) // url, pos, size, speed, frames, dir, once, inProgress
+			},
+			{
+				id: 2,
+				count: 1,
+				width: 64,
+				height: 32,
+				icon: 150,
+				sprite: new Sprite('img/obstacles.png', [128, 0], [64, 32], 8, [0], 'horizontal', false, false) // url, pos, size, speed, frames, dir, once, inProgress
+			}
+		]
+	},
+	leve10: {
+		name: 'Brot',
+		time: 0,
+		obstacles: [[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+				    [1, 1, 0, 0, 0, 0, 0, 8, 24, 0, 0, 0, 0, 0, 0, 1],
+				    [1, 0, 0, 0, 0, 0, 13, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+				    [1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 22, 0, 0, 0, 1],
+				    [1, 1, 0, 0, 0, 0, 0, 6, 0, 0, 0, 23, 0, 0, 0, 1],
+				    [1, 1, 0, 0, 0, 0, 0, 7, 0, 0, 13, 0, 0, 0, 0, 1],
+				  	[1, 1, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 2, 1],
+				  	[1, 1, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 1, 1],
+				  	[1, 1, 0, 0, 0, 0, 0, 11, 0, 0, 0, 0, 0, 0, 4, 1],
+				  	[1, 1, 0, 0, 0, 0, 0, 10, 0, 0, 0, 0, 0, 0, 5, 1],
+				  	[1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+				  	[1, 1, 0, 0, 0, 0, 12, 28, 44, 0, 0, 0, 0, 0, 0, 1],
+				  	[1, 1, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 1],
+				  	[1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+				  	[1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+				  	[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]],
+		stars: [20, 30, 40],
+		unlocked: false,
+		items: [
+			{
+				id: 0,
+				count: 2,
+				width: 32,
+				height: 32,
+				icon: 0,
+				sprite: new Sprite('img/obstacles.png', [64, 0], [32, 32], 8, [0], 'horizontal', false, false) // url, pos, size, speed, frames, dir, once, inProgress
+			},
+			{
+				id: 1,
+				count: 1,
+				width: 32,
+				height: 64,
+				icon: 50,
+				sprite: new Sprite('img/obstacles.png', [96, 0], [32, 64], 8, [0], 'horizontal', false, false) // url, pos, size, speed, frames, dir, once, inProgress
+			},
+			{
+				id: 2,
+				count: 1,
+				width: 64,
+				height: 32,
+				icon: 150,
+				sprite: new Sprite('img/obstacles.png', [128, 0], [64, 32], 8, [0], 'horizontal', false, false) // url, pos, size, speed, frames, dir, once, inProgress
+			}
+		]
+	}
 };
 /**
  * The heart of the game
@@ -610,8 +1021,40 @@ var core = function(document, window){
 	function endLevel(){
 		GameJam.gameEnded = true;
 		GameJam.paused = true;
+
+		var stars = GameJam.levels[GameJam.currentLevel].stars,
+			steps = Math.round(GameJam.tileCounter);
+
+		for (var i in stars) {
+			document.querySelectorAll('#steps' + i)[0].innerHTML = stars[i];
+			if (steps >= stars[i]) {
+				showStar(i);
+				var nextLevel = 'level' + (parseInt(GameJam.currentLevel.replace(/level/g, '')) + 1);
+				if (GameJam.levels[nextLevel]) {
+					GameJam.levels[nextLevel].unlocked = true;
+				}
+			}
+		}
+
+		function showStar(star){
+			requestTimeout(function(){
+				document.querySelectorAll('#star-big' + star)[0].className = 'star show';
+			}, star*500 + 500);
+		}
+
+		GameJam.levels[GameJam.currentLevel].time = steps;
+		document.querySelectorAll('#complete .steps')[0].innerHTML = steps;
+
+		GameJam.canvasa.style.display = 'none';
+		GameJam.canvass.style.display = 'none';
+
+		document.getElementById('fog').className = 'show';
+
+		getLevels();
+
+		changeView('complete');
+
 		console.log('-- Level done!');
-		//changeView('complete');
 	}
 
 
