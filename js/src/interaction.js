@@ -78,19 +78,67 @@ var interaction = function(document, window){
 	            	if (GameJam.draggedItem) {
 	            		var cellwidth = cell[0] - Math.floor((GameJam.items[GameJam.draggedItem].width)/GameJam.tileWidth) + 1 ,
 	            			cellheight = cell[1] - Math.floor((GameJam.items[GameJam.draggedItem].height)/GameJam.tileHeight) + 1,
+	            			cellxhigh = GameJam.items[GameJam.draggedItem].width/ GameJam.tileWidth,
+	            			cellyhigh = GameJam.items[GameJam.draggedItem].height/ GameJam.tileHeight,
 	            			newxpos = cellwidth * GameJam.tileWidth,
 	            			newypos = cellheight * GameJam.tileHeight,
+	            			newxhighpos =  newxpos + GameJam.tileWidth*(GameJam.items[GameJam.draggedItem].width/GameJam.tileWidth -1),
+	            			newyhighpos =  newypos + GameJam.tileHeight*(GameJam.items[GameJam.draggedItem].height/GameJam.tileHeight -1),
 	            			posHasItem = false;
+						
+						// if it has an obstacle we dont move it there
+						if (GameJam.obstacles[cellwidth] && GameJam.obstacles[cellwidth][cellheight] === 0 ){
+	            			// checkin all  x blocks from the item with the obstacles
+	            			while(!posHasItem && cellxhigh>1){
+	            				//console.log("ob XX" + GameJam.obstacles[cellwidth + cellxhigh -1][cellheight] + '-'+cellwidth  + '-' +cellxhigh + posHasItem );
+	            				if (GameJam.obstacles[cellwidth + cellxhigh -1][cellheight]  !== 0){
+	            					posHasItem = true;
+	            					console.log("ob X" + GameJam.obstacles[cellwidth + cellxhigh -1][cellheight] + '-'+cellwidth  + '-' +cellxhigh + posHasItem );
+	            				}
+	            				cellxhigh--;
+	            			}
 
-	            		if (GameJam.obstacles[cellwidth] && GameJam.obstacles[cellwidth][cellheight] === 0 ){
-		            		for (var i=0; i < GameJam.items.length; i++) {
-									if (GameJam.items[i].pos[0] === newxpos && GameJam.items[i].pos[1] === newypos){
+	            			// checkin all y blocks from the item with the obstacles
+	            			while(!posHasItem && cellyhigh>1){
+	            				if (GameJam.obstacles[cellwidth][cellheight + cellyhigh -1]  !== 0){
+	            					posHasItem = true;
+	            					console.log("ob y" + GameJam.obstacles[cellwidth][cellheight + cellyhigh -1] + '-'+cellheight  + '-' +cellyhigh + posHasItem);
+	            				}
+	            				cellyhigh--;
+	            			}
+	            			var i = 0;
+	            			while (!posHasItem && i < GameJam.items.length){
+	            				//we want to check all items but not the one that we drag
+	            				if(i != GameJam.draggedItem){
+	            					var itemxpos = GameJam.items[i].pos[0],
+	            						itemypos = GameJam.items[i].pos[1],
+	            						itemxhighpos = itemxpos + GameJam.tileWidth*(GameJam.items[i].width/GameJam.tileWidth -1),
+	            						itemyhighpos = itemypos +  GameJam.tileHeight*(GameJam.items[i].height/GameJam.tileHeight -1);
+
+		            				console.log('x:' + newxpos + ':' + newxhighpos + '-'+ itemxpos + ':' + itemxhighpos + '::' + i);
+		            				console.log('y:' + newypos + ':' + newyhighpos + '-'+ itemypos + ':' + itemyhighpos  + '::' + i);
+
+		            				//ix <= nx <= nhx <= ihx
+		            				//iy <= ny <= nhy <= ihy
+									if (((itemxpos <= newxpos && newxpos <= itemxhighpos) || (itemxpos <= newxhighpos && newxhighpos <= itemxhighpos)) &&
+										((itemypos <= newypos && newypos <= itemyhighpos) || (itemypos <= newyhighpos && newyhighpos <= itemyhighpos))){
+
+										console.log('xx:'+GameJam.items[i].pos[0] + '-' + newxpos + ':' + newxhighpos + '::' + i);
+		            					console.log('yy:'+GameJam.items[i].pos[1] + '-' + newypos + ':' + newyhighpos + '::' + i);
+
 										posHasItem = true;
 									}
+									
+								}
+
+								i++;
 							}
+							
+							// it didnt have any obstacle or another item so we can move it
 		            		if (!posHasItem){
 		            			GameJam.items[GameJam.draggedItem].pos = [newxpos, newypos];
 		            		}
+
 	            		}
 	            	} else{
 						// Map scrolling
