@@ -86,7 +86,7 @@ var interaction = function(document, window){
 	            			newyhighpos =  newypos + GameJam.tileHeight*(GameJam.items[GameJam.draggedItem].height/GameJam.tileHeight -1),
 	            			posHasItem = false;
 						
-						// if it has an obstacle we dont move it there
+						// if it has an obstacle we don't move it there
 						if (GameJam.obstacles[cellwidth] && GameJam.obstacles[cellwidth][cellheight] === 0 ){
 	            			// checkin all  x blocks from the item with the obstacles
 	            			while(!posHasItem && cellxhigh>1){

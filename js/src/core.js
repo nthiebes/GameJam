@@ -328,33 +328,42 @@ var core = function(document, window){
 		}
 	}
    	
+	function itemsToObstacles(insertItems){
+		// Put the items to the world map
+			var list = GameJam.items;
+			for (var i=0; i<list.length; i++) {
+				var item = GameJam.items[i],
+					itemPos = item.sprite.pos,
+					obstacleX = itemPos[0]/32,
+					obstacleY = itemPos[1]/32,
+					rows = item.height/32,
+					cols = item.width/32,
+					offset = obstacleY;
+				
+				if (cols >= rows) {
+					for (var c=0; c<cols; c++) {
+						GameJam.obstacles[GameJam.items[i].pos[0]/32 + c][GameJam.items[i].pos[1]/32] = insertItems? obstacleX + c : 0;
+					}
+				} else {
+					for (var r=0; r<rows; r++) {
+						GameJam.obstacles[GameJam.items[i].pos[0]/32][GameJam.items[i].pos[1]/32 + r] = insertItems? obstacleX + offset : 0;
+						offset = offset + GameJam.imageNumTiles;
+					}
+				}
+			}
+	}
+
 
    	/**
    	 * Start the second stage of the game
    	 */
    	function startGame(){
-		// Put the items to the world map
-		var list = GameJam.items;
-		for (var i=0; i<list.length; i++) {
-			var item = GameJam.items[i],
-				itemPos = item.sprite.pos,
-				obstacleX = itemPos[0]/32,
-				obstacleY = itemPos[1]/32,
-				rows = item.height/32,
-				cols = item.width/32,
-				offset = obstacleY;
-			
-			if (cols >= rows) {
-				for (var c=0; c<cols; c++) {
-					GameJam.obstacles[GameJam.items[i].pos[0]/32 + c][GameJam.items[i].pos[1]/32] = obstacleX + c;
-				}
-			} else {
-				for (var r=0; r<rows; r++) {
-					GameJam.obstacles[GameJam.items[i].pos[0]/32][GameJam.items[i].pos[1]/32 + r] = obstacleX + offset;
-					offset = offset + GameJam.imageNumTiles;
-				}
-			}
-		}
+		
+		//put items in the map
+		itemsToObstacles(true);
+
+		// Create the prisoner path
+		GameJam.movePrisoner();
 
 		// Reset items, we dont want the user to be able to drag and drop them
  		GameJam.items = [];
@@ -371,9 +380,6 @@ var core = function(document, window){
 
 		// Game has started
 		GameJam.gameStarted = true;
-
-		// Create the prisoner path
-		GameJam.movePrisoner();
 
 		console.log('-- Game started');
 	}
@@ -475,7 +481,8 @@ var core = function(document, window){
 		ChangeView: changeView,
 		Loading: loading,
 		HideObstacles: hideObstacles,
-		ShowObstacles: showObstacles
+		ShowObstacles: showObstacles,
+		itemsToObstacles: itemsToObstacles
 	};
 
 }(document, window);
