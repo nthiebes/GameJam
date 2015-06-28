@@ -59,10 +59,12 @@ var interaction = function(document, window){
 	            	// Check if an item is at the dragstart cell
 					for (var i in GameJam.items) {
 						var startwidth = Math.floor(GameJam.items[i].pos[0]/GameJam.tileWidth),
-							endwidth = Math.floor((GameJam.items[i].pos[0] + GameJam.items[i].width)/GameJam.tileWidth),
+							endwidth = Math.floor(GameJam.items[i].pos[0]/GameJam.tileWidth + GameJam.items[i].width/GameJam.tileWidth - 1),
 							startheight = Math.floor(GameJam.items[i].pos[1]/GameJam.tileHeight),
-							endheight = Math.floor((GameJam.items[i].pos[1] + GameJam.items[i].height)/GameJam.tileHeight);
+							endheight = Math.floor(GameJam.items[i].pos[1]/GameJam.tileHeight + GameJam.items[i].height/GameJam.tileHeight - 1);
 
+						//console.log(startwidth + "-" + endwidth + "-" + startheight + "-" + endheight + "-" + cell);
+						
 						if (startwidth <= cell[0] && cell[0] <= endwidth && startheight <= cell[1] && cell[1] <= endheight) {
 							GameJam.draggedItem = i;
 						}
@@ -93,7 +95,7 @@ var interaction = function(document, window){
 	            				//console.log("ob XX" + GameJam.obstacles[cellwidth + cellxhigh -1][cellheight] + '-'+cellwidth  + '-' +cellxhigh + posHasItem );
 	            				if (GameJam.obstacles[cellwidth + cellxhigh -1][cellheight]  !== 0){
 	            					posHasItem = true;
-	            					console.log("ob X" + GameJam.obstacles[cellwidth + cellxhigh -1][cellheight] + '-'+cellwidth  + '-' +cellxhigh + posHasItem );
+	            					//console.log("ob X" + GameJam.obstacles[cellwidth + cellxhigh -1][cellheight] + '-'+cellwidth  + '-' +cellxhigh + posHasItem );
 	            				}
 	            				cellxhigh--;
 	            			}
@@ -102,7 +104,7 @@ var interaction = function(document, window){
 	            			while(!posHasItem && cellyhigh>1){
 	            				if (GameJam.obstacles[cellwidth][cellheight + cellyhigh -1]  !== 0){
 	            					posHasItem = true;
-	            					console.log("ob y" + GameJam.obstacles[cellwidth][cellheight + cellyhigh -1] + '-'+cellheight  + '-' +cellyhigh + posHasItem);
+	            					//console.log("ob y" + GameJam.obstacles[cellwidth][cellheight + cellyhigh -1] + '-'+cellheight  + '-' +cellyhigh + posHasItem);
 	            				}
 	            				cellyhigh--;
 	            			}
@@ -115,16 +117,16 @@ var interaction = function(document, window){
 	            						itemxhighpos = itemxpos + GameJam.tileWidth*(GameJam.items[i].width/GameJam.tileWidth -1),
 	            						itemyhighpos = itemypos +  GameJam.tileHeight*(GameJam.items[i].height/GameJam.tileHeight -1);
 
-		            				console.log('x:' + newxpos + ':' + newxhighpos + '-'+ itemxpos + ':' + itemxhighpos + '::' + i);
-		            				console.log('y:' + newypos + ':' + newyhighpos + '-'+ itemypos + ':' + itemyhighpos  + '::' + i);
+		            				//console.log('x:' + newxpos + ':' + newxhighpos + '-'+ itemxpos + ':' + itemxhighpos + '::' + i);
+		            				//console.log('y:' + newypos + ':' + newyhighpos + '-'+ itemypos + ':' + itemyhighpos  + '::' + i);
 
 		            				//ix <= nx <= nhx <= ihx
 		            				//iy <= ny <= nhy <= ihy
 									if (((itemxpos <= newxpos && newxpos <= itemxhighpos) || (itemxpos <= newxhighpos && newxhighpos <= itemxhighpos)) &&
 										((itemypos <= newypos && newypos <= itemyhighpos) || (itemypos <= newyhighpos && newyhighpos <= itemyhighpos))){
 
-										console.log('xx:'+GameJam.items[i].pos[0] + '-' + newxpos + ':' + newxhighpos + '::' + i);
-		            					console.log('yy:'+GameJam.items[i].pos[1] + '-' + newypos + ':' + newyhighpos + '::' + i);
+										//console.log('xx:'+GameJam.items[i].pos[0] + '-' + newxpos + ':' + newxhighpos + '::' + i);
+		            					//console.log('yy:'+GameJam.items[i].pos[1] + '-' + newypos + ':' + newyhighpos + '::' + i);
 
 										posHasItem = true;
 									}
