@@ -39,6 +39,14 @@ var core = function(document, window){
    		loading(100);
    		console.log('-- Loading done');
 
+		//music
+		if (!buzz.isMP3Supported()) {
+		    alert("Your browser doesn't support MP3 Format.");
+		}else{
+			GameJam.music = new buzz.sound("music/cafm.mp3");
+			GameJam.music.loop().play().fadeIn();
+		}
+
    		requestTimeout(function(){
 			changeView('menu');
 			document.getElementById('fog').className = 'show';

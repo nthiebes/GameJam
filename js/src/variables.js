@@ -76,5 +76,7 @@ window.GameJam = {
 	body: document.getElementsByTagName('body')[0],
 	loadingWrapper: document.getElementById('loading-wrapper'),
 	loadingInner: document.getElementById('loading-inner'),
-	draggedIcon: document.getElementById('dragged-icon')
+	draggedIcon: document.getElementById('dragged-icon'),
+
+	music: null
 };
