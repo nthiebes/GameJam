@@ -63,6 +63,12 @@ var core = function(document, window){
 			} else {
 				useStorage();
 			}
+		} else {
+			if (!docCookies.hasItem('levels')) {
+				populateCookie();
+			} else {
+				useCookie();
+			}
 		}
 
 		getLevels();
@@ -79,8 +85,6 @@ var core = function(document, window){
    		for (var level in GameJam.levels) {
    			localStorage.setItem(level, GameJam.levels[level].time);
    		}
-
-		useStorage();
    	}
 
 
@@ -92,6 +96,38 @@ var core = function(document, window){
 
    		for (var level in GameJam.levels) {
    			GameJam.levels[level].time = localStorage.getItem(level);
+   			if (GameJam.levels[level].time >= GameJam.levels[level].stars[0]) {
+   				GameJam.levels[level].unlocked = true;
+   				var nextLevel = 'level' + (parseInt(level.replace(/level/g, '')) + 1);
+   				GameJam.levels[nextLevel].unlocked = true;
+   			}
+   		}
+   	}
+
+
+   	/**
+   	 * Populate the cookie for the first time
+   	 */
+   	function populateCookie(){
+   		console.log('-- Populate cookie');
+
+   		var cookieObject = {};
+   		for (var level in GameJam.levels) {
+   			cookieObject[level] = GameJam.levels[level].time;
+   		}
+   		docCookies.setItem('levels', JSON.stringify(cookieObject));
+   	}
+
+
+   	/**
+   	 * Update the levels with data from cookie
+   	 */
+   	function useCookie(){
+   		console.log('-- Use cookie');
+
+   		var cookie = JSON.parse(docCookies.getItem('levels'));
+   		for (var level in GameJam.levels) {
+   			GameJam.levels[level].time = cookie[level];
    			if (GameJam.levels[level].time >= GameJam.levels[level].stars[0]) {
    				GameJam.levels[level].unlocked = true;
    				var nextLevel = 'level' + (parseInt(level.replace(/level/g, '')) + 1);
@@ -486,6 +522,10 @@ var core = function(document, window){
 			GameJam.levels[GameJam.currentLevel].time = steps;
 			if (localStorageActive) {
 				localStorage.setItem(GameJam.currentLevel, steps);
+			} else {
+				var cookieObject = JSON.parse(docCookies.getItem('levels'));
+				cookieObject[GameJam.currentLevel] = steps;
+				docCookies.setItem('levels', JSON.stringify(cookieObject));
 			}
 		}
 		document.querySelectorAll('#complete .steps')[0].innerHTML = steps;
@@ -585,6 +625,50 @@ var core = function(document, window){
 			return false;
 		}
 	}
+
+
+	/**
+	 * Cookie helper
+	 */
+	var docCookies = {
+		getItem: function (sKey) {
+			if (!sKey) { return null; }
+			return decodeURIComponent(document.cookie.replace(new RegExp("(?:(?:^|.*;)\\s*" + encodeURIComponent(sKey).replace(/[\-\.\+\*]/g, "\\$&") + "\\s*\\=\\s*([^;]*).*$)|^.*$"), "$1")) || null;
+		},
+		setItem: function (sKey, sValue, vEnd, sPath, sDomain, bSecure) {
+			if (!sKey || /^(?:expires|max\-age|path|domain|secure)$/i.test(sKey)) { return false; }
+			var sExpires = "";
+			if (vEnd) {
+				switch (vEnd.constructor) {
+					case Number:
+						sExpires = vEnd === Infinity ? "; expires=Fri, 31 Dec 9999 23:59:59 GMT" : "; max-age=" + vEnd;
+						break;
+					case String:
+						sExpires = "; expires=" + vEnd;
+						break;
+					case Date:
+						sExpires = "; expires=" + vEnd.toUTCString();
+					break;
+				}
+			}
+			document.cookie = encodeURIComponent(sKey) + "=" + encodeURIComponent(sValue) + sExpires + (sDomain ? "; domain=" + sDomain : "") + (sPath ? "; path=" + sPath : "") + (bSecure ? "; secure" : "");
+			return true;
+		},
+		removeItem: function (sKey, sPath, sDomain) {
+			if (!this.hasItem(sKey)) { return false; }
+			document.cookie = encodeURIComponent(sKey) + "=; expires=Thu, 01 Jan 1970 00:00:00 GMT" + (sDomain ? "; domain=" + sDomain : "") + (sPath ? "; path=" + sPath : "");
+			return true;
+		},
+		hasItem: function (sKey) {
+			if (!sKey) { return false; }
+			return (new RegExp("(?:^|;\\s*)" + encodeURIComponent(sKey).replace(/[\-\.\+\*]/g, "\\$&") + "\\s*\\=")).test(document.cookie);
+		},
+		keys: function () {
+			var aKeys = document.cookie.replace(/((?:^|\s*;)[^\=]+)(?=;|$)|^\s*|\s*(?:\=[^;]*)?(?:\1|$)/g, "").split(/\s*(?:\=[^;]*)?;\s*/);
+			for (var nLen = aKeys.length, nIdx = 0; nIdx < nLen; nIdx++) { aKeys[nIdx] = decodeURIComponent(aKeys[nIdx]); }
+			return aKeys;
+		}
+	};
 
 
 	/**
