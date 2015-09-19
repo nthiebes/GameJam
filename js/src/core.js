@@ -4,6 +4,9 @@
  */
 var core = function(document, window){
 
+	var localStorageActive = storageAvailable('localStorage');
+
+
 	/**
 	 * General initialization
 	 */
@@ -27,8 +30,6 @@ var core = function(document, window){
 			]);
 			resources.onReady(initMenu);
 		};
-
-		getLevels();
    	}
 
 
@@ -54,8 +55,49 @@ var core = function(document, window){
 		}, 700);
 
 		interaction.GeneralEvents();
-		interaction.LevelButtonEvents();
 		console.log('-- Events initialized');
+
+		if (localStorageActive) {
+			if (!localStorage.getItem('level1')) {
+				populateStorage();
+			} else {
+				useStorage();
+			}
+		}
+
+		getLevels();
+		interaction.LevelButtonEvents();
+   	}
+
+
+   	/**
+   	 * Populate the local storage for the first time
+   	 */
+   	function populateStorage(){
+   		console.log('-- Populate local storage');
+
+   		for (var level in GameJam.levels) {
+   			localStorage.setItem(level, GameJam.levels[level].time);
+   		}
+
+		useStorage();
+   	}
+
+
+   	/**
+   	 * Update the levels with data from storage
+   	 */
+   	function useStorage(){
+   		console.log('-- Use local storage');
+
+   		for (var level in GameJam.levels) {
+   			GameJam.levels[level].time = localStorage.getItem(level);
+   			if (GameJam.levels[level].time >= GameJam.levels[level].stars[0]) {
+   				GameJam.levels[level].unlocked = true;
+   				var nextLevel = 'level' + (parseInt(level.replace(/level/g, '')) + 1);
+   				GameJam.levels[nextLevel].unlocked = true;
+   			}
+   		}
    	}
 
 
@@ -442,6 +484,9 @@ var core = function(document, window){
 
 		if (steps > GameJam.levels[GameJam.currentLevel].time) {
 			GameJam.levels[GameJam.currentLevel].time = steps;
+			if (localStorageActive) {
+				localStorage.setItem(GameJam.currentLevel, steps);
+			}
 		}
 		document.querySelectorAll('#complete .steps')[0].innerHTML = steps;
 
@@ -526,6 +571,23 @@ var core = function(document, window){
 
 
 	/**
+	 * Check for local storage availability
+	 */
+	function storageAvailable(type){
+		try {
+			var storage = window[type],
+				x = '__storage_test__';
+			storage.setItem(x, x);
+			storage.removeItem(x);
+			return true;
+		}
+		catch(e) {
+			return false;
+		}
+	}
+
+
+	/**
 	 * A cross-browser requestAnimationFrame
 	 */
 	var requestAnimFrame = (function(){
@@ -586,13 +648,3 @@ var core = function(document, window){
 }(document, window);
 
 core.Init();
-
-
-function arraysIdentical(a, b) {
-	    var i = a.length;
-	    if (i != b.length) return false;
-	    while (i--) {
-	        if (a[i] !== b[i]) return false;
-	    }
-	    return true;
-	}
