@@ -560,6 +560,13 @@ ul {
     -ms-transform: scale(1.5);
     -o-transform: scale(1.5);
     transform: scale(1.5); }
+    .window .star.visible {
+      -webkit-transform: scale(1);
+      -moz-transform: scale(1);
+      -ms-transform: scale(1);
+      -o-transform: scale(1);
+      transform: scale(1);
+      opacity: 1; }
     .window .star.show {
       -webkit-transition: all 0.3s;
       -moz-transition: all 0.3s;

@@ -4,7 +4,6 @@
  */
 window.GameJam.levels = {
 	level1: {
-		name: 'Brot',
 		time: 0,
 		obstacles: [[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
 				    [1, 1, 0, 0, 0, 0, 0, 8, 24, 0, 0, 0, 0, 0, 0, 1],
@@ -52,7 +51,6 @@ window.GameJam.levels = {
 		]
 	},
 	level2: {
-		name: 'Brot',
 		time: 0,
 		obstacles: [[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
 				    [1, 1, 0, 0, 0, 0, 0, 8, 24, 0, 0, 0, 0, 0, 0, 1],
@@ -100,7 +98,6 @@ window.GameJam.levels = {
 		]
 	},
 	level3: {
-		name: 'Brot',
 		time: 0,
 		obstacles: [[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
 				    [1, 1, 0, 0, 0, 0, 0, 8, 24, 0, 0, 0, 0, 0, 0, 1],
@@ -148,7 +145,6 @@ window.GameJam.levels = {
 		]
 	},
 	level4: {
-		name: 'Brot',
 		time: 0,
 		obstacles: [[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
 				    [1, 1, 0, 0, 0, 0, 0, 8, 24, 0, 0, 0, 0, 0, 0, 1],
@@ -196,7 +192,6 @@ window.GameJam.levels = {
 		]
 	},
 	level5: {
-		name: 'Brot',
 		time: 0,
 		obstacles: [[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
 				    [1, 1, 0, 0, 0, 0, 0, 8, 24, 0, 0, 0, 0, 0, 0, 1],
@@ -244,7 +239,6 @@ window.GameJam.levels = {
 		]
 	},
 	level6: {
-		name: 'Brot',
 		time: 0,
 		obstacles: [[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
 				    [1, 1, 0, 0, 0, 0, 0, 8, 24, 0, 0, 0, 0, 0, 0, 1],
@@ -292,7 +286,6 @@ window.GameJam.levels = {
 		]
 	},
 	level7: {
-		name: 'Brot',
 		time: 0,
 		obstacles: [[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
 				    [1, 1, 0, 0, 0, 0, 0, 8, 24, 0, 0, 0, 0, 0, 0, 1],
@@ -340,7 +333,6 @@ window.GameJam.levels = {
 		]
 	},
 	level8: {
-		name: 'Brot',
 		time: 0,
 		obstacles: [[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
 				    [1, 1, 0, 0, 0, 0, 0, 8, 24, 0, 0, 0, 0, 0, 0, 1],
@@ -388,7 +380,6 @@ window.GameJam.levels = {
 		]
 	},
 	level9: {
-		name: 'Brot',
 		time: 0,
 		obstacles: [[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
 				    [1, 1, 0, 0, 0, 0, 0, 8, 24, 0, 0, 0, 0, 0, 0, 1],
@@ -436,7 +427,6 @@ window.GameJam.levels = {
 		]
 	},
 	leve10: {
-		name: 'Brot',
 		time: 0,
 		obstacles: [[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
 				    [1, 1, 0, 0, 0, 0, 0, 8, 24, 0, 0, 0, 0, 0, 0, 1],

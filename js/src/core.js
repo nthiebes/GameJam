@@ -43,8 +43,8 @@ var core = function(document, window){
 		if (!buzz.isMP3Supported()) {
 		    alert("Your browser doesn't support MP3 Format.");
 		}else{
-			GameJam.music = new buzz.sound("music/cafm.mp3");
-			GameJam.music.loop().play().fadeIn();
+			// GameJam.music = new buzz.sound("music/cafm.mp3");
+			// GameJam.music.loop().play().fadeIn();
 		}
 
    		requestTimeout(function(){
@@ -54,6 +54,7 @@ var core = function(document, window){
 		}, 700);
 
 		interaction.GeneralEvents();
+		interaction.LevelButtonEvents();
 		console.log('-- Events initialized');
    	}
 
@@ -338,27 +339,27 @@ var core = function(document, window){
    	
 	function itemsToObstacles(insertItems){
 		// Put the items to the world map
-			var list = GameJam.items;
-			for (var i=0; i<list.length; i++) {
-				var item = GameJam.items[i],
-					itemPos = item.sprite.pos,
-					obstacleX = itemPos[0]/32,
-					obstacleY = itemPos[1]/32,
-					rows = item.height/32,
-					cols = item.width/32,
-					offset = obstacleY;
-				
-				if (cols >= rows) {
-					for (var c=0; c<cols; c++) {
-						GameJam.obstacles[GameJam.items[i].pos[0]/32 + c][GameJam.items[i].pos[1]/32] = insertItems? obstacleX + c : 0;
-					}
-				} else {
-					for (var r=0; r<rows; r++) {
-						GameJam.obstacles[GameJam.items[i].pos[0]/32][GameJam.items[i].pos[1]/32 + r] = insertItems? obstacleX + offset : 0;
-						offset = offset + GameJam.imageNumTiles;
-					}
+		var list = GameJam.items;
+		for (var i=0; i<list.length; i++) {
+			var item = GameJam.items[i],
+				itemPos = item.sprite.pos,
+				obstacleX = itemPos[0]/32,
+				obstacleY = itemPos[1]/32,
+				rows = item.height/32,
+				cols = item.width/32,
+				offset = obstacleY;
+			
+			if (cols >= rows) {
+				for (var c=0; c<cols; c++) {
+					GameJam.obstacles[GameJam.items[i].pos[0]/32 + c][GameJam.items[i].pos[1]/32] = insertItems? obstacleX + c : 0;
+				}
+			} else {
+				for (var r=0; r<rows; r++) {
+					GameJam.obstacles[GameJam.items[i].pos[0]/32][GameJam.items[i].pos[1]/32 + r] = insertItems? obstacleX + offset : 0;
+					offset = offset + GameJam.imageNumTiles;
 				}
 			}
+		}
 	}
 
 
@@ -389,6 +390,8 @@ var core = function(document, window){
 		// Game has started
 		GameJam.gameStarted = true;
 
+		GameJam.gameEnded = false;
+
 		console.log('-- Game started');
 	}
 
@@ -400,11 +403,28 @@ var core = function(document, window){
 		GameJam.gameEnded = true;
 		GameJam.paused = true;
 
+		// Reset
+		var starsElmts = document.querySelectorAll('.stars-big .star');
+		for (var star in starsElmts) {
+			starsElmts[star].className = 'star';
+		}
+
+		var nextLevelBtn = document.querySelectorAll('#complete .next-btn')[0];
+		if (nextLevelBtn) {
+			nextLevelBtn.remove();
+		}
+
 		var stars = GameJam.levels[GameJam.currentLevel].stars,
 			steps = Math.round(GameJam.tileCounter);
 
 		for (var i in stars) {
 			document.querySelectorAll('#steps' + i)[0].innerHTML = stars[i];
+
+			if (GameJam.levels[GameJam.currentLevel].time >= stars[i]) {
+				document.querySelectorAll('#star-big' + i)[0].className = 'star visible';
+			}
+
+			// Current playthrough
 			if (steps >= stars[i]) {
 				showStar(i);
 				var nextLevel = 'level' + (parseInt(GameJam.currentLevel.replace(/level/g, '')) + 1);
@@ -420,19 +440,88 @@ var core = function(document, window){
 			}, star*500 + 500);
 		}
 
-		GameJam.levels[GameJam.currentLevel].time = steps;
+		if (steps > GameJam.levels[GameJam.currentLevel].time) {
+			GameJam.levels[GameJam.currentLevel].time = steps;
+		}
 		document.querySelectorAll('#complete .steps')[0].innerHTML = steps;
+
+		if (GameJam.levels[GameJam.currentLevel].time >= GameJam.levels[GameJam.currentLevel].stars[0]) {
+			var buttonsElm = document.querySelectorAll('#complete .buttons')[0];
+			buttonsElm.insertAdjacentHTML('beforeend', '<div class="button next-btn"></div>');
+			interaction.NextLevelBtnEvent();
+		}
 
 		GameJam.canvasa.style.display = 'none';
 		GameJam.canvass.style.display = 'none';
+		GameJam.timer.className = '';
 
 		document.getElementById('fog').className = 'show';
 
 		getLevels();
+		interaction.LevelButtonEvents();
 
 		changeView('complete');
 
 		console.log('-- Level done!');
+	}
+
+
+	/**
+	 * Load a new level
+	 */
+	function loadLevel(newLevel){
+		console.log('-- Load new level:', newLevel);
+		GameJam.currentLevel = newLevel;
+
+		GameJam.timer.className = '';
+
+		if( !GameJam.firstLevel ){
+			core.InitGame();
+		} else {
+			GameJam.prisoner[0].pos = [Math.floor((GameJam.worldWidth-1) / 2) * GameJam.tileWidth, (GameJam.worldHeight-1) * GameJam.tileHeight - 32];
+
+			// Hide menu
+			GameJam.body.className = 'in-game';
+			document.getElementById('levels').className = 'window hide';
+			document.getElementById('fog').className = '';
+		}
+		GameJam.createWorld();
+
+		// Create obstacle icons
+		var iconsHtml = '',
+			counter = 1;
+		for (var i in GameJam.levels[GameJam.currentLevel].items) {
+			var item = GameJam.levels[GameJam.currentLevel].items[i];
+			iconsHtml += '<li class="obstacle" data-icon="' + item.id + '">' +
+							'<div class="size">' + item.width/32 + 'x' + item.height/32 + '</div>' +
+							'<div class="icon" style="background-position: 0px -' + item.icon + 'px;"></div>' +
+							'<div class="count">' + item.count + '</div>' +
+						 '</li>';
+			counter++;
+		}
+		document.getElementById('obstacles-list').innerHTML = iconsHtml;
+
+		// Register game event handlers
+		if( !GameJam.firstLevel ){
+			interaction.GameEvents();
+		}
+		interaction.ObstacleEvents();
+		console.log('-- Game events initialized');
+
+		GameJam.canvasa.style.display = 'block';
+		GameJam.canvass.style.display = 'block';
+
+		GameJam.paused = false;
+
+		requestTimeout(function(){
+			document.getElementById('obstacles').className = 'show';
+			document.getElementById('start-button-wrapper').className = 'show';
+			document.getElementById('slider').className = 'show';
+		}, 300);
+
+		if( !GameJam.firstLevel ){
+			GameJam.firstLevel = true;
+		}
 	}
 
 
@@ -490,9 +579,20 @@ var core = function(document, window){
 		Loading: loading,
 		HideObstacles: hideObstacles,
 		ShowObstacles: showObstacles,
-		itemsToObstacles: itemsToObstacles
+		itemsToObstacles: itemsToObstacles,
+		LoadLevel: loadLevel
 	};
 
 }(document, window);
 
 core.Init();
+
+
+function arraysIdentical(a, b) {
+	    var i = a.length;
+	    if (i != b.length) return false;
+	    while (i--) {
+	        if (a[i] !== b[i]) return false;
+	    }
+	    return true;
+	}

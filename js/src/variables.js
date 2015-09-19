@@ -65,6 +65,7 @@ window.GameJam = {
 	draggedItem: null,
 	currentLevel: '',
 	gameStarted: false,
+	firstLevel: false,
 	gameEnded: false,
 	paused: false,
 	panning: false,

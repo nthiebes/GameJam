@@ -171,6 +171,61 @@ var interaction = function(document, window){
 	        }
 		});
 
+
+		/** Free the mouse ... */
+		var mcStart = new Hammer(document.getElementById('start-game'));
+		mcStart.on('tap', function(e){
+			if (e.target.className.match(/disabled/g)) {
+				return false;
+			}
+
+			core.StartGame();
+		});
+
+		/** Expand/minimize the item list */
+		var mcSlider = new Hammer(document.getElementById('slider'));
+		mcSlider.on('tap', function(e){
+			if (e.target.className.match(/minimized/g)) {
+				core.ShowObstacles();
+			} else{
+		        core.HideObstacles();
+			}
+		});
+
+		/** Reset margin on resize */
+		window.onresize = function(e){
+		    for (var i=0; i < canvas.length; i++) {
+		    	canvas[i].style.marginLeft = '0px';
+				canvas[i].style.marginTop = '0px';
+			}
+		};
+
+		/** Replay level button */
+		var mcReplay = new Hammer(document.querySelectorAll('.replay-btn')[0]);
+		mcReplay.on('tap', function(e){
+			document.getElementById('complete').className = 'window hide';
+			core.LoadLevel(GameJam.currentLevel);
+		});
+	}
+
+
+	/**
+	 * Start the next level
+	 */
+	function nextLevelBtnEvent(){
+		var mcNext = new Hammer(document.querySelectorAll('.next-btn')[0]);
+		mcNext.on('tap', function(e){
+			document.getElementById('complete').className = 'window hide';
+			var nextLevel = 'level' + (parseInt(GameJam.currentLevel.replace(/level/g, '')) + 1);
+			core.LoadLevel(nextLevel);
+		});
+	}
+
+
+	/**
+	 * Obstacle list pan events
+	 */
+	function obstacleEvents(){
 		/** Listen to pan events */
 		var obstaclesList = document.querySelectorAll('.obstacle');
 		for (var i=0; i<obstaclesList.length; i++) {
@@ -184,6 +239,7 @@ var interaction = function(document, window){
 	           		obstacle = e.target.className.match(/obstacle/g) ? e.target : e.target.parentElement,
             		obstacleId = obstacle.getAttribute('data-icon'),
             		item = GameJam.levels[GameJam.currentLevel].items[obstacleId],
+            		itemCount = parseInt(item.count),
 	           		x,
 	           		y,
             		pos = [],
@@ -234,11 +290,11 @@ var interaction = function(document, window){
 	            		pos.push(cellheight * GameJam.tileHeight);
 
 	            		// Remove obstacle from obstacle window
-	            		item.count = item.count - 1;
-	            		if (item.count <= 0) {
+	            		itemCount = itemCount - 1;
+	            		if (itemCount <= 0) {
 	            			obstacle.remove();
 	            		} else {
-	            			obstacle.querySelectorAll('.count')[0].innerHTML = item.count;
+	            			obstacle.querySelectorAll('.count')[0].innerHTML = itemCount;
 	            		}
 
 	            		// Create a new item and add it to the global items list
@@ -255,34 +311,6 @@ var interaction = function(document, window){
 		        }
 			});
 		}
-
-		/** Free the mouse ... */
-		var mcStart = new Hammer(document.getElementById('start-game'));
-		mcStart.on('tap', function(e){
-			if (e.target.className.match(/disabled/g)) {
-				return false;
-			}
-
-			core.StartGame();
-		});
-
-		/** Expand/minimize the item list */
-		var mcSlider = new Hammer(document.getElementById('slider'));
-		mcSlider.on('tap', function(e){
-			if (e.target.className.match(/minimized/g)) {
-				core.ShowObstacles();
-			} else{
-		        core.HideObstacles();
-			}
-		});
-
-		/** Reset margin on resize */
-		window.onresize = function(e){
-		    for (var i=0; i < canvas.length; i++) {
-		    	canvas[i].style.marginLeft = '0px';
-				canvas[i].style.marginTop = '0px';
-			}
-		};
 	}
 
 
@@ -317,41 +345,19 @@ var interaction = function(document, window){
 				}
 			});
 		}
+	}
 
-		/** Level selection buttons */
+
+	/**
+	 * Level selection buttons
+	 */
+	function levelButtonEvents(){
 		var levelList = document.querySelectorAll('.level.unlocked');
 		for (var i=0; i<levelList.length; i++) {
 			var mcLevel = new Hammer(levelList[i]);
 
 			mcLevel.on('tap', function(e){
-				GameJam.currentLevel = e.target.parentElement.id;
-				core.InitGame();
-				GameJam.createWorld();
-
-				// Create obstacle icons
-				var iconsHtml = '',
-					counter = 1;
-				for (var i in GameJam.levels[GameJam.currentLevel].items) {
-					var item = GameJam.levels[GameJam.currentLevel].items[i];
-					iconsHtml += '<li class="obstacle" data-icon="' + item.id + '">' +
-									'<div class="size">' + item.width/32 + 'x' + item.height/32 + '</div>' +
-									'<div class="icon" style="background-position: 0px -' + item.icon + 'px;"></div>' +
-									'<div class="count">' + item.count + '</div>' +
-								 '</li>';
-					counter++;
-				}
-				document.getElementById('obstacles-list').innerHTML = iconsHtml;
-
-				// Register game event handlers
-				interaction.GameEvents();
-				console.log('-- Game events initialized');
-
-				requestTimeout(function(){
-					document.getElementById('obstacles').className = 'show';
-					document.getElementById('start-button-wrapper').className = 'show';
-					document.getElementById('slider').className = 'show';
-				}, 300);
-				
+				core.LoadLevel(e.target.parentElement.id);
 			});
 		}
 	}
@@ -362,7 +368,10 @@ var interaction = function(document, window){
 	 */
 	return {
 		GameEvents: gameEvents,
-		GeneralEvents: generalEvents
+		GeneralEvents: generalEvents,
+		LevelButtonEvents: levelButtonEvents,
+		ObstacleEvents: obstacleEvents,
+		NextLevelBtnEvent: nextLevelBtnEvent
 	};
 
 }(document, window);

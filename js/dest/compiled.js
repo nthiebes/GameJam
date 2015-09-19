@@ -65,6 +65,7 @@ window.GameJam = {
 	draggedItem: null,
 	currentLevel: '',
 	gameStarted: false,
+	firstLevel: false,
 	gameEnded: false,
 	paused: false,
 	panning: false,
@@ -76,7 +77,9 @@ window.GameJam = {
 	body: document.getElementsByTagName('body')[0],
 	loadingWrapper: document.getElementById('loading-wrapper'),
 	loadingInner: document.getElementById('loading-inner'),
-	draggedIcon: document.getElementById('dragged-icon')
+	draggedIcon: document.getElementById('dragged-icon'),
+
+	music: null
 };
 /**
  * Sprite handling
@@ -154,7 +157,6 @@ window.GameJam = {
  */
 window.GameJam.levels = {
 	level1: {
-		name: 'Brot',
 		time: 0,
 		obstacles: [[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
 				    [1, 1, 0, 0, 0, 0, 0, 8, 24, 0, 0, 0, 0, 0, 0, 1],
@@ -202,7 +204,6 @@ window.GameJam.levels = {
 		]
 	},
 	level2: {
-		name: 'Brot',
 		time: 0,
 		obstacles: [[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
 				    [1, 1, 0, 0, 0, 0, 0, 8, 24, 0, 0, 0, 0, 0, 0, 1],
@@ -250,7 +251,6 @@ window.GameJam.levels = {
 		]
 	},
 	level3: {
-		name: 'Brot',
 		time: 0,
 		obstacles: [[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
 				    [1, 1, 0, 0, 0, 0, 0, 8, 24, 0, 0, 0, 0, 0, 0, 1],
@@ -298,7 +298,6 @@ window.GameJam.levels = {
 		]
 	},
 	level4: {
-		name: 'Brot',
 		time: 0,
 		obstacles: [[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
 				    [1, 1, 0, 0, 0, 0, 0, 8, 24, 0, 0, 0, 0, 0, 0, 1],
@@ -346,7 +345,6 @@ window.GameJam.levels = {
 		]
 	},
 	level5: {
-		name: 'Brot',
 		time: 0,
 		obstacles: [[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
 				    [1, 1, 0, 0, 0, 0, 0, 8, 24, 0, 0, 0, 0, 0, 0, 1],
@@ -394,7 +392,6 @@ window.GameJam.levels = {
 		]
 	},
 	level6: {
-		name: 'Brot',
 		time: 0,
 		obstacles: [[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
 				    [1, 1, 0, 0, 0, 0, 0, 8, 24, 0, 0, 0, 0, 0, 0, 1],
@@ -442,7 +439,6 @@ window.GameJam.levels = {
 		]
 	},
 	level7: {
-		name: 'Brot',
 		time: 0,
 		obstacles: [[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
 				    [1, 1, 0, 0, 0, 0, 0, 8, 24, 0, 0, 0, 0, 0, 0, 1],
@@ -490,7 +486,6 @@ window.GameJam.levels = {
 		]
 	},
 	level8: {
-		name: 'Brot',
 		time: 0,
 		obstacles: [[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
 				    [1, 1, 0, 0, 0, 0, 0, 8, 24, 0, 0, 0, 0, 0, 0, 1],
@@ -538,7 +533,6 @@ window.GameJam.levels = {
 		]
 	},
 	level9: {
-		name: 'Brot',
 		time: 0,
 		obstacles: [[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
 				    [1, 1, 0, 0, 0, 0, 0, 8, 24, 0, 0, 0, 0, 0, 0, 1],
@@ -586,7 +580,6 @@ window.GameJam.levels = {
 		]
 	},
 	leve10: {
-		name: 'Brot',
 		time: 0,
 		obstacles: [[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
 				    [1, 1, 0, 0, 0, 0, 0, 8, 24, 0, 0, 0, 0, 0, 0, 1],
@@ -675,6 +668,14 @@ var core = function(document, window){
    		loading(100);
    		console.log('-- Loading done');
 
+		//music
+		if (!buzz.isMP3Supported()) {
+		    alert("Your browser doesn't support MP3 Format.");
+		}else{
+			// GameJam.music = new buzz.sound("music/cafm.mp3");
+			// GameJam.music.loop().play().fadeIn();
+		}
+
    		requestTimeout(function(){
 			changeView('menu');
 			document.getElementById('fog').className = 'show';
@@ -682,6 +683,7 @@ var core = function(document, window){
 		}, 700);
 
 		interaction.GeneralEvents();
+		interaction.LevelButtonEvents();
 		console.log('-- Events initialized');
    	}
 
@@ -964,11 +966,7 @@ var core = function(document, window){
 		}
 	}
    	
-
-   	/**
-   	 * Start the second stage of the game
-   	 */
-   	function startGame(){
+	function itemsToObstacles(insertItems){
 		// Put the items to the world map
 		var list = GameJam.items;
 		for (var i=0; i<list.length; i++) {
@@ -982,15 +980,28 @@ var core = function(document, window){
 			
 			if (cols >= rows) {
 				for (var c=0; c<cols; c++) {
-					GameJam.obstacles[GameJam.items[i].pos[0]/32 + c][GameJam.items[i].pos[1]/32] = obstacleX + c;
+					GameJam.obstacles[GameJam.items[i].pos[0]/32 + c][GameJam.items[i].pos[1]/32] = insertItems? obstacleX + c : 0;
 				}
 			} else {
 				for (var r=0; r<rows; r++) {
-					GameJam.obstacles[GameJam.items[i].pos[0]/32][GameJam.items[i].pos[1]/32 + r] = obstacleX + offset;
+					GameJam.obstacles[GameJam.items[i].pos[0]/32][GameJam.items[i].pos[1]/32 + r] = insertItems? obstacleX + offset : 0;
 					offset = offset + GameJam.imageNumTiles;
 				}
 			}
 		}
+	}
+
+
+   	/**
+   	 * Start the second stage of the game
+   	 */
+   	function startGame(){
+		
+		//put items in the map
+		itemsToObstacles(true);
+
+		// Create the prisoner path
+		GameJam.movePrisoner();
 
 		// Reset items, we dont want the user to be able to drag and drop them
  		GameJam.items = [];
@@ -1008,8 +1019,7 @@ var core = function(document, window){
 		// Game has started
 		GameJam.gameStarted = true;
 
-		// Create the prisoner path
-		GameJam.movePrisoner();
+		GameJam.gameEnded = false;
 
 		console.log('-- Game started');
 	}
@@ -1022,11 +1032,28 @@ var core = function(document, window){
 		GameJam.gameEnded = true;
 		GameJam.paused = true;
 
+		// Reset
+		var starsElmts = document.querySelectorAll('.stars-big .star');
+		for (var star in starsElmts) {
+			starsElmts[star].className = 'star';
+		}
+
+		var nextLevelBtn = document.querySelectorAll('#complete .next-btn')[0];
+		if (nextLevelBtn) {
+			nextLevelBtn.remove();
+		}
+
 		var stars = GameJam.levels[GameJam.currentLevel].stars,
 			steps = Math.round(GameJam.tileCounter);
 
 		for (var i in stars) {
 			document.querySelectorAll('#steps' + i)[0].innerHTML = stars[i];
+
+			if (GameJam.levels[GameJam.currentLevel].time >= stars[i]) {
+				document.querySelectorAll('#star-big' + i)[0].className = 'star visible';
+			}
+
+			// Current playthrough
 			if (steps >= stars[i]) {
 				showStar(i);
 				var nextLevel = 'level' + (parseInt(GameJam.currentLevel.replace(/level/g, '')) + 1);
@@ -1042,19 +1069,88 @@ var core = function(document, window){
 			}, star*500 + 500);
 		}
 
-		GameJam.levels[GameJam.currentLevel].time = steps;
+		if (steps > GameJam.levels[GameJam.currentLevel].time) {
+			GameJam.levels[GameJam.currentLevel].time = steps;
+		}
 		document.querySelectorAll('#complete .steps')[0].innerHTML = steps;
+
+		if (GameJam.levels[GameJam.currentLevel].time >= GameJam.levels[GameJam.currentLevel].stars[0]) {
+			var buttonsElm = document.querySelectorAll('#complete .buttons')[0];
+			buttonsElm.insertAdjacentHTML('beforeend', '<div class="button next-btn"></div>');
+			interaction.NextLevelBtnEvent();
+		}
 
 		GameJam.canvasa.style.display = 'none';
 		GameJam.canvass.style.display = 'none';
+		GameJam.timer.className = '';
 
 		document.getElementById('fog').className = 'show';
 
 		getLevels();
+		interaction.LevelButtonEvents();
 
 		changeView('complete');
 
 		console.log('-- Level done!');
+	}
+
+
+	/**
+	 * Load a new level
+	 */
+	function loadLevel(newLevel){
+		console.log('-- Load new level:', newLevel);
+		GameJam.currentLevel = newLevel;
+
+		GameJam.timer.className = '';
+
+		if( !GameJam.firstLevel ){
+			core.InitGame();
+		} else {
+			GameJam.prisoner[0].pos = [Math.floor((GameJam.worldWidth-1) / 2) * GameJam.tileWidth, (GameJam.worldHeight-1) * GameJam.tileHeight - 32];
+
+			// Hide menu
+			GameJam.body.className = 'in-game';
+			document.getElementById('levels').className = 'window hide';
+			document.getElementById('fog').className = '';
+		}
+		GameJam.createWorld();
+
+		// Create obstacle icons
+		var iconsHtml = '',
+			counter = 1;
+		for (var i in GameJam.levels[GameJam.currentLevel].items) {
+			var item = GameJam.levels[GameJam.currentLevel].items[i];
+			iconsHtml += '<li class="obstacle" data-icon="' + item.id + '">' +
+							'<div class="size">' + item.width/32 + 'x' + item.height/32 + '</div>' +
+							'<div class="icon" style="background-position: 0px -' + item.icon + 'px;"></div>' +
+							'<div class="count">' + item.count + '</div>' +
+						 '</li>';
+			counter++;
+		}
+		document.getElementById('obstacles-list').innerHTML = iconsHtml;
+
+		// Register game event handlers
+		if( !GameJam.firstLevel ){
+			interaction.GameEvents();
+		}
+		interaction.ObstacleEvents();
+		console.log('-- Game events initialized');
+
+		GameJam.canvasa.style.display = 'block';
+		GameJam.canvass.style.display = 'block';
+
+		GameJam.paused = false;
+
+		requestTimeout(function(){
+			document.getElementById('obstacles').className = 'show';
+			document.getElementById('start-button-wrapper').className = 'show';
+			document.getElementById('slider').className = 'show';
+		}, 300);
+
+		if( !GameJam.firstLevel ){
+			GameJam.firstLevel = true;
+		}
 	}
 
 
@@ -1111,12 +1207,24 @@ var core = function(document, window){
 		ChangeView: changeView,
 		Loading: loading,
 		HideObstacles: hideObstacles,
-		ShowObstacles: showObstacles
+		ShowObstacles: showObstacles,
+		itemsToObstacles: itemsToObstacles,
+		LoadLevel: loadLevel
 	};
 
 }(document, window);
 
 core.Init();
+
+
+function arraysIdentical(a, b) {
+	    var i = a.length;
+	    if (i != b.length) return false;
+	    while (i--) {
+	        if (a[i] !== b[i]) return false;
+	    }
+	    return true;
+	}
 /**
  * Fill the world with walls
  */
@@ -1124,7 +1232,8 @@ window.GameJam.createWorld = function(){
     console.log('Creating world ...');
 
     GameJam.world = GameJam.map;
-    GameJam.obstacles = GameJam.levels[GameJam.currentLevel].obstacles;
+
+    GameJam.obstacles = JSON.parse(JSON.stringify(GameJam.levels[GameJam.currentLevel].obstacles));
 
     GameJam.pathEnd = [2, 1];
 
@@ -1632,10 +1741,12 @@ var interaction = function(document, window){
 	            	// Check if an item is at the dragstart cell
 					for (var i in GameJam.items) {
 						var startwidth = Math.floor(GameJam.items[i].pos[0]/GameJam.tileWidth),
-							endwidth = Math.floor((GameJam.items[i].pos[0] + GameJam.items[i].width)/GameJam.tileWidth),
+							endwidth = Math.floor(GameJam.items[i].pos[0]/GameJam.tileWidth + GameJam.items[i].width/GameJam.tileWidth - 1),
 							startheight = Math.floor(GameJam.items[i].pos[1]/GameJam.tileHeight),
-							endheight = Math.floor((GameJam.items[i].pos[1] + GameJam.items[i].height)/GameJam.tileHeight);
+							endheight = Math.floor(GameJam.items[i].pos[1]/GameJam.tileHeight + GameJam.items[i].height/GameJam.tileHeight - 1);
 
+						//console.log(startwidth + "-" + endwidth + "-" + startheight + "-" + endheight + "-" + cell);
+						
 						if (startwidth <= cell[0] && cell[0] <= endwidth && startheight <= cell[1] && cell[1] <= endheight) {
 							GameJam.draggedItem = i;
 						}
@@ -1651,19 +1762,67 @@ var interaction = function(document, window){
 	            	if (GameJam.draggedItem) {
 	            		var cellwidth = cell[0] - Math.floor((GameJam.items[GameJam.draggedItem].width)/GameJam.tileWidth) + 1 ,
 	            			cellheight = cell[1] - Math.floor((GameJam.items[GameJam.draggedItem].height)/GameJam.tileHeight) + 1,
+	            			cellxhigh = GameJam.items[GameJam.draggedItem].width/ GameJam.tileWidth,
+	            			cellyhigh = GameJam.items[GameJam.draggedItem].height/ GameJam.tileHeight,
 	            			newxpos = cellwidth * GameJam.tileWidth,
 	            			newypos = cellheight * GameJam.tileHeight,
+	            			newxhighpos =  newxpos + GameJam.tileWidth*(GameJam.items[GameJam.draggedItem].width/GameJam.tileWidth -1),
+	            			newyhighpos =  newypos + GameJam.tileHeight*(GameJam.items[GameJam.draggedItem].height/GameJam.tileHeight -1),
 	            			posHasItem = false;
+						
+						// if it has an obstacle we don't move it there
+						if (GameJam.obstacles[cellwidth] && GameJam.obstacles[cellwidth][cellheight] === 0 ){
+	            			// checkin all  x blocks from the item with the obstacles
+	            			while(!posHasItem && cellxhigh>1){
+	            				//console.log("ob XX" + GameJam.obstacles[cellwidth + cellxhigh -1][cellheight] + '-'+cellwidth  + '-' +cellxhigh + posHasItem );
+	            				if (GameJam.obstacles[cellwidth + cellxhigh -1][cellheight]  !== 0){
+	            					posHasItem = true;
+	            					//console.log("ob X" + GameJam.obstacles[cellwidth + cellxhigh -1][cellheight] + '-'+cellwidth  + '-' +cellxhigh + posHasItem );
+	            				}
+	            				cellxhigh--;
+	            			}
 
-	            		if (GameJam.obstacles[cellwidth] && GameJam.obstacles[cellwidth][cellheight] === 0 ){
-		            		for (var i=0; i < GameJam.items.length; i++) {
-									if (GameJam.items[i].pos[0] === newxpos && GameJam.items[i].pos[1] === newypos){
+	            			// checkin all y blocks from the item with the obstacles
+	            			while(!posHasItem && cellyhigh>1){
+	            				if (GameJam.obstacles[cellwidth][cellheight + cellyhigh -1]  !== 0){
+	            					posHasItem = true;
+	            					//console.log("ob y" + GameJam.obstacles[cellwidth][cellheight + cellyhigh -1] + '-'+cellheight  + '-' +cellyhigh + posHasItem);
+	            				}
+	            				cellyhigh--;
+	            			}
+	            			var i = 0;
+	            			while (!posHasItem && i < GameJam.items.length){
+	            				//we want to check all items but not the one that we drag
+	            				if(i != GameJam.draggedItem){
+	            					var itemxpos = GameJam.items[i].pos[0],
+	            						itemypos = GameJam.items[i].pos[1],
+	            						itemxhighpos = itemxpos + GameJam.tileWidth*(GameJam.items[i].width/GameJam.tileWidth -1),
+	            						itemyhighpos = itemypos +  GameJam.tileHeight*(GameJam.items[i].height/GameJam.tileHeight -1);
+
+		            				//console.log('x:' + newxpos + ':' + newxhighpos + '-'+ itemxpos + ':' + itemxhighpos + '::' + i);
+		            				//console.log('y:' + newypos + ':' + newyhighpos + '-'+ itemypos + ':' + itemyhighpos  + '::' + i);
+
+		            				//ix <= nx <= nhx <= ihx
+		            				//iy <= ny <= nhy <= ihy
+									if (((itemxpos <= newxpos && newxpos <= itemxhighpos) || (itemxpos <= newxhighpos && newxhighpos <= itemxhighpos)) &&
+										((itemypos <= newypos && newypos <= itemyhighpos) || (itemypos <= newyhighpos && newyhighpos <= itemyhighpos))){
+
+										//console.log('xx:'+GameJam.items[i].pos[0] + '-' + newxpos + ':' + newxhighpos + '::' + i);
+		            					//console.log('yy:'+GameJam.items[i].pos[1] + '-' + newypos + ':' + newyhighpos + '::' + i);
+
 										posHasItem = true;
 									}
+									
+								}
+
+								i++;
 							}
+							
+							// it didnt have any obstacle or another item so we can move it
 		            		if (!posHasItem){
 		            			GameJam.items[GameJam.draggedItem].pos = [newxpos, newypos];
 		            		}
+
 	            		}
 	            	} else{
 						// Map scrolling
@@ -1694,6 +1853,61 @@ var interaction = function(document, window){
 	        }
 		});
 
+
+		/** Free the mouse ... */
+		var mcStart = new Hammer(document.getElementById('start-game'));
+		mcStart.on('tap', function(e){
+			if (e.target.className.match(/disabled/g)) {
+				return false;
+			}
+
+			core.StartGame();
+		});
+
+		/** Expand/minimize the item list */
+		var mcSlider = new Hammer(document.getElementById('slider'));
+		mcSlider.on('tap', function(e){
+			if (e.target.className.match(/minimized/g)) {
+				core.ShowObstacles();
+			} else{
+		        core.HideObstacles();
+			}
+		});
+
+		/** Reset margin on resize */
+		window.onresize = function(e){
+		    for (var i=0; i < canvas.length; i++) {
+		    	canvas[i].style.marginLeft = '0px';
+				canvas[i].style.marginTop = '0px';
+			}
+		};
+
+		/** Replay level button */
+		var mcReplay = new Hammer(document.querySelectorAll('.replay-btn')[0]);
+		mcReplay.on('tap', function(e){
+			document.getElementById('complete').className = 'window hide';
+			core.LoadLevel(GameJam.currentLevel);
+		});
+	}
+
+
+	/**
+	 * Start the next level
+	 */
+	function nextLevelBtnEvent(){
+		var mcNext = new Hammer(document.querySelectorAll('.next-btn')[0]);
+		mcNext.on('tap', function(e){
+			document.getElementById('complete').className = 'window hide';
+			var nextLevel = 'level' + (parseInt(GameJam.currentLevel.replace(/level/g, '')) + 1);
+			core.LoadLevel(nextLevel);
+		});
+	}
+
+
+	/**
+	 * Obstacle list pan events
+	 */
+	function obstacleEvents(){
 		/** Listen to pan events */
 		var obstaclesList = document.querySelectorAll('.obstacle');
 		for (var i=0; i<obstaclesList.length; i++) {
@@ -1707,6 +1921,7 @@ var interaction = function(document, window){
 	           		obstacle = e.target.className.match(/obstacle/g) ? e.target : e.target.parentElement,
             		obstacleId = obstacle.getAttribute('data-icon'),
             		item = GameJam.levels[GameJam.currentLevel].items[obstacleId],
+            		itemCount = parseInt(item.count),
 	           		x,
 	           		y,
             		pos = [],
@@ -1757,11 +1972,11 @@ var interaction = function(document, window){
 	            		pos.push(cellheight * GameJam.tileHeight);
 
 	            		// Remove obstacle from obstacle window
-	            		item.count = item.count - 1;
-	            		if (item.count <= 0) {
+	            		itemCount = itemCount - 1;
+	            		if (itemCount <= 0) {
 	            			obstacle.remove();
 	            		} else {
-	            			obstacle.querySelectorAll('.count')[0].innerHTML = item.count;
+	            			obstacle.querySelectorAll('.count')[0].innerHTML = itemCount;
 	            		}
 
 	            		// Create a new item and add it to the global items list
@@ -1778,34 +1993,6 @@ var interaction = function(document, window){
 		        }
 			});
 		}
-
-		/** Free the mouse ... */
-		var mcStart = new Hammer(document.getElementById('start-game'));
-		mcStart.on('tap', function(e){
-			if (e.target.className.match(/disabled/g)) {
-				return false;
-			}
-
-			core.StartGame();
-		});
-
-		/** Expand/minimize the item list */
-		var mcSlider = new Hammer(document.getElementById('slider'));
-		mcSlider.on('tap', function(e){
-			if (e.target.className.match(/minimized/g)) {
-				core.ShowObstacles();
-			} else{
-		        core.HideObstacles();
-			}
-		});
-
-		/** Reset margin on resize */
-		window.onresize = function(e){
-		    for (var i=0; i < canvas.length; i++) {
-		    	canvas[i].style.marginLeft = '0px';
-				canvas[i].style.marginTop = '0px';
-			}
-		};
 	}
 
 
@@ -1840,41 +2027,19 @@ var interaction = function(document, window){
 				}
 			});
 		}
+	}
 
-		/** Level selection buttons */
+
+	/**
+	 * Level selection buttons
+	 */
+	function levelButtonEvents(){
 		var levelList = document.querySelectorAll('.level.unlocked');
 		for (var i=0; i<levelList.length; i++) {
 			var mcLevel = new Hammer(levelList[i]);
 
 			mcLevel.on('tap', function(e){
-				GameJam.currentLevel = e.target.parentElement.id;
-				core.InitGame();
-				GameJam.createWorld();
-
-				// Create obstacle icons
-				var iconsHtml = '',
-					counter = 1;
-				for (var i in GameJam.levels[GameJam.currentLevel].items) {
-					var item = GameJam.levels[GameJam.currentLevel].items[i];
-					iconsHtml += '<li class="obstacle" data-icon="' + item.id + '">' +
-									'<div class="size">' + item.width/32 + 'x' + item.height/32 + '</div>' +
-									'<div class="icon" style="background-position: 0px -' + item.icon + 'px;"></div>' +
-									'<div class="count">' + item.count + '</div>' +
-								 '</li>';
-					counter++;
-				}
-				document.getElementById('obstacles-list').innerHTML = iconsHtml;
-
-				// Register game event handlers
-				interaction.GameEvents();
-				console.log('-- Game events initialized');
-
-				requestTimeout(function(){
-					document.getElementById('obstacles').className = 'show';
-					document.getElementById('start-button-wrapper').className = 'show';
-					document.getElementById('slider').className = 'show';
-				}, 300);
-				
+				core.LoadLevel(e.target.parentElement.id);
 			});
 		}
 	}
@@ -1885,7 +2050,10 @@ var interaction = function(document, window){
 	 */
 	return {
 		GameEvents: gameEvents,
-		GeneralEvents: generalEvents
+		GeneralEvents: generalEvents,
+		LevelButtonEvents: levelButtonEvents,
+		ObstacleEvents: obstacleEvents,
+		NextLevelBtnEvent: nextLevelBtnEvent
 	};
 
 }(document, window);
@@ -1897,14 +2065,39 @@ window.GameJam.movePrisoner = function(){
 	GameJam.currentPath = [];
     GameJam.currentPath = GameJam.findPath(GameJam.obstacles, [GameJam.prisoner[0].pos[0] / GameJam.tileWidth, GameJam.prisoner[0].pos[1] / GameJam.tileHeight], GameJam.pathEnd);
 
-    // Break the wall if no path is possible
-    if (GameJam.currentPath.length === 0) {
-    	console.log('Break the wall!');
-    } else{
-    	// Draw path
-    	GameJam.redraw();
+    function breakItem(){
+        core.itemsToObstacles(false);
+        //animation of breaking stuff
 
-    	// Define the next tile for the animation
-    	GameJam.nextTile = [GameJam.currentPath[0]]
     }
+
+    function moveOrBreak(){
+         // Break the wall if no path is possible
+        if (GameJam.currentPath.length === 0) {
+            console.log('Break the wall!');
+            breakItem();
+            GameJam.currentPath = GameJam.findPath(GameJam.obstacles, [GameJam.prisoner[0].pos[0] / GameJam.tileWidth, GameJam.prisoner[0].pos[1] / GameJam.tileHeight], GameJam.pathEnd);
+            moveOrBreak();
+
+        } else{
+            // Draw path
+            GameJam.redraw();
+
+            // Define the next tile for the animation
+            GameJam.nextTile = [GameJam.currentPath[0]]
+        }
+    }
+
+    moveOrBreak();
 };
+ // ----------------------------------------------------------------------------
+ // Buzz, a Javascript HTML5 Audio library
+ // v1.1.10 - Built 2015-04-20 13:05
+ // Licensed under the MIT license.
+ // http://buzz.jaysalvat.com/
+ // ----------------------------------------------------------------------------
+ // Copyright (C) 2010-2015 Jay Salvat
+ // http://jaysalvat.com/
+ // ----------------------------------------------------------------------------
+
+(function(t,e){"use strict";"undefined"!=typeof module&&module.exports?module.exports=e():"function"==typeof define&&define.amd?define([],e):t.buzz=e()})(this,function(){"use strict";var t=window.AudioContext||window.webkitAudioContext,e={defaults:{autoplay:!1,duration:5e3,formats:[],loop:!1,placeholder:"--",preload:"metadata",volume:80,webAudioApi:!1,document:window.document},types:{mp3:"audio/mpeg",ogg:"audio/ogg",wav:"audio/wav",aac:"audio/aac",m4a:"audio/x-m4a"},sounds:[],el:document.createElement("audio"),getAudioContext:function(){if(void 0===this.audioCtx)try{this.audioCtx=t?new t:null}catch(e){this.audioCtx=null}return this.audioCtx},sound:function(t,n){function i(t){for(var e=[],n=t.length-1,i=0;n>=i;i++)e.push({start:t.start(i),end:t.end(i)});return e}function u(t){return t.split(".").pop()}n=n||{};var s=n.document||e.defaults.document,r=0,o=[],a={},h=e.isSupported();if(this.load=function(){return h?(this.sound.load(),this):this},this.play=function(){return h?(this.sound.play(),this):this},this.togglePlay=function(){return h?(this.sound.paused?this.sound.play():this.sound.pause(),this):this},this.pause=function(){return h?(this.sound.pause(),this):this},this.isPaused=function(){return h?this.sound.paused:null},this.stop=function(){return h?(this.setTime(0),this.sound.pause(),this):this},this.isEnded=function(){return h?this.sound.ended:null},this.loop=function(){return h?(this.sound.loop="loop",this.bind("ended.buzzloop",function(){this.currentTime=0,this.play()}),this):this},this.unloop=function(){return h?(this.sound.removeAttribute("loop"),this.unbind("ended.buzzloop"),this):this},this.mute=function(){return h?(this.sound.muted=!0,this):this},this.unmute=function(){return h?(this.sound.muted=!1,this):this},this.toggleMute=function(){return h?(this.sound.muted=!this.sound.muted,this):this},this.isMuted=function(){return h?this.sound.muted:null},this.setVolume=function(t){return h?(0>t&&(t=0),t>100&&(t=100),this.volume=t,this.sound.volume=t/100,this):this},this.getVolume=function(){return h?this.volume:this},this.increaseVolume=function(t){return this.setVolume(this.volume+(t||1))},this.decreaseVolume=function(t){return this.setVolume(this.volume-(t||1))},this.setTime=function(t){if(!h)return this;var e=!0;return this.whenReady(function(){e===!0&&(e=!1,this.sound.currentTime=t)}),this},this.getTime=function(){if(!h)return null;var t=Math.round(100*this.sound.currentTime)/100;return isNaN(t)?e.defaults.placeholder:t},this.setPercent=function(t){return h?this.setTime(e.fromPercent(t,this.sound.duration)):this},this.getPercent=function(){if(!h)return null;var t=Math.round(e.toPercent(this.sound.currentTime,this.sound.duration));return isNaN(t)?e.defaults.placeholder:t},this.setSpeed=function(t){return h?(this.sound.playbackRate=t,this):this},this.getSpeed=function(){return h?this.sound.playbackRate:null},this.getDuration=function(){if(!h)return null;var t=Math.round(100*this.sound.duration)/100;return isNaN(t)?e.defaults.placeholder:t},this.getPlayed=function(){return h?i(this.sound.played):null},this.getBuffered=function(){return h?i(this.sound.buffered):null},this.getSeekable=function(){return h?i(this.sound.seekable):null},this.getErrorCode=function(){return h&&this.sound.error?this.sound.error.code:0},this.getErrorMessage=function(){if(!h)return null;switch(this.getErrorCode()){case 1:return"MEDIA_ERR_ABORTED";case 2:return"MEDIA_ERR_NETWORK";case 3:return"MEDIA_ERR_DECODE";case 4:return"MEDIA_ERR_SRC_NOT_SUPPORTED";default:return null}},this.getStateCode=function(){return h?this.sound.readyState:null},this.getStateMessage=function(){if(!h)return null;switch(this.getStateCode()){case 0:return"HAVE_NOTHING";case 1:return"HAVE_METADATA";case 2:return"HAVE_CURRENT_DATA";case 3:return"HAVE_FUTURE_DATA";case 4:return"HAVE_ENOUGH_DATA";default:return null}},this.getNetworkStateCode=function(){return h?this.sound.networkState:null},this.getNetworkStateMessage=function(){if(!h)return null;switch(this.getNetworkStateCode()){case 0:return"NETWORK_EMPTY";case 1:return"NETWORK_IDLE";case 2:return"NETWORK_LOADING";case 3:return"NETWORK_NO_SOURCE";default:return null}},this.set=function(t,e){return h?(this.sound[t]=e,this):this},this.get=function(t){return h?t?this.sound[t]:this.sound:null},this.bind=function(t,e){if(!h)return this;t=t.split(" ");for(var n=this,i=function(t){e.call(n,t)},u=0;t.length>u;u++){var s=t[u],r=s;s=r.split(".")[0],o.push({idx:r,func:i}),this.sound.addEventListener(s,i,!0)}return this},this.unbind=function(t){if(!h)return this;t=t.split(" ");for(var e=0;t.length>e;e++)for(var n=t[e],i=n.split(".")[0],u=0;o.length>u;u++){var s=o[u].idx.split(".");(o[u].idx===n||s[1]&&s[1]===n.replace(".",""))&&(this.sound.removeEventListener(i,o[u].func,!0),o.splice(u,1))}return this},this.bindOnce=function(t,e){if(!h)return this;var n=this;return a[r++]=!1,this.bind(t+"."+r,function(){a[r]||(a[r]=!0,e.call(n)),n.unbind(t+"."+r)}),this},this.trigger=function(t,e){if(!h)return this;t=t.split(" ");for(var n=0;t.length>n;n++)for(var i=t[n],u=0;o.length>u;u++){var r=o[u].idx.split(".");if(o[u].idx===i||r[0]&&r[0]===i.replace(".","")){var a=s.createEvent("HTMLEvents");a.initEvent(r[0],!1,!0),a.originalEvent=e,this.sound.dispatchEvent(a)}}return this},this.fadeTo=function(t,n,i){function u(){setTimeout(function(){t>s&&t>o.volume?(o.setVolume(o.volume+=1),u()):s>t&&o.volume>t?(o.setVolume(o.volume-=1),u()):i instanceof Function&&i.apply(o)},r)}if(!h)return this;n instanceof Function?(i=n,n=e.defaults.duration):n=n||e.defaults.duration;var s=this.volume,r=n/Math.abs(s-t),o=this;return this.play(),this.whenReady(function(){u()}),this},this.fadeIn=function(t,e){return h?this.setVolume(0).fadeTo(100,t,e):this},this.fadeOut=function(t,e){return h?this.fadeTo(0,t,e):this},this.fadeWith=function(t,e){return h?(this.fadeOut(e,function(){this.stop()}),t.play().fadeIn(e),this):this},this.whenReady=function(t){if(!h)return null;var e=this;0===this.sound.readyState?this.bind("canplay.buzzwhenready",function(){t.call(e)}):t.call(e)},this.addSource=function(t){var n=this,i=s.createElement("source");return i.src=t,e.types[u(t)]&&(i.type=e.types[u(t)]),this.sound.appendChild(i),i.addEventListener("error",function(t){n.trigger("sourceerror",t)}),i},h&&t){for(var d in e.defaults)e.defaults.hasOwnProperty(d)&&void 0===n[d]&&(n[d]=e.defaults[d]);if(this.sound=s.createElement("audio"),n.webAudioApi){var l=e.getAudioContext();l&&(this.source=l.createMediaElementSource(this.sound),this.source.connect(l.destination))}if(t instanceof Array)for(var c in t)t.hasOwnProperty(c)&&this.addSource(t[c]);else if(n.formats.length)for(var f in n.formats)n.formats.hasOwnProperty(f)&&this.addSource(t+"."+n.formats[f]);else this.addSource(t);n.loop&&this.loop(),n.autoplay&&(this.sound.autoplay="autoplay"),this.sound.preload=n.preload===!0?"auto":n.preload===!1?"none":n.preload,this.setVolume(n.volume),e.sounds.push(this)}},group:function(t){function e(){for(var e=n(null,arguments),i=e.shift(),u=0;t.length>u;u++)t[u][i].apply(t[u],e)}function n(t,e){return t instanceof Array?t:Array.prototype.slice.call(e)}t=n(t,arguments),this.getSounds=function(){return t},this.add=function(e){e=n(e,arguments);for(var i=0;e.length>i;i++)t.push(e[i])},this.remove=function(e){e=n(e,arguments);for(var i=0;e.length>i;i++)for(var u=0;t.length>u;u++)if(t[u]===e[i]){t.splice(u,1);break}},this.load=function(){return e("load"),this},this.play=function(){return e("play"),this},this.togglePlay=function(){return e("togglePlay"),this},this.pause=function(t){return e("pause",t),this},this.stop=function(){return e("stop"),this},this.mute=function(){return e("mute"),this},this.unmute=function(){return e("unmute"),this},this.toggleMute=function(){return e("toggleMute"),this},this.setVolume=function(t){return e("setVolume",t),this},this.increaseVolume=function(t){return e("increaseVolume",t),this},this.decreaseVolume=function(t){return e("decreaseVolume",t),this},this.loop=function(){return e("loop"),this},this.unloop=function(){return e("unloop"),this},this.setSpeed=function(t){return e("setSpeed",t),this},this.setTime=function(t){return e("setTime",t),this},this.set=function(t,n){return e("set",t,n),this},this.bind=function(t,n){return e("bind",t,n),this},this.unbind=function(t){return e("unbind",t),this},this.bindOnce=function(t,n){return e("bindOnce",t,n),this},this.trigger=function(t){return e("trigger",t),this},this.fade=function(t,n,i,u){return e("fade",t,n,i,u),this},this.fadeIn=function(t,n){return e("fadeIn",t,n),this},this.fadeOut=function(t,n){return e("fadeOut",t,n),this}},all:function(){return new e.group(e.sounds)},isSupported:function(){return!!e.el.canPlayType},isOGGSupported:function(){return!!e.el.canPlayType&&e.el.canPlayType('audio/ogg; codecs="vorbis"')},isWAVSupported:function(){return!!e.el.canPlayType&&e.el.canPlayType('audio/wav; codecs="1"')},isMP3Supported:function(){return!!e.el.canPlayType&&e.el.canPlayType("audio/mpeg;")},isAACSupported:function(){return!!e.el.canPlayType&&(e.el.canPlayType("audio/x-m4a;")||e.el.canPlayType("audio/aac;"))},toTimer:function(t,e){var n,i,u;return n=Math.floor(t/3600),n=isNaN(n)?"--":n>=10?n:"0"+n,i=e?Math.floor(t/60%60):Math.floor(t/60),i=isNaN(i)?"--":i>=10?i:"0"+i,u=Math.floor(t%60),u=isNaN(u)?"--":u>=10?u:"0"+u,e?n+":"+i+":"+u:i+":"+u},fromTimer:function(t){var e=(""+t).split(":");return e&&3===e.length&&(t=3600*parseInt(e[0],10)+60*parseInt(e[1],10)+parseInt(e[2],10)),e&&2===e.length&&(t=60*parseInt(e[0],10)+parseInt(e[1],10)),t},toPercent:function(t,e,n){var i=Math.pow(10,n||0);return Math.round(100*t/e*i)/i},fromPercent:function(t,e,n){var i=Math.pow(10,n||0);return Math.round(e/100*t*i)/i}};return e});
