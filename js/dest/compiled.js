@@ -1909,7 +1909,11 @@ var interaction = function(document, window){
 	 */
 	function obstacleEvents(){
 		/** Listen to pan events */
-		var obstaclesList = document.querySelectorAll('.obstacle');
+		var obstaclesList = document.querySelectorAll('.obstacle'),
+		canvas = document.getElementsByTagName('canvas'),
+			startMarginLeft = 0,
+	        startMarginTop = 0;
+
 		for (var i=0; i<obstaclesList.length; i++) {
 			var mcObstacle = new Hammer(obstaclesList[i]);
 			mcObstacle.get('pan').set({
@@ -1954,12 +1958,17 @@ var interaction = function(document, window){
 		            	// Hide obstacles list
 		            	core.HideObstacles();
 
+		            	// Get the starting margins
+						startMarginLeft = parseInt(window.getComputedStyle(canvas[0]).getPropertyValue('margin-left'));
+						startMarginTop = parseInt(window.getComputedStyle(canvas[0]).getPropertyValue('margin-top'));
+
 		                break;
 
 		            case 'pan':
+
 		            	// Move icon
-		            	GameJam.draggedIcon.style.left = x-25 + 'px';
-		            	GameJam.draggedIcon.style.top = y-25 + 'px';
+		            	GameJam.draggedIcon.style.left = x-25 + startMarginLeft + 'px';
+		            	GameJam.draggedIcon.style.top = y-25 + startMarginTop + 'px';
 		            	
 		            	break;
 
