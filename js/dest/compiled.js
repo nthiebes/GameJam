@@ -180,6 +180,7 @@ window.GameJam.levels = {
 			{
 				id: 0,
 				count: 2,
+				countStart: 2,
 				width: 32,
 				height: 32,
 				icon: 0,
@@ -188,6 +189,7 @@ window.GameJam.levels = {
 			{
 				id: 1,
 				count: 1,
+				countStart: 1,
 				width: 32,
 				height: 64,
 				icon: 50,
@@ -196,6 +198,7 @@ window.GameJam.levels = {
 			{
 				id: 2,
 				count: 1,
+				countStart: 1,
 				width: 64,
 				height: 32,
 				icon: 150,
@@ -227,6 +230,7 @@ window.GameJam.levels = {
 			{
 				id: 0,
 				count: 2,
+				countStart: 2,
 				width: 32,
 				height: 32,
 				icon: 0,
@@ -235,6 +239,7 @@ window.GameJam.levels = {
 			{
 				id: 1,
 				count: 1,
+				countStart: 1,
 				width: 32,
 				height: 64,
 				icon: 50,
@@ -243,6 +248,7 @@ window.GameJam.levels = {
 			{
 				id: 2,
 				count: 1,
+				countStart: 1,
 				width: 64,
 				height: 32,
 				icon: 150,
@@ -274,6 +280,7 @@ window.GameJam.levels = {
 			{
 				id: 0,
 				count: 2,
+				countStart: 2,
 				width: 32,
 				height: 32,
 				icon: 0,
@@ -282,6 +289,7 @@ window.GameJam.levels = {
 			{
 				id: 1,
 				count: 1,
+				countStart: 1,
 				width: 32,
 				height: 64,
 				icon: 50,
@@ -290,6 +298,7 @@ window.GameJam.levels = {
 			{
 				id: 2,
 				count: 1,
+				countStart: 1,
 				width: 64,
 				height: 32,
 				icon: 150,
@@ -321,6 +330,7 @@ window.GameJam.levels = {
 			{
 				id: 0,
 				count: 2,
+				countStart: 2,
 				width: 32,
 				height: 32,
 				icon: 0,
@@ -329,6 +339,7 @@ window.GameJam.levels = {
 			{
 				id: 1,
 				count: 1,
+				countStart: 1,
 				width: 32,
 				height: 64,
 				icon: 50,
@@ -337,6 +348,7 @@ window.GameJam.levels = {
 			{
 				id: 2,
 				count: 1,
+				countStart: 1,
 				width: 64,
 				height: 32,
 				icon: 150,
@@ -368,6 +380,7 @@ window.GameJam.levels = {
 			{
 				id: 0,
 				count: 2,
+				countStart: 2,
 				width: 32,
 				height: 32,
 				icon: 0,
@@ -376,6 +389,7 @@ window.GameJam.levels = {
 			{
 				id: 1,
 				count: 1,
+				countStart: 1,
 				width: 32,
 				height: 64,
 				icon: 50,
@@ -384,6 +398,7 @@ window.GameJam.levels = {
 			{
 				id: 2,
 				count: 1,
+				countStart: 1,
 				width: 64,
 				height: 32,
 				icon: 150,
@@ -415,6 +430,7 @@ window.GameJam.levels = {
 			{
 				id: 0,
 				count: 2,
+				countStart: 2,
 				width: 32,
 				height: 32,
 				icon: 0,
@@ -423,6 +439,7 @@ window.GameJam.levels = {
 			{
 				id: 1,
 				count: 1,
+				countStart: 1,
 				width: 32,
 				height: 64,
 				icon: 50,
@@ -431,6 +448,7 @@ window.GameJam.levels = {
 			{
 				id: 2,
 				count: 1,
+				countStart: 1,
 				width: 64,
 				height: 32,
 				icon: 150,
@@ -462,6 +480,7 @@ window.GameJam.levels = {
 			{
 				id: 0,
 				count: 2,
+				countStart: 2,
 				width: 32,
 				height: 32,
 				icon: 0,
@@ -470,6 +489,7 @@ window.GameJam.levels = {
 			{
 				id: 1,
 				count: 1,
+				countStart: 1,
 				width: 32,
 				height: 64,
 				icon: 50,
@@ -478,6 +498,7 @@ window.GameJam.levels = {
 			{
 				id: 2,
 				count: 1,
+				countStart: 1,
 				width: 64,
 				height: 32,
 				icon: 150,
@@ -509,6 +530,7 @@ window.GameJam.levels = {
 			{
 				id: 0,
 				count: 2,
+				countStart: 2,
 				width: 32,
 				height: 32,
 				icon: 0,
@@ -517,6 +539,7 @@ window.GameJam.levels = {
 			{
 				id: 1,
 				count: 1,
+				countStart: 1,
 				width: 32,
 				height: 64,
 				icon: 50,
@@ -525,6 +548,7 @@ window.GameJam.levels = {
 			{
 				id: 2,
 				count: 1,
+				countStart: 1,
 				width: 64,
 				height: 32,
 				icon: 150,
@@ -556,6 +580,7 @@ window.GameJam.levels = {
 			{
 				id: 0,
 				count: 2,
+				countStart: 2,
 				width: 32,
 				height: 32,
 				icon: 0,
@@ -564,6 +589,7 @@ window.GameJam.levels = {
 			{
 				id: 1,
 				count: 1,
+				countStart: 1,
 				width: 32,
 				height: 64,
 				icon: 50,
@@ -572,6 +598,7 @@ window.GameJam.levels = {
 			{
 				id: 2,
 				count: 1,
+				countStart: 1,
 				width: 64,
 				height: 32,
 				icon: 150,
@@ -603,6 +630,7 @@ window.GameJam.levels = {
 			{
 				id: 0,
 				count: 2,
+				countStart: 2,
 				width: 32,
 				height: 32,
 				icon: 0,
@@ -611,6 +639,7 @@ window.GameJam.levels = {
 			{
 				id: 1,
 				count: 1,
+				countStart: 1,
 				width: 32,
 				height: 64,
 				icon: 50,
@@ -619,6 +648,7 @@ window.GameJam.levels = {
 			{
 				id: 2,
 				count: 1,
+				countStart: 1,
 				width: 64,
 				height: 32,
 				icon: 150,
@@ -1083,6 +1113,10 @@ var core = function(document, window){
 
 		// Reset items, we dont want the user to be able to drag and drop them
  		GameJam.items = [];
+ 		
+ 		for (var item in GameJam.levels[GameJam.currentLevel].items) {
+ 			GameJam.levels[GameJam.currentLevel].items[item].count = GameJam.levels[GameJam.currentLevel].items[item].countStart;
+ 		}
 
 		// Reset prisoner speed
 		GameJam.prisoner[0].sprite.speed = 5;
@@ -1355,7 +1389,9 @@ var core = function(document, window){
 		HideObstacles: hideObstacles,
 		ShowObstacles: showObstacles,
 		itemsToObstacles: itemsToObstacles,
-		LoadLevel: loadLevel
+		LoadLevel: loadLevel,
+		DocCookies: docCookies,
+		LocalStorageActive: localStorageActive
 	};
 
 }(document, window);
@@ -2046,7 +2082,7 @@ var interaction = function(document, window){
 	function obstacleEvents(){
 		/** Listen to pan events */
 		var obstaclesList = document.querySelectorAll('.obstacle'),
-		canvas = document.getElementsByTagName('canvas'),
+			canvas = document.getElementsByTagName('canvas'),
 			startMarginLeft = 0,
 	        startMarginTop = 0;
 
@@ -2061,7 +2097,7 @@ var interaction = function(document, window){
 	           		obstacle = e.target.className.match(/obstacle/g) ? e.target : e.target.parentElement,
             		obstacleId = obstacle.getAttribute('data-icon'),
             		item = GameJam.levels[GameJam.currentLevel].items[obstacleId],
-            		itemCount = parseInt(item.count),
+            		itemCount = item.count,
 	           		x,
 	           		y,
             		pos = [],
@@ -2117,13 +2153,17 @@ var interaction = function(document, window){
 	            		pos.push(cellheight * GameJam.tileHeight);
 
 	            		// Remove obstacle from obstacle window
+	            		
+console.log(item,itemCount);
+
 	            		itemCount = itemCount - 1;
 	            		if (itemCount <= 0) {
 	            			obstacle.remove();
 	            		} else {
 	            			obstacle.querySelectorAll('.count')[0].innerHTML = itemCount;
 	            		}
-
+	            		item.count = itemCount;
+console.log(item,itemCount);
 	            		// Create a new item and add it to the global items list
 		            	var newItem = {};
 		            	newItem.width = item.width;
@@ -2172,6 +2212,16 @@ var interaction = function(document, window){
 				}
 			});
 		}
+
+		/** Reset button */
+		var mcReset = new Hammer(document.getElementById('reset-btn'));
+		mcReset.on('tap', function(e){
+			if (core.LocalStorageActive) {
+				localStorage.clear();
+			}
+			core.DocCookies.removeItem('levels');
+			document.location.reload();
+		});
 	}
 
 

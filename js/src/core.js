@@ -454,6 +454,10 @@ var core = function(document, window){
 
 		// Reset items, we dont want the user to be able to drag and drop them
  		GameJam.items = [];
+ 		
+ 		for (var item in GameJam.levels[GameJam.currentLevel].items) {
+ 			GameJam.levels[GameJam.currentLevel].items[item].count = GameJam.levels[GameJam.currentLevel].items[item].countStart;
+ 		}
 
 		// Reset prisoner speed
 		GameJam.prisoner[0].sprite.speed = 5;
@@ -726,7 +730,9 @@ var core = function(document, window){
 		HideObstacles: hideObstacles,
 		ShowObstacles: showObstacles,
 		itemsToObstacles: itemsToObstacles,
-		LoadLevel: loadLevel
+		LoadLevel: loadLevel,
+		DocCookies: docCookies,
+		LocalStorageActive: localStorageActive
 	};
 
 }(document, window);

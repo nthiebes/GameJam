@@ -516,6 +516,21 @@ ul {
     height: 40px;
     width: 40px;
     display: inline-block; }
+  .window .button-big {
+    background: transparent url("../img/ui.png") no-repeat scroll 0 -250px;
+    background-size: 335px 685px;
+    cursor: pointer;
+    height: 34px;
+    width: 116px;
+    font-weight: bold;
+    line-height: 30px;
+    color: #bc976e;
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.45), 0 0 2px rgba(0, 0, 0, 0.35);
+    text-align: center;
+    margin-left: 10px;
+    margin-top: 15px; }
+    .window .button-big:active {
+      background-position: 0 -290px; }
   .window .bottom-info {
     bottom: 12px;
     height: 81px;

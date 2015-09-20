@@ -27,6 +27,7 @@ window.GameJam.levels = {
 			{
 				id: 0,
 				count: 2,
+				countStart: 2,
 				width: 32,
 				height: 32,
 				icon: 0,
@@ -35,6 +36,7 @@ window.GameJam.levels = {
 			{
 				id: 1,
 				count: 1,
+				countStart: 1,
 				width: 32,
 				height: 64,
 				icon: 50,
@@ -43,6 +45,7 @@ window.GameJam.levels = {
 			{
 				id: 2,
 				count: 1,
+				countStart: 1,
 				width: 64,
 				height: 32,
 				icon: 150,
@@ -74,6 +77,7 @@ window.GameJam.levels = {
 			{
 				id: 0,
 				count: 2,
+				countStart: 2,
 				width: 32,
 				height: 32,
 				icon: 0,
@@ -82,6 +86,7 @@ window.GameJam.levels = {
 			{
 				id: 1,
 				count: 1,
+				countStart: 1,
 				width: 32,
 				height: 64,
 				icon: 50,
@@ -90,6 +95,7 @@ window.GameJam.levels = {
 			{
 				id: 2,
 				count: 1,
+				countStart: 1,
 				width: 64,
 				height: 32,
 				icon: 150,
@@ -121,6 +127,7 @@ window.GameJam.levels = {
 			{
 				id: 0,
 				count: 2,
+				countStart: 2,
 				width: 32,
 				height: 32,
 				icon: 0,
@@ -129,6 +136,7 @@ window.GameJam.levels = {
 			{
 				id: 1,
 				count: 1,
+				countStart: 1,
 				width: 32,
 				height: 64,
 				icon: 50,
@@ -137,6 +145,7 @@ window.GameJam.levels = {
 			{
 				id: 2,
 				count: 1,
+				countStart: 1,
 				width: 64,
 				height: 32,
 				icon: 150,
@@ -168,6 +177,7 @@ window.GameJam.levels = {
 			{
 				id: 0,
 				count: 2,
+				countStart: 2,
 				width: 32,
 				height: 32,
 				icon: 0,
@@ -176,6 +186,7 @@ window.GameJam.levels = {
 			{
 				id: 1,
 				count: 1,
+				countStart: 1,
 				width: 32,
 				height: 64,
 				icon: 50,
@@ -184,6 +195,7 @@ window.GameJam.levels = {
 			{
 				id: 2,
 				count: 1,
+				countStart: 1,
 				width: 64,
 				height: 32,
 				icon: 150,
@@ -215,6 +227,7 @@ window.GameJam.levels = {
 			{
 				id: 0,
 				count: 2,
+				countStart: 2,
 				width: 32,
 				height: 32,
 				icon: 0,
@@ -223,6 +236,7 @@ window.GameJam.levels = {
 			{
 				id: 1,
 				count: 1,
+				countStart: 1,
 				width: 32,
 				height: 64,
 				icon: 50,
@@ -231,6 +245,7 @@ window.GameJam.levels = {
 			{
 				id: 2,
 				count: 1,
+				countStart: 1,
 				width: 64,
 				height: 32,
 				icon: 150,
@@ -262,6 +277,7 @@ window.GameJam.levels = {
 			{
 				id: 0,
 				count: 2,
+				countStart: 2,
 				width: 32,
 				height: 32,
 				icon: 0,
@@ -270,6 +286,7 @@ window.GameJam.levels = {
 			{
 				id: 1,
 				count: 1,
+				countStart: 1,
 				width: 32,
 				height: 64,
 				icon: 50,
@@ -278,6 +295,7 @@ window.GameJam.levels = {
 			{
 				id: 2,
 				count: 1,
+				countStart: 1,
 				width: 64,
 				height: 32,
 				icon: 150,
@@ -309,6 +327,7 @@ window.GameJam.levels = {
 			{
 				id: 0,
 				count: 2,
+				countStart: 2,
 				width: 32,
 				height: 32,
 				icon: 0,
@@ -317,6 +336,7 @@ window.GameJam.levels = {
 			{
 				id: 1,
 				count: 1,
+				countStart: 1,
 				width: 32,
 				height: 64,
 				icon: 50,
@@ -325,6 +345,7 @@ window.GameJam.levels = {
 			{
 				id: 2,
 				count: 1,
+				countStart: 1,
 				width: 64,
 				height: 32,
 				icon: 150,
@@ -356,6 +377,7 @@ window.GameJam.levels = {
 			{
 				id: 0,
 				count: 2,
+				countStart: 2,
 				width: 32,
 				height: 32,
 				icon: 0,
@@ -364,6 +386,7 @@ window.GameJam.levels = {
 			{
 				id: 1,
 				count: 1,
+				countStart: 1,
 				width: 32,
 				height: 64,
 				icon: 50,
@@ -372,6 +395,7 @@ window.GameJam.levels = {
 			{
 				id: 2,
 				count: 1,
+				countStart: 1,
 				width: 64,
 				height: 32,
 				icon: 150,
@@ -403,6 +427,7 @@ window.GameJam.levels = {
 			{
 				id: 0,
 				count: 2,
+				countStart: 2,
 				width: 32,
 				height: 32,
 				icon: 0,
@@ -411,6 +436,7 @@ window.GameJam.levels = {
 			{
 				id: 1,
 				count: 1,
+				countStart: 1,
 				width: 32,
 				height: 64,
 				icon: 50,
@@ -419,6 +445,7 @@ window.GameJam.levels = {
 			{
 				id: 2,
 				count: 1,
+				countStart: 1,
 				width: 64,
 				height: 32,
 				icon: 150,
@@ -450,6 +477,7 @@ window.GameJam.levels = {
 			{
 				id: 0,
 				count: 2,
+				countStart: 2,
 				width: 32,
 				height: 32,
 				icon: 0,
@@ -458,6 +486,7 @@ window.GameJam.levels = {
 			{
 				id: 1,
 				count: 1,
+				countStart: 1,
 				width: 32,
 				height: 64,
 				icon: 50,
@@ -466,6 +495,7 @@ window.GameJam.levels = {
 			{
 				id: 2,
 				count: 1,
+				countStart: 1,
 				width: 64,
 				height: 32,
 				icon: 150,
