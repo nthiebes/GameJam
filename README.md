@@ -1,4 +1,4 @@
 GameJam
 ======
 
-Hello world!
+Demo: http://grindkoala.com/GameJam/
