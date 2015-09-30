@@ -26,7 +26,8 @@ var core = function(document, window){
 				'img/window-vert.png',
 				'img/icons.png',
 				'img/level.png',
-				'img/obstacles.png'
+				'img/obstacles.png',
+				'img/explosion.png'
 			]);
 			resources.onReady(initMenu);
 		};
@@ -173,6 +174,7 @@ var core = function(document, window){
 			sprite: new Sprite('img/mouse.png', [0, 0], [32, 32], 5, [0, 1], 'horizontal', false, false) // url, pos, size, speed, frames, dir, once, inProgress
 		});
 
+		
 		// Main game loop
 		main();
 
@@ -385,6 +387,7 @@ var core = function(document, window){
 		GameJam.canvasa.width = GameJam.canvasa.width;
 	    renderEntities(GameJam.prisoner);
 	    renderEntities(GameJam.items);
+	    renderEntities(GameJam.explosion);
 	}
 
 
