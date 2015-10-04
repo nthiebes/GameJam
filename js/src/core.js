@@ -45,8 +45,8 @@ var core = function(document, window){
 		if (!buzz.isMP3Supported()) {
 		    alert("Your browser doesn't support MP3 Format.");
 		}else{
-			// GameJam.music = new buzz.sound("music/cafm.mp3");
-			// GameJam.music.loop().play().fadeIn();
+			GameJam.music = new buzz.sound("music/cafm.mp3");
+			GameJam.music.loop().play().fadeIn();
 		}
 
    		requestTimeout(function(){
@@ -71,6 +71,16 @@ var core = function(document, window){
 				useCookie();
 			}
 		}
+
+
+		var musicbtn = document.getElementById('musicbtn');
+
+		musicbtn.addEventListener('click', function() {
+			console.log("he: " +document.getElementById('musicbtn').getAttribute("data-checked"));
+		    var musicon = !(document.getElementById('musicbtn').getAttribute("data-checked") == 'true');
+		    console.log(musicon	);
+		    musicon ? GameJam.music.play() : GameJam.music.pause();
+		}, false);
 
 		getLevels();
 		interaction.LevelButtonEvents();
@@ -735,7 +745,8 @@ var core = function(document, window){
 		itemsToObstacles: itemsToObstacles,
 		LoadLevel: loadLevel,
 		DocCookies: docCookies,
-		LocalStorageActive: localStorageActive
+		LocalStorageActive: localStorageActive,
+		renderEntities: renderEntities
 	};
 
 }(document, window);
