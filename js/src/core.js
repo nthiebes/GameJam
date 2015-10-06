@@ -45,8 +45,8 @@ var core = function(document, window){
 		if (!buzz.isMP3Supported()) {
 		    alert("Your browser doesn't support MP3 Format.");
 		}else{
-			GameJam.music = new buzz.sound("music/cafm.mp3");
-			GameJam.music.loop().play().fadeIn();
+			// GameJam.music = new buzz.sound("music/cafm.mp3");
+			// GameJam.music.loop().play().fadeIn();
 		}
 
    		requestTimeout(function(){
@@ -386,6 +386,10 @@ var core = function(document, window){
 
 	    for (var i in GameJam.items) {
 			GameJam.items[i].sprite.update(dt);
+		}
+
+		for (var i in GameJam.explosion) {
+			GameJam.explosion[i].sprite.update(dt);
 		}
 	}
 

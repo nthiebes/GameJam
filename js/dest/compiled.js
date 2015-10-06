@@ -62,6 +62,7 @@ window.GameJam = {
 		  [240, 241, 242, 243, 244, 245, 246, 247, 248, 249, 250, 251, 252, 253, 254, 255]],
 
 	// Misc
+	explosion: [],
 	draggedItem: null,
 	currentLevel: '',
 	gameStarted: false,
@@ -676,7 +677,8 @@ var core = function(document, window){
 				'img/window-vert.png',
 				'img/icons.png',
 				'img/level.png',
-				'img/obstacles.png'
+				'img/obstacles.png',
+				'img/explosion.png'
 			]);
 			resources.onReady(initMenu);
 		};
@@ -720,6 +722,16 @@ var core = function(document, window){
 				useCookie();
 			}
 		}
+
+
+		var musicbtn = document.getElementById('musicbtn');
+
+		musicbtn.addEventListener('click', function() {
+			console.log("he: " +document.getElementById('musicbtn').getAttribute("data-checked"));
+		    var musicon = !(document.getElementById('musicbtn').getAttribute("data-checked") == 'true');
+		    console.log(musicon	);
+		    musicon ? GameJam.music.play() : GameJam.music.pause();
+		}, false);
 
 		getLevels();
 		interaction.LevelButtonEvents();
@@ -823,6 +835,7 @@ var core = function(document, window){
 			sprite: new Sprite('img/mouse.png', [0, 0], [32, 32], 5, [0, 1], 'horizontal', false, false) // url, pos, size, speed, frames, dir, once, inProgress
 		});
 
+		
 		// Main game loop
 		main();
 
@@ -1025,6 +1038,10 @@ var core = function(document, window){
 	    for (var i in GameJam.items) {
 			GameJam.items[i].sprite.update(dt);
 		}
+
+		for (var i in GameJam.explosion) {
+			GameJam.explosion[i].sprite.update(dt);
+		}
 	}
 
 
@@ -1035,6 +1052,7 @@ var core = function(document, window){
 		GameJam.canvasa.width = GameJam.canvasa.width;
 	    renderEntities(GameJam.prisoner);
 	    renderEntities(GameJam.items);
+	    renderEntities(GameJam.explosion);
 	}
 
 
@@ -1382,7 +1400,8 @@ var core = function(document, window){
 		itemsToObstacles: itemsToObstacles,
 		LoadLevel: loadLevel,
 		DocCookies: docCookies,
-		LocalStorageActive: localStorageActive
+		LocalStorageActive: localStorageActive,
+		renderEntities: renderEntities
 	};
 
 }(document, window);
@@ -2252,8 +2271,17 @@ window.GameJam.movePrisoner = function(){
     GameJam.currentPath = GameJam.findPath(GameJam.obstacles, [GameJam.prisoner[0].pos[0] / GameJam.tileWidth, GameJam.prisoner[0].pos[1] / GameJam.tileHeight], GameJam.pathEnd);
 
     function breakItem(){
+
+        //animation of breaking stuff        
+        for (var i = GameJam.items.length - 1; i >= 0; i--) {
+            GameJam.explosion.push({
+                pos: GameJam.items[i].pos,
+                sprite: new Sprite('img/explosion.png', [0, 0], [32, 32], 5, [0,1,2,3,4,5,6], 'horizontal', true, false) // url, pos, size, speed, frames, dir, once, inProgress
+            });
+
+        };
+
         core.itemsToObstacles(false);
-        //animation of breaking stuff
 
     }
 
@@ -2263,7 +2291,23 @@ window.GameJam.movePrisoner = function(){
             console.log('Break the wall!');
             breakItem();
             GameJam.currentPath = GameJam.findPath(GameJam.obstacles, [GameJam.prisoner[0].pos[0] / GameJam.tileWidth, GameJam.prisoner[0].pos[1] / GameJam.tileHeight], GameJam.pathEnd);
-            moveOrBreak();
+            
+            //setTimeout(function(){ 
+                //core.renderEntities(GameJam.explosion);
+                //GameJam.explosion.map(function (sprite){
+
+                //        sprite.sprite.render(GameJam.ctxa);
+                        //sprite.sprite.update();
+                //})
+                setTimeout(function(){ 
+                    GameJam.explosion.length = 0;
+                    
+                }, 2000);
+
+                moveOrBreak();
+
+            //}, 1000);
+            
 
         } else{
             // Draw path
