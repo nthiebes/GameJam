@@ -1020,16 +1020,28 @@ var core = function(document, window){
    	 * Initialize the main menu
    	 */
    	function initMenu(){
+   		var musicStorage = "";
    		loading(100);
    		console.log('-- Loading done');
+
+		if(localStorageActive){
+			 musicStorage = localStorage.getItem('music') || "";
+	 	}
 
 		//music
 		if (!buzz.isMP3Supported()) {
 		    alert("Your browser doesn't support MP3 Format.");
 		}else{
-			// GameJam.music = new buzz.sound("music/cafm.mp3");
-			// GameJam.music.loop().play().fadeIn();
+			GameJam.music = new buzz.sound("music/cafm.mp3");
+			//if we have localStorage and this is save as false, we dont want to play the music
+		 	if (!(musicStorage.length > 0 && musicStorage == 'false') ){
+				GameJam.music.loop().play().fadeIn();
+			}else{
+				 document.getElementById('musicbtn').setAttribute('data-checked','false');
+				 document.getElementById('musicbtn').className = "checkbox";
+			}
 		}
+	
 
    		requestTimeout(function(){
 			changeView('menu');
@@ -1059,9 +1071,10 @@ var core = function(document, window){
 
 		musicbtn.addEventListener('click', function() {
 			console.log("he: " +document.getElementById('musicbtn').getAttribute("data-checked"));
-		    var musicon = !(document.getElementById('musicbtn').getAttribute("data-checked") == 'true');
-		    console.log(musicon	);
-		    musicon ? GameJam.music.play() : GameJam.music.pause();
+		    var musicOn = document.getElementById('musicbtn').getAttribute("data-checked") == 'true';
+		    console.log(musicOn	);
+		    musicOn ? GameJam.music.play() : GameJam.music.pause();
+		    localStorage.setItem("music", musicOn);
 		}, false);
 
 		getLevels();
