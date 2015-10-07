@@ -2,25 +2,29 @@
  * Sprite handling
  */
 (function(){
-    function Sprite( url, pos, size, speed, frames, dir, once, inProgress ){
-        this.pos = pos;
-        this.size = size;
-        this.speed = typeof speed === 'number' ? speed : 0;
-        this.frames = frames;
+    function Sprite( cfg ){
+        this.pos = cfg.pos;
+        this.size = cfg.size;
+        this.speed = typeof cfg.speed === 'number' ? cfg.speed : 0;
+        this.frames = cfg.frames;
         this._index = 0;
-        this.url = url;
-        this.dir = dir || 'horizontal';
-        this.once = once;
+        this.url = cfg.url;
+        this.dir = cfg.dir || 'horizontal';
+        this.once = cfg.once;
+        this.stay = cfg.stay;
         this.currentFrame;
-        this.inProgress = inProgress;
-    };
+        this.inProgress = cfg.inProgress;
+    }
 
     Sprite.prototype = {
         update: function(dt) {
-            this._index += this.speed*dt;
-            // Always start with first frame
-            if( this.frames.length === 1 ){
-                this._index = 0;
+            // Stay not yet working correct
+            if (!(this.stay && this.done)) {
+                this._index += this.speed*dt;
+                // Always start with first frame
+                if( this.frames.length === 1 ){
+                    this._index = 0;
+                }
             }
         },
 
@@ -58,11 +62,14 @@
                 x += frame * this.size[0];
             }
 
-            ctx.drawImage(resources.get(this.url),
-                          x, y,
-                          this.size[0], this.size[1],
-                          0, 0,
-                          this.size[0], this.size[1]);
+            //if it is done and it has to run once, we dont update
+            if(!(this.done && this.once)){
+                ctx.drawImage(resources.get(this.url),
+                              x, y,
+                              this.size[0], this.size[1],
+                              0, 0,
+                              this.size[0], this.size[1]);
+            }
         }
     };
 

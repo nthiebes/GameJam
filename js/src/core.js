@@ -181,7 +181,17 @@ var core = function(document, window){
 			currentStep: 20,	// Current position in the way from one tile to another
 			nextTile: [],
 			pos: [Math.floor((GameJam.worldWidth-1) / 2) * GameJam.tileWidth, (GameJam.worldHeight-1) * GameJam.tileHeight - 32],
-			sprite: new Sprite('img/mouse.png', [0, 0], [32, 32], 5, [0, 1], 'horizontal', false, false) // url, pos, size, speed, frames, dir, once, inProgress
+			sprite: new Sprite({
+				url: 'img/mouse.png',
+				pos: [0, 0],
+				size: [32, 32],
+				speed: 5,
+				frames: [0, 1],
+				dir: 'horizontal',
+				once: false,
+				inProgress: false,
+				stay: false
+			})
 		});
 
 		

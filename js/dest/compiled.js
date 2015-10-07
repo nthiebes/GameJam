@@ -86,25 +86,29 @@ window.GameJam = {
  * Sprite handling
  */
 (function(){
-    function Sprite( url, pos, size, speed, frames, dir, once, inProgress ){
-        this.pos = pos;
-        this.size = size;
-        this.speed = typeof speed === 'number' ? speed : 0;
-        this.frames = frames;
+    function Sprite( cfg ){
+        this.pos = cfg.pos;
+        this.size = cfg.size;
+        this.speed = typeof cfg.speed === 'number' ? cfg.speed : 0;
+        this.frames = cfg.frames;
         this._index = 0;
-        this.url = url;
-        this.dir = dir || 'horizontal';
-        this.once = once;
+        this.url = cfg.url;
+        this.dir = cfg.dir || 'horizontal';
+        this.once = cfg.once;
+        this.stay = cfg.stay;
         this.currentFrame;
-        this.inProgress = inProgress;
-    };
+        this.inProgress = cfg.inProgress;
+    }
 
     Sprite.prototype = {
         update: function(dt) {
-            this._index += this.speed*dt;
-            // Always start with first frame
-            if( this.frames.length === 1 ){
-                this._index = 0;
+            // Stay not yet working correct
+            if (!(this.stay && this.done)) {
+                this._index += this.speed*dt;
+                // Always start with first frame
+                if( this.frames.length === 1 ){
+                    this._index = 0;
+                }
             }
         },
 
@@ -142,11 +146,14 @@ window.GameJam = {
                 x += frame * this.size[0];
             }
 
-            ctx.drawImage(resources.get(this.url),
-                          x, y,
-                          this.size[0], this.size[1],
-                          0, 0,
-                          this.size[0], this.size[1]);
+            //if it is done and it has to run once, we dont update
+            if(!(this.done && this.once)){
+                ctx.drawImage(resources.get(this.url),
+                              x, y,
+                              this.size[0], this.size[1],
+                              0, 0,
+                              this.size[0], this.size[1]);
+            }
         }
     };
 
@@ -156,6 +163,40 @@ window.GameJam = {
  * All levels of the game
  * @type {Object}
  */
+
+/*
+
+[[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+[1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+[1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+[1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+[1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+[1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+[1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+[1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1],
+[1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+[1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+[1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+[1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+[1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+[1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+[1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]],
+
+sprite: new Sprite({
+    url: 'img/obstacles.png',
+    pos: [96, 0],
+    size: [32, 64],
+    speed: 0,
+    frames: [0],
+    dir: 'horizontal',
+    once: false,
+    inProgress: false,
+    stay: false
+})
+
+ */
+
 window.GameJam.levels = {
 	level1: {
 		time: 0,
@@ -185,7 +226,17 @@ window.GameJam.levels = {
 				width: 32,
 				height: 32,
 				icon: 0,
-				sprite: new Sprite('img/obstacles.png', [64, 0], [32, 32], 8, [0], 'horizontal', false, false) // url, pos, size, speed, frames, dir, once, inProgress
+				sprite: new Sprite({
+				    url: 'img/obstacles.png',
+				    pos: [64, 0],
+				    size: [32, 32],
+				    speed: 0,
+				    frames: [0],
+				    dir: 'horizontal',
+				    once: false,
+				    inProgress: false,
+				    stay: false
+				})
 			},
 			{
 				id: 1,
@@ -194,7 +245,17 @@ window.GameJam.levels = {
 				width: 64,
 				height: 32,
 				icon: 150,
-				sprite: new Sprite('img/obstacles.png', [128, 0], [64, 32], 8, [0], 'horizontal', false, false) // url, pos, size, speed, frames, dir, once, inProgress
+				sprite: new Sprite({
+				    url: 'img/obstacles.png',
+				    pos: [128, 0],
+				    size: [64, 32],
+				    speed: 0,
+				    frames: [0],
+				    dir: 'horizontal',
+				    once: false,
+				    inProgress: false,
+				    stay: false
+				})
 			}
 		]
 	},
@@ -226,7 +287,17 @@ window.GameJam.levels = {
 				width: 32,
 				height: 32,
 				icon: 0,
-				sprite: new Sprite('img/obstacles.png', [64, 0], [32, 32], 8, [0], 'horizontal', false, false) // url, pos, size, speed, frames, dir, once, inProgress
+				sprite: new Sprite({
+				    url: 'img/obstacles.png',
+				    pos: [64, 0],
+				    size: [32, 32],
+				    speed: 0,
+				    frames: [0],
+				    dir: 'horizontal',
+				    once: false,
+				    inProgress: false,
+				    stay: false
+				})
 			},
 			{
 				id: 1,
@@ -235,7 +306,17 @@ window.GameJam.levels = {
 				width: 32,
 				height: 64,
 				icon: 50,
-				sprite: new Sprite('img/obstacles.png', [96, 0], [32, 64], 8, [0], 'horizontal', false, false) // url, pos, size, speed, frames, dir, once, inProgress
+				sprite: new Sprite({
+				    url: 'img/obstacles.png',
+				    pos: [96, 0],
+				    size: [32, 64],
+				    speed: 0,
+				    frames: [0],
+				    dir: 'horizontal',
+				    once: false,
+				    inProgress: false,
+				    stay: false
+				})
 			},
 			{
 				id: 2,
@@ -244,30 +325,40 @@ window.GameJam.levels = {
 				width: 64,
 				height: 32,
 				icon: 150,
-				sprite: new Sprite('img/obstacles.png', [128, 0], [64, 32], 8, [0], 'horizontal', false, false) // url, pos, size, speed, frames, dir, once, inProgress
+				sprite: new Sprite({
+				    url: 'img/obstacles.png',
+				    pos: [128, 0],
+				    size: [64, 32],
+				    speed: 0,
+				    frames: [0],
+				    dir: 'horizontal',
+				    once: false,
+				    inProgress: false,
+				    stay: false
+				})
 			}
 		]
 	},
 	level3: {
 		time: 0,
 		obstacles: [[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-				    [1, 1, 0, 0, 0, 0, 0, 8, 24, 0, 0, 0, 0, 0, 0, 1],
-				    [1, 0, 0, 0, 0, 0, 13, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-				    [1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 22, 0, 0, 0, 1],
-				    [1, 1, 0, 0, 0, 0, 0, 6, 0, 0, 0, 23, 0, 0, 0, 1],
-				    [1, 1, 0, 0, 0, 0, 0, 7, 0, 0, 13, 0, 0, 0, 0, 1],
-				  	[1, 1, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 2, 1],
-				  	[1, 1, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 1, 1],
-				  	[1, 1, 0, 0, 0, 0, 0, 11, 0, 0, 0, 0, 0, 0, 4, 1],
-				  	[1, 1, 0, 0, 0, 0, 0, 10, 0, 0, 0, 0, 0, 0, 5, 1],
+				    [1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+				    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+				    [1, 1, 0, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+				    [1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+				    [1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
 				  	[1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-				  	[1, 1, 0, 0, 0, 0, 12, 28, 44, 0, 0, 0, 0, 0, 0, 1],
-				  	[1, 1, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 1],
+				  	[1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1],
+				  	[1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 1],
+				  	[1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 0, 0, 1],
+				  	[1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+				  	[1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+				  	[1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
 				  	[1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
 				  	[1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
 				  	[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]],
 		stars: [20, 30, 40],
-		unlocked: false,
+		unlocked: true,
 		items: [
 			{
 				id: 0,
@@ -276,7 +367,17 @@ window.GameJam.levels = {
 				width: 32,
 				height: 32,
 				icon: 0,
-				sprite: new Sprite('img/obstacles.png', [64, 0], [32, 32], 8, [0], 'horizontal', false, false) // url, pos, size, speed, frames, dir, once, inProgress
+				sprite: new Sprite({
+    url: 'img/obstacles.png',
+    pos: [64, 0],
+    size: [32, 32],
+    speed: 0,
+    frames: [0],
+    dir: 'horizontal',
+    once: false,
+    inProgress: false,
+    stay: false
+})
 			},
 			{
 				id: 1,
@@ -285,7 +386,17 @@ window.GameJam.levels = {
 				width: 32,
 				height: 64,
 				icon: 50,
-				sprite: new Sprite('img/obstacles.png', [96, 0], [32, 64], 8, [0], 'horizontal', false, false) // url, pos, size, speed, frames, dir, once, inProgress
+				sprite: new Sprite({
+    url: 'img/obstacles.png',
+    pos: [96, 0],
+    size: [32, 64],
+    speed: 0,
+    frames: [0],
+    dir: 'horizontal',
+    once: false,
+    inProgress: false,
+    stay: false
+})
 			},
 			{
 				id: 2,
@@ -294,7 +405,17 @@ window.GameJam.levels = {
 				width: 64,
 				height: 32,
 				icon: 150,
-				sprite: new Sprite('img/obstacles.png', [128, 0], [64, 32], 8, [0], 'horizontal', false, false) // url, pos, size, speed, frames, dir, once, inProgress
+				sprite: new Sprite({
+    url: 'img/obstacles.png',
+    pos: [128, 0],
+    size: [64, 32],
+    speed: 0,
+    frames: [0],
+    dir: 'horizontal',
+    once: false,
+    inProgress: false,
+    stay: false
+})
 			}
 		]
 	},
@@ -306,9 +427,9 @@ window.GameJam.levels = {
 				    [1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 22, 0, 0, 0, 1],
 				    [1, 1, 0, 0, 0, 0, 0, 6, 0, 0, 0, 23, 0, 0, 0, 1],
 				    [1, 1, 0, 0, 0, 0, 0, 7, 0, 0, 13, 0, 0, 0, 0, 1],
-				  	[1, 1, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 2, 1],
+				  	[1, 1, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 2, 2, 1],
 				  	[1, 1, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 1, 1],
-				  	[1, 1, 0, 0, 0, 0, 0, 11, 0, 0, 0, 0, 0, 0, 4, 1],
+				  	[1, 1, 0, 0, 0, 0, 0, 11, 0, 0, 0, 0, 0, 2, 4, 1],
 				  	[1, 1, 0, 0, 0, 0, 0, 10, 0, 0, 0, 0, 0, 0, 5, 1],
 				  	[1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
 				  	[1, 1, 0, 0, 0, 0, 12, 28, 44, 0, 0, 0, 0, 0, 0, 1],
@@ -317,7 +438,7 @@ window.GameJam.levels = {
 				  	[1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
 				  	[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]],
 		stars: [20, 30, 40],
-		unlocked: false,
+		unlocked: true,
 		items: [
 			{
 				id: 0,
@@ -326,7 +447,17 @@ window.GameJam.levels = {
 				width: 32,
 				height: 32,
 				icon: 0,
-				sprite: new Sprite('img/obstacles.png', [64, 0], [32, 32], 8, [0], 'horizontal', false, false) // url, pos, size, speed, frames, dir, once, inProgress
+				sprite: new Sprite({
+    url: 'img/obstacles.png',
+    pos: [64, 0],
+    size: [32, 32],
+    speed: 0,
+    frames: [0],
+    dir: 'horizontal',
+    once: false,
+    inProgress: false,
+    stay: false
+})
 			},
 			{
 				id: 1,
@@ -335,7 +466,17 @@ window.GameJam.levels = {
 				width: 32,
 				height: 64,
 				icon: 50,
-				sprite: new Sprite('img/obstacles.png', [96, 0], [32, 64], 8, [0], 'horizontal', false, false) // url, pos, size, speed, frames, dir, once, inProgress
+				sprite: new Sprite({
+    url: 'img/obstacles.png',
+    pos: [96, 0],
+    size: [32, 64],
+    speed: 0,
+    frames: [0],
+    dir: 'horizontal',
+    once: false,
+    inProgress: false,
+    stay: false
+})
 			},
 			{
 				id: 2,
@@ -344,7 +485,17 @@ window.GameJam.levels = {
 				width: 64,
 				height: 32,
 				icon: 150,
-				sprite: new Sprite('img/obstacles.png', [128, 0], [64, 32], 8, [0], 'horizontal', false, false) // url, pos, size, speed, frames, dir, once, inProgress
+				sprite: new Sprite({
+    url: 'img/obstacles.png',
+    pos: [128, 0],
+    size: [64, 32],
+    speed: 0,
+    frames: [0],
+    dir: 'horizontal',
+    once: false,
+    inProgress: false,
+    stay: false
+})
 			}
 		]
 	},
@@ -376,7 +527,17 @@ window.GameJam.levels = {
 				width: 32,
 				height: 32,
 				icon: 0,
-				sprite: new Sprite('img/obstacles.png', [64, 0], [32, 32], 8, [0], 'horizontal', false, false) // url, pos, size, speed, frames, dir, once, inProgress
+				sprite: new Sprite({
+    url: 'img/obstacles.png',
+    pos: [64, 0],
+    size: [32, 32],
+    speed: 0,
+    frames: [0],
+    dir: 'horizontal',
+    once: false,
+    inProgress: false,
+    stay: false
+})
 			},
 			{
 				id: 1,
@@ -385,7 +546,17 @@ window.GameJam.levels = {
 				width: 32,
 				height: 64,
 				icon: 50,
-				sprite: new Sprite('img/obstacles.png', [96, 0], [32, 64], 8, [0], 'horizontal', false, false) // url, pos, size, speed, frames, dir, once, inProgress
+				sprite: new Sprite({
+    url: 'img/obstacles.png',
+    pos: [96, 0],
+    size: [32, 64],
+    speed: 0,
+    frames: [0],
+    dir: 'horizontal',
+    once: false,
+    inProgress: false,
+    stay: false
+})
 			},
 			{
 				id: 2,
@@ -394,7 +565,17 @@ window.GameJam.levels = {
 				width: 64,
 				height: 32,
 				icon: 150,
-				sprite: new Sprite('img/obstacles.png', [128, 0], [64, 32], 8, [0], 'horizontal', false, false) // url, pos, size, speed, frames, dir, once, inProgress
+				sprite: new Sprite({
+    url: 'img/obstacles.png',
+    pos: [128, 0],
+    size: [64, 32],
+    speed: 0,
+    frames: [0],
+    dir: 'horizontal',
+    once: false,
+    inProgress: false,
+    stay: false
+})
 			}
 		]
 	},
@@ -426,7 +607,17 @@ window.GameJam.levels = {
 				width: 32,
 				height: 32,
 				icon: 0,
-				sprite: new Sprite('img/obstacles.png', [64, 0], [32, 32], 8, [0], 'horizontal', false, false) // url, pos, size, speed, frames, dir, once, inProgress
+				sprite: new Sprite({
+    url: 'img/obstacles.png',
+    pos: [64, 0],
+    size: [32, 32],
+    speed: 0,
+    frames: [0],
+    dir: 'horizontal',
+    once: false,
+    inProgress: false,
+    stay: false
+})
 			},
 			{
 				id: 1,
@@ -435,7 +626,17 @@ window.GameJam.levels = {
 				width: 32,
 				height: 64,
 				icon: 50,
-				sprite: new Sprite('img/obstacles.png', [96, 0], [32, 64], 8, [0], 'horizontal', false, false) // url, pos, size, speed, frames, dir, once, inProgress
+				sprite: new Sprite({
+    url: 'img/obstacles.png',
+    pos: [96, 0],
+    size: [32, 64],
+    speed: 0,
+    frames: [0],
+    dir: 'horizontal',
+    once: false,
+    inProgress: false,
+    stay: false
+})
 			},
 			{
 				id: 2,
@@ -444,7 +645,17 @@ window.GameJam.levels = {
 				width: 64,
 				height: 32,
 				icon: 150,
-				sprite: new Sprite('img/obstacles.png', [128, 0], [64, 32], 8, [0], 'horizontal', false, false) // url, pos, size, speed, frames, dir, once, inProgress
+				sprite: new Sprite({
+    url: 'img/obstacles.png',
+    pos: [128, 0],
+    size: [64, 32],
+    speed: 0,
+    frames: [0],
+    dir: 'horizontal',
+    once: false,
+    inProgress: false,
+    stay: false
+})
 			}
 		]
 	},
@@ -476,7 +687,17 @@ window.GameJam.levels = {
 				width: 32,
 				height: 32,
 				icon: 0,
-				sprite: new Sprite('img/obstacles.png', [64, 0], [32, 32], 8, [0], 'horizontal', false, false) // url, pos, size, speed, frames, dir, once, inProgress
+				sprite: new Sprite({
+    url: 'img/obstacles.png',
+    pos: [64, 0],
+    size: [32, 32],
+    speed: 0,
+    frames: [0],
+    dir: 'horizontal',
+    once: false,
+    inProgress: false,
+    stay: false
+})
 			},
 			{
 				id: 1,
@@ -485,7 +706,17 @@ window.GameJam.levels = {
 				width: 32,
 				height: 64,
 				icon: 50,
-				sprite: new Sprite('img/obstacles.png', [96, 0], [32, 64], 8, [0], 'horizontal', false, false) // url, pos, size, speed, frames, dir, once, inProgress
+				sprite: new Sprite({
+    url: 'img/obstacles.png',
+    pos: [96, 0],
+    size: [32, 64],
+    speed: 0,
+    frames: [0],
+    dir: 'horizontal',
+    once: false,
+    inProgress: false,
+    stay: false
+})
 			},
 			{
 				id: 2,
@@ -494,7 +725,17 @@ window.GameJam.levels = {
 				width: 64,
 				height: 32,
 				icon: 150,
-				sprite: new Sprite('img/obstacles.png', [128, 0], [64, 32], 8, [0], 'horizontal', false, false) // url, pos, size, speed, frames, dir, once, inProgress
+				sprite: new Sprite({
+    url: 'img/obstacles.png',
+    pos: [128, 0],
+    size: [64, 32],
+    speed: 0,
+    frames: [0],
+    dir: 'horizontal',
+    once: false,
+    inProgress: false,
+    stay: false
+})
 			}
 		]
 	},
@@ -526,7 +767,17 @@ window.GameJam.levels = {
 				width: 32,
 				height: 32,
 				icon: 0,
-				sprite: new Sprite('img/obstacles.png', [64, 0], [32, 32], 8, [0], 'horizontal', false, false) // url, pos, size, speed, frames, dir, once, inProgress
+				sprite: new Sprite({
+    url: 'img/obstacles.png',
+    pos: [64, 0],
+    size: [32, 32],
+    speed: 0,
+    frames: [0],
+    dir: 'horizontal',
+    once: false,
+    inProgress: false,
+    stay: false
+})
 			},
 			{
 				id: 1,
@@ -535,7 +786,17 @@ window.GameJam.levels = {
 				width: 32,
 				height: 64,
 				icon: 50,
-				sprite: new Sprite('img/obstacles.png', [96, 0], [32, 64], 8, [0], 'horizontal', false, false) // url, pos, size, speed, frames, dir, once, inProgress
+				sprite: new Sprite({
+    url: 'img/obstacles.png',
+    pos: [96, 0],
+    size: [32, 64],
+    speed: 0,
+    frames: [0],
+    dir: 'horizontal',
+    once: false,
+    inProgress: false,
+    stay: false
+})
 			},
 			{
 				id: 2,
@@ -544,7 +805,17 @@ window.GameJam.levels = {
 				width: 64,
 				height: 32,
 				icon: 150,
-				sprite: new Sprite('img/obstacles.png', [128, 0], [64, 32], 8, [0], 'horizontal', false, false) // url, pos, size, speed, frames, dir, once, inProgress
+				sprite: new Sprite({
+    url: 'img/obstacles.png',
+    pos: [128, 0],
+    size: [64, 32],
+    speed: 0,
+    frames: [0],
+    dir: 'horizontal',
+    once: false,
+    inProgress: false,
+    stay: false
+})
 			}
 		]
 	},
@@ -576,7 +847,17 @@ window.GameJam.levels = {
 				width: 32,
 				height: 32,
 				icon: 0,
-				sprite: new Sprite('img/obstacles.png', [64, 0], [32, 32], 8, [0], 'horizontal', false, false) // url, pos, size, speed, frames, dir, once, inProgress
+				sprite: new Sprite({
+    url: 'img/obstacles.png',
+    pos: [64, 0],
+    size: [32, 32],
+    speed: 0,
+    frames: [0],
+    dir: 'horizontal',
+    once: false,
+    inProgress: false,
+    stay: false
+})
 			},
 			{
 				id: 1,
@@ -585,7 +866,17 @@ window.GameJam.levels = {
 				width: 32,
 				height: 64,
 				icon: 50,
-				sprite: new Sprite('img/obstacles.png', [96, 0], [32, 64], 8, [0], 'horizontal', false, false) // url, pos, size, speed, frames, dir, once, inProgress
+				sprite: new Sprite({
+    url: 'img/obstacles.png',
+    pos: [96, 0],
+    size: [32, 64],
+    speed: 0,
+    frames: [0],
+    dir: 'horizontal',
+    once: false,
+    inProgress: false,
+    stay: false
+})
 			},
 			{
 				id: 2,
@@ -594,7 +885,17 @@ window.GameJam.levels = {
 				width: 64,
 				height: 32,
 				icon: 150,
-				sprite: new Sprite('img/obstacles.png', [128, 0], [64, 32], 8, [0], 'horizontal', false, false) // url, pos, size, speed, frames, dir, once, inProgress
+				sprite: new Sprite({
+    url: 'img/obstacles.png',
+    pos: [128, 0],
+    size: [64, 32],
+    speed: 0,
+    frames: [0],
+    dir: 'horizontal',
+    once: false,
+    inProgress: false,
+    stay: false
+})
 			}
 		]
 	},
@@ -626,7 +927,17 @@ window.GameJam.levels = {
 				width: 32,
 				height: 32,
 				icon: 0,
-				sprite: new Sprite('img/obstacles.png', [64, 0], [32, 32], 8, [0], 'horizontal', false, false) // url, pos, size, speed, frames, dir, once, inProgress
+				sprite: new Sprite({
+    url: 'img/obstacles.png',
+    pos: [64, 0],
+    size: [32, 32],
+    speed: 0,
+    frames: [0],
+    dir: 'horizontal',
+    once: false,
+    inProgress: false,
+    stay: false
+})
 			},
 			{
 				id: 1,
@@ -635,7 +946,17 @@ window.GameJam.levels = {
 				width: 32,
 				height: 64,
 				icon: 50,
-				sprite: new Sprite('img/obstacles.png', [96, 0], [32, 64], 8, [0], 'horizontal', false, false) // url, pos, size, speed, frames, dir, once, inProgress
+				sprite: new Sprite({
+    url: 'img/obstacles.png',
+    pos: [96, 0],
+    size: [32, 64],
+    speed: 0,
+    frames: [0],
+    dir: 'horizontal',
+    once: false,
+    inProgress: false,
+    stay: false
+})
 			},
 			{
 				id: 2,
@@ -644,7 +965,17 @@ window.GameJam.levels = {
 				width: 64,
 				height: 32,
 				icon: 150,
-				sprite: new Sprite('img/obstacles.png', [128, 0], [64, 32], 8, [0], 'horizontal', false, false) // url, pos, size, speed, frames, dir, once, inProgress
+				sprite: new Sprite({
+    url: 'img/obstacles.png',
+    pos: [128, 0],
+    size: [64, 32],
+    speed: 0,
+    frames: [0],
+    dir: 'horizontal',
+    once: false,
+    inProgress: false,
+    stay: false
+})
 			}
 		]
 	}
@@ -832,7 +1163,17 @@ var core = function(document, window){
 			currentStep: 20,	// Current position in the way from one tile to another
 			nextTile: [],
 			pos: [Math.floor((GameJam.worldWidth-1) / 2) * GameJam.tileWidth, (GameJam.worldHeight-1) * GameJam.tileHeight - 32],
-			sprite: new Sprite('img/mouse.png', [0, 0], [32, 32], 5, [0, 1], 'horizontal', false, false) // url, pos, size, speed, frames, dir, once, inProgress
+			sprite: new Sprite({
+				url: 'img/mouse.png',
+				pos: [0, 0],
+				size: [32, 32],
+				speed: 5,
+				frames: [0, 1],
+				dir: 'horizontal',
+				once: false,
+				inProgress: false,
+				stay: false
+			})
 		});
 
 		
@@ -2276,10 +2617,19 @@ window.GameJam.movePrisoner = function(){
         for (var i = GameJam.items.length - 1; i >= 0; i--) {
             GameJam.explosion.push({
                 pos: GameJam.items[i].pos,
-                sprite: new Sprite('img/explosion.png', [0, 0], [32, 32], 5, [0,1,2,3,4,5,6], 'horizontal', true, false) // url, pos, size, speed, frames, dir, once, inProgress
+                sprite: new Sprite({
+                    url: 'img/explosion.png',
+                    pos: [0, 0],
+                    size: [32, 32],
+                    speed: 5,
+                    frames: [0,1,2,3,4,5,6],
+                    dir: 'horizontal',
+                    once: true,
+                    inProgress: false,
+                    stay: false
+                })
             });
-
-        };
+        }
 
         core.itemsToObstacles(false);
 
@@ -2292,29 +2642,18 @@ window.GameJam.movePrisoner = function(){
             breakItem();
             GameJam.currentPath = GameJam.findPath(GameJam.obstacles, [GameJam.prisoner[0].pos[0] / GameJam.tileWidth, GameJam.prisoner[0].pos[1] / GameJam.tileHeight], GameJam.pathEnd);
             
-            //setTimeout(function(){ 
-                //core.renderEntities(GameJam.explosion);
-                //GameJam.explosion.map(function (sprite){
+            setTimeout(function(){ 
+                GameJam.explosion.length = 0;
+            }, 2000);
 
-                //        sprite.sprite.render(GameJam.ctxa);
-                        //sprite.sprite.update();
-                //})
-                setTimeout(function(){ 
-                    GameJam.explosion.length = 0;
-                    
-                }, 2000);
-
-                moveOrBreak();
-
-            //}, 1000);
-            
+            moveOrBreak();
 
         } else{
             // Draw path
             GameJam.redraw();
 
             // Define the next tile for the animation
-            GameJam.nextTile = [GameJam.currentPath[0]]
+            GameJam.nextTile = [GameJam.currentPath[0]];
         }
     }
 

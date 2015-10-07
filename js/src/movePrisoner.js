@@ -12,10 +12,19 @@ window.GameJam.movePrisoner = function(){
         for (var i = GameJam.items.length - 1; i >= 0; i--) {
             GameJam.explosion.push({
                 pos: GameJam.items[i].pos,
-                sprite: new Sprite('img/explosion.png', [0, 0], [32, 32], 5, [0,1,2,3,4,5,6], 'horizontal', true, false) // url, pos, size, speed, frames, dir, once, inProgress
+                sprite: new Sprite({
+                    url: 'img/explosion.png',
+                    pos: [0, 0],
+                    size: [32, 32],
+                    speed: 5,
+                    frames: [0,1,2,3,4,5,6],
+                    dir: 'horizontal',
+                    once: true,
+                    inProgress: false,
+                    stay: false
+                })
             });
-
-        };
+        }
 
         core.itemsToObstacles(false);
 
@@ -28,29 +37,18 @@ window.GameJam.movePrisoner = function(){
             breakItem();
             GameJam.currentPath = GameJam.findPath(GameJam.obstacles, [GameJam.prisoner[0].pos[0] / GameJam.tileWidth, GameJam.prisoner[0].pos[1] / GameJam.tileHeight], GameJam.pathEnd);
             
-            //setTimeout(function(){ 
-                //core.renderEntities(GameJam.explosion);
-                //GameJam.explosion.map(function (sprite){
+            setTimeout(function(){ 
+                GameJam.explosion.length = 0;
+            }, 2000);
 
-                //        sprite.sprite.render(GameJam.ctxa);
-                        //sprite.sprite.update();
-                //})
-                setTimeout(function(){ 
-                    GameJam.explosion.length = 0;
-                    
-                }, 2000);
-
-                moveOrBreak();
-
-            //}, 1000);
-            
+            moveOrBreak();
 
         } else{
             // Draw path
             GameJam.redraw();
 
             // Define the next tile for the animation
-            GameJam.nextTile = [GameJam.currentPath[0]]
+            GameJam.nextTile = [GameJam.currentPath[0]];
         }
     }
 
