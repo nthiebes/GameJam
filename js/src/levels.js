@@ -207,16 +207,16 @@ window.GameJam.levels = {
 				height: 32,
 				icon: 0,
 				sprite: new Sprite({
-				    url: 'img/obstacles.png',
-				    pos: [64, 0],
-				    size: [32, 32],
-				    speed: 0,
-				    frames: [0],
-				    dir: 'horizontal',
-				    once: false,
-				    inProgress: false,
-				    stay: false
-				})
+							    url: 'img/obstacles.png',
+							    pos: [64, 0],
+							    size: [32, 32],
+							    speed: 0,
+							    frames: [0],
+							    dir: 'horizontal',
+							    once: false,
+							    inProgress: false,
+							    stay: false
+							})
 			},
 			{
 				id: 1,
@@ -226,16 +226,16 @@ window.GameJam.levels = {
 				height: 64,
 				icon: 50,
 				sprite: new Sprite({
-				    url: 'img/obstacles.png',
-				    pos: [96, 0],
-				    size: [32, 64],
-				    speed: 0,
-				    frames: [0],
-				    dir: 'horizontal',
-				    once: false,
-				    inProgress: false,
-				    stay: false
-				})
+							    url: 'img/obstacles.png',
+							    pos: [96, 0],
+							    size: [32, 64],
+							    speed: 0,
+							    frames: [0],
+							    dir: 'horizontal',
+							    once: false,
+							    inProgress: false,
+							    stay: false
+							})
 			}
 		]
 	},
@@ -268,16 +268,16 @@ window.GameJam.levels = {
 				height: 32,
 				icon: 0,
 				sprite: new Sprite({
-				    url: 'img/obstacles.png',
-				    pos: [64, 0],
-				    size: [32, 32],
-				    speed: 0,
-				    frames: [0],
-				    dir: 'horizontal',
-				    once: false,
-				    inProgress: false,
-				    stay: false
-				})
+						    url: 'img/obstacles.png',
+						    pos: [64, 0],
+						    size: [32, 32],
+						    speed: 0,
+						    frames: [0],
+						    dir: 'horizontal',
+						    once: false,
+						    inProgress: false,
+						    stay: false
+						})
 			},
 			{
 				id: 1,
@@ -287,16 +287,16 @@ window.GameJam.levels = {
 				height: 64,
 				icon: 50,
 				sprite: new Sprite({
-				    url: 'img/obstacles.png',
-				    pos: [96, 0],
-				    size: [32, 64],
-				    speed: 0,
-				    frames: [0],
-				    dir: 'horizontal',
-				    once: false,
-				    inProgress: false,
-				    stay: false
-				})
+						    url: 'img/obstacles.png',
+						    pos: [96, 0],
+						    size: [32, 64],
+						    speed: 0,
+						    frames: [0],
+						    dir: 'horizontal',
+						    once: false,
+						    inProgress: false,
+						    stay: false
+						})
 			},
 			{
 				id: 2,
@@ -306,16 +306,16 @@ window.GameJam.levels = {
 				height: 32,
 				icon: 150,
 				sprite: new Sprite({
-				    url: 'img/obstacles.png',
-				    pos: [128, 0],
-				    size: [64, 32],
-				    speed: 0,
-				    frames: [0],
-				    dir: 'horizontal',
-				    once: false,
-				    inProgress: false,
-				    stay: false
-				})
+						    url: 'img/obstacles.png',
+						    pos: [128, 0],
+						    size: [64, 32],
+						    speed: 0,
+						    frames: [0],
+						    dir: 'horizontal',
+						    once: false,
+						    inProgress: false,
+						    stay: false
+						})
 			}
 		]
 	},
@@ -348,16 +348,16 @@ window.GameJam.levels = {
 				height: 32,
 				icon: 0,
 				sprite: new Sprite({
-				    url: 'img/obstacles.png',
-				    pos: [64, 0],
-				    size: [32, 32],
-				    speed: 0,
-				    frames: [0],
-				    dir: 'horizontal',
-				    once: false,
-				    inProgress: false,
-				    stay: false
-				})
+    url: 'img/obstacles.png',
+    pos: [64, 0],
+    size: [32, 32],
+    speed: 0,
+    frames: [0],
+    dir: 'horizontal',
+    once: false,
+    inProgress: false,
+    stay: false
+})
 			},
 			{
 				id: 1,
@@ -367,16 +367,16 @@ window.GameJam.levels = {
 				height: 64,
 				icon: 50,
 				sprite: new Sprite({
-				    url: 'img/obstacles.png',
-				    pos: [96, 0],
-				    size: [32, 64],
-				    speed: 0,
-				    frames: [0],
-				    dir: 'horizontal',
-				    once: false,
-				    inProgress: false,
-				    stay: false
-				})
+    url: 'img/obstacles.png',
+    pos: [96, 0],
+    size: [32, 64],
+    speed: 0,
+    frames: [0],
+    dir: 'horizontal',
+    once: false,
+    inProgress: false,
+    stay: false
+})
 			},
 			{
 				id: 2,
@@ -386,16 +386,16 @@ window.GameJam.levels = {
 				height: 32,
 				icon: 150,
 				sprite: new Sprite({
-				    url: 'img/obstacles.png',
-				    pos: [128, 0],
-				    size: [64, 32],
-				    speed: 0,
-				    frames: [0],
-				    dir: 'horizontal',
-				    once: false,
-				    inProgress: false,
-				    stay: false
-				})
+    url: 'img/obstacles.png',
+    pos: [128, 0],
+    size: [64, 32],
+    speed: 0,
+    frames: [0],
+    dir: 'horizontal',
+    once: false,
+    inProgress: false,
+    stay: false
+})
 			}
 		]
 	},
@@ -428,16 +428,16 @@ window.GameJam.levels = {
 				height: 32,
 				icon: 0,
 				sprite: new Sprite({
-				    url: 'img/obstacles.png',
-				    pos: [64, 0],
-				    size: [32, 32],
-				    speed: 0,
-				    frames: [0],
-				    dir: 'horizontal',
-				    once: false,
-				    inProgress: false,
-				    stay: false
-				})
+    url: 'img/obstacles.png',
+    pos: [64, 0],
+    size: [32, 32],
+    speed: 0,
+    frames: [0],
+    dir: 'horizontal',
+    once: false,
+    inProgress: false,
+    stay: false
+})
 			},
 			{
 				id: 1,
@@ -447,16 +447,16 @@ window.GameJam.levels = {
 				height: 64,
 				icon: 50,
 				sprite: new Sprite({
-				    url: 'img/obstacles.png',
-				    pos: [96, 0],
-				    size: [32, 64],
-				    speed: 0,
-				    frames: [0],
-				    dir: 'horizontal',
-				    once: false,
-				    inProgress: false,
-				    stay: false
-				})
+    url: 'img/obstacles.png',
+    pos: [96, 0],
+    size: [32, 64],
+    speed: 0,
+    frames: [0],
+    dir: 'horizontal',
+    once: false,
+    inProgress: false,
+    stay: false
+})
 			},
 			{
 				id: 2,
@@ -466,16 +466,16 @@ window.GameJam.levels = {
 				height: 32,
 				icon: 150,
 				sprite: new Sprite({
-				    url: 'img/obstacles.png',
-				    pos: [128, 0],
-				    size: [64, 32],
-				    speed: 0,
-				    frames: [0],
-				    dir: 'horizontal',
-				    once: false,
-				    inProgress: false,
-				    stay: false
-				})
+    url: 'img/obstacles.png',
+    pos: [128, 0],
+    size: [64, 32],
+    speed: 0,
+    frames: [0],
+    dir: 'horizontal',
+    once: false,
+    inProgress: false,
+    stay: false
+})
 			}
 		]
 	},
@@ -508,16 +508,16 @@ window.GameJam.levels = {
 				height: 32,
 				icon: 0,
 				sprite: new Sprite({
-				    url: 'img/obstacles.png',
-				    pos: [64, 0],
-				    size: [32, 32],
-				    speed: 0,
-				    frames: [0],
-				    dir: 'horizontal',
-				    once: false,
-				    inProgress: false,
-				    stay: false
-				})
+    url: 'img/obstacles.png',
+    pos: [64, 0],
+    size: [32, 32],
+    speed: 0,
+    frames: [0],
+    dir: 'horizontal',
+    once: false,
+    inProgress: false,
+    stay: false
+})
 			},
 			{
 				id: 1,
@@ -527,16 +527,16 @@ window.GameJam.levels = {
 				height: 64,
 				icon: 50,
 				sprite: new Sprite({
-				    url: 'img/obstacles.png',
-				    pos: [96, 0],
-				    size: [32, 64],
-				    speed: 0,
-				    frames: [0],
-				    dir: 'horizontal',
-				    once: false,
-				    inProgress: false,
-				    stay: false
-				})
+    url: 'img/obstacles.png',
+    pos: [96, 0],
+    size: [32, 64],
+    speed: 0,
+    frames: [0],
+    dir: 'horizontal',
+    once: false,
+    inProgress: false,
+    stay: false
+})
 			},
 			{
 				id: 2,
@@ -546,16 +546,16 @@ window.GameJam.levels = {
 				height: 32,
 				icon: 150,
 				sprite: new Sprite({
-				    url: 'img/obstacles.png',
-				    pos: [128, 0],
-				    size: [64, 32],
-				    speed: 0,
-				    frames: [0],
-				    dir: 'horizontal',
-				    once: false,
-				    inProgress: false,
-				    stay: false
-				})
+    url: 'img/obstacles.png',
+    pos: [128, 0],
+    size: [64, 32],
+    speed: 0,
+    frames: [0],
+    dir: 'horizontal',
+    once: false,
+    inProgress: false,
+    stay: false
+})
 			}
 		]
 	},
@@ -588,16 +588,16 @@ window.GameJam.levels = {
 				height: 32,
 				icon: 0,
 				sprite: new Sprite({
-				    url: 'img/obstacles.png',
-				    pos: [64, 0],
-				    size: [32, 32],
-				    speed: 0,
-				    frames: [0],
-				    dir: 'horizontal',
-				    once: false,
-				    inProgress: false,
-				    stay: false
-				})
+    url: 'img/obstacles.png',
+    pos: [64, 0],
+    size: [32, 32],
+    speed: 0,
+    frames: [0],
+    dir: 'horizontal',
+    once: false,
+    inProgress: false,
+    stay: false
+})
 			},
 			{
 				id: 1,
@@ -607,16 +607,16 @@ window.GameJam.levels = {
 				height: 64,
 				icon: 50,
 				sprite: new Sprite({
-				    url: 'img/obstacles.png',
-				    pos: [96, 0],
-				    size: [32, 64],
-				    speed: 0,
-				    frames: [0],
-				    dir: 'horizontal',
-				    once: false,
-				    inProgress: false,
-				    stay: false
-				})
+    url: 'img/obstacles.png',
+    pos: [96, 0],
+    size: [32, 64],
+    speed: 0,
+    frames: [0],
+    dir: 'horizontal',
+    once: false,
+    inProgress: false,
+    stay: false
+})
 			},
 			{
 				id: 2,
@@ -626,16 +626,16 @@ window.GameJam.levels = {
 				height: 32,
 				icon: 150,
 				sprite: new Sprite({
-				    url: 'img/obstacles.png',
-				    pos: [128, 0],
-				    size: [64, 32],
-				    speed: 0,
-				    frames: [0],
-				    dir: 'horizontal',
-				    once: false,
-				    inProgress: false,
-				    stay: false
-				})
+    url: 'img/obstacles.png',
+    pos: [128, 0],
+    size: [64, 32],
+    speed: 0,
+    frames: [0],
+    dir: 'horizontal',
+    once: false,
+    inProgress: false,
+    stay: false
+})
 			}
 		]
 	},
@@ -668,16 +668,16 @@ window.GameJam.levels = {
 				height: 32,
 				icon: 0,
 				sprite: new Sprite({
-				    url: 'img/obstacles.png',
-				    pos: [64, 0],
-				    size: [32, 32],
-				    speed: 0,
-				    frames: [0],
-				    dir: 'horizontal',
-				    once: false,
-				    inProgress: false,
-				    stay: false
-				})
+    url: 'img/obstacles.png',
+    pos: [64, 0],
+    size: [32, 32],
+    speed: 0,
+    frames: [0],
+    dir: 'horizontal',
+    once: false,
+    inProgress: false,
+    stay: false
+})
 			},
 			{
 				id: 1,
@@ -687,16 +687,16 @@ window.GameJam.levels = {
 				height: 64,
 				icon: 50,
 				sprite: new Sprite({
-				    url: 'img/obstacles.png',
-				    pos: [96, 0],
-				    size: [32, 64],
-				    speed: 0,
-				    frames: [0],
-				    dir: 'horizontal',
-				    once: false,
-				    inProgress: false,
-				    stay: false
-				})
+    url: 'img/obstacles.png',
+    pos: [96, 0],
+    size: [32, 64],
+    speed: 0,
+    frames: [0],
+    dir: 'horizontal',
+    once: false,
+    inProgress: false,
+    stay: false
+})
 			},
 			{
 				id: 2,
@@ -706,16 +706,16 @@ window.GameJam.levels = {
 				height: 32,
 				icon: 150,
 				sprite: new Sprite({
-				    url: 'img/obstacles.png',
-				    pos: [128, 0],
-				    size: [64, 32],
-				    speed: 0,
-				    frames: [0],
-				    dir: 'horizontal',
-				    once: false,
-				    inProgress: false,
-				    stay: false
-				})
+    url: 'img/obstacles.png',
+    pos: [128, 0],
+    size: [64, 32],
+    speed: 0,
+    frames: [0],
+    dir: 'horizontal',
+    once: false,
+    inProgress: false,
+    stay: false
+})
 			}
 		]
 	},
@@ -748,16 +748,16 @@ window.GameJam.levels = {
 				height: 32,
 				icon: 0,
 				sprite: new Sprite({
-				    url: 'img/obstacles.png',
-				    pos: [64, 0],
-				    size: [32, 32],
-				    speed: 0,
-				    frames: [0],
-				    dir: 'horizontal',
-				    once: false,
-				    inProgress: false,
-				    stay: false
-				})
+    url: 'img/obstacles.png',
+    pos: [64, 0],
+    size: [32, 32],
+    speed: 0,
+    frames: [0],
+    dir: 'horizontal',
+    once: false,
+    inProgress: false,
+    stay: false
+})
 			},
 			{
 				id: 1,
@@ -767,16 +767,16 @@ window.GameJam.levels = {
 				height: 64,
 				icon: 50,
 				sprite: new Sprite({
-				    url: 'img/obstacles.png',
-				    pos: [96, 0],
-				    size: [32, 64],
-				    speed: 0,
-				    frames: [0],
-				    dir: 'horizontal',
-				    once: false,
-				    inProgress: false,
-				    stay: false
-				})
+    url: 'img/obstacles.png',
+    pos: [96, 0],
+    size: [32, 64],
+    speed: 0,
+    frames: [0],
+    dir: 'horizontal',
+    once: false,
+    inProgress: false,
+    stay: false
+})
 			},
 			{
 				id: 2,
@@ -786,16 +786,16 @@ window.GameJam.levels = {
 				height: 32,
 				icon: 150,
 				sprite: new Sprite({
-				    url: 'img/obstacles.png',
-				    pos: [128, 0],
-				    size: [64, 32],
-				    speed: 0,
-				    frames: [0],
-				    dir: 'horizontal',
-				    once: false,
-				    inProgress: false,
-				    stay: false
-				})
+    url: 'img/obstacles.png',
+    pos: [128, 0],
+    size: [64, 32],
+    speed: 0,
+    frames: [0],
+    dir: 'horizontal',
+    once: false,
+    inProgress: false,
+    stay: false
+})
 			}
 		]
 	}
