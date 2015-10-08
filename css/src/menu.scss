@@ -67,7 +67,7 @@
     @include transform(translateY(0));
 }
 
-@include keyframe(bounce-in-menu) {
+@include keyframe(bounce_in_menu) {
     0% {
         opacity: 0;
         @include transform(translateY(-100px));
@@ -86,27 +86,27 @@
 
 .show {
     .menu-top {
-        @include animation(bounce-in-menu 1.1s 0s forwards);
+        @include animation(bounce_in_menu 1.1s 0s forwards);
     }
 
     #play-btn {
-        @include animation(bounce-in-menu 1.1s 0s forwards);
+        @include animation(bounce_in_menu 1.1s 0s forwards);
     }
 
     #help-btn {
-        @include animation(bounce-in-menu 1.0s 0s forwards);
+        @include animation(bounce_in_menu 1.0s 0s forwards);
     }
 
     #options-btn {
-        @include animation(bounce-in-menu 0.9s 0s forwards);
+        @include animation(bounce_in_menu 0.9s 0s forwards);
     }
 
     #credits-btn {
-        @include animation(bounce-in-menu 0.8s 0s forwards);
+        @include animation(bounce_in_menu 0.8s 0s forwards);
     }
 
     .menu-bottom {
-        @include animation(bounce-in-menu 0.8s 0s forwards);
+        @include animation(bounce_in_menu 0.8s 0s forwards);
     }
 }
 
