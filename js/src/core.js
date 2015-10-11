@@ -88,9 +88,9 @@ var core = function(document, window){
 		var musicbtn = document.getElementById('musicbtn');
 
 		musicbtn.addEventListener('click', function() {
-			console.log("he: " +document.getElementById('musicbtn').getAttribute("data-checked"));
+			//console.log("he: " +document.getElementById('musicbtn').getAttribute("data-checked"));
 		    var musicOn = document.getElementById('musicbtn').getAttribute("data-checked") == 'true';
-		    console.log(musicOn	);
+		    //console.log(musicOn	);
 		    musicOn ? GameJam.music.play() : GameJam.music.pause();
 		    localStorage.setItem("music", musicOn);
 		}, false);
@@ -486,7 +486,7 @@ var core = function(document, window){
    	 */
    	function startGame(){
 		
-		//put items in the map
+		// Put items in the map
 		itemsToObstacles(true);
 
 		// Create the prisoner path
@@ -513,6 +513,8 @@ var core = function(document, window){
 		GameJam.gameStarted = true;
 
 		GameJam.gameEnded = false;
+
+		document.getElementById('static-canvas').className = 'started';
 
 		console.log('-- Game started');
 	}
@@ -585,6 +587,8 @@ var core = function(document, window){
 		GameJam.timer.className = '';
 
 		document.getElementById('fog').className = 'show';
+
+		document.getElementById('static-canvas').className = '';
 
 		getLevels();
 		interaction.LevelButtonEvents();
