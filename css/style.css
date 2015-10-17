@@ -875,7 +875,7 @@ canvas {
   min-width: 512px; }
 
 #static-canvas {
-  opacity: 0.7; }
+  opacity: 0.5; }
   #static-canvas.started {
     opacity: 1; }
 

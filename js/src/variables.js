@@ -80,5 +80,7 @@ window.GameJam = {
 	loadingInner: document.getElementById('loading-inner'),
 	draggedIcon: document.getElementById('dragged-icon'),
 
-	music: null
+	// Sound
+	music: null,
+	sound: null
 };

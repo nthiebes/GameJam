@@ -38,28 +38,33 @@ var core = function(document, window){
    	 * Initialize the main menu
    	 */
    	function initMenu(){
-   		var musicStorage = "";
+   		var musicStorage = "",
+   			soundStorage = "";
    		loading(100);
    		console.log('-- Loading done');
 
 		if(localStorageActive){
-			 musicStorage = localStorage.getItem('music') || "";
+			musicStorage = localStorage.getItem('music') || "";
+			soundStorage = localStorage.getItem('sound') || "";
 	 	}
 
-		//music
-		if (!buzz.isMP3Supported()) {
-		    alert("Your browser doesn't support MP3 Format.");
-		}else{
-			GameJam.music = new buzz.sound("music/cafm.mp3");
-			//if we have localStorage and this is save as false, we dont want to play the music
-		 	if (!(musicStorage.length > 0 && musicStorage == 'false') ){
-				GameJam.music.loop().play().fadeIn();
-			}else{
-				 document.getElementById('musicbtn').setAttribute('data-checked','false');
-				 document.getElementById('musicbtn').className = "checkbox";
-			}
+		// if we have localStorage and this is save as false, we dont want to play the music
+	 	if (!(musicStorage.length > 0 && musicStorage == 'false') ){
+			initMusic();
+		} else{
+			document.getElementById('musicbtn').setAttribute('data-checked','false');
+			document.getElementById('musicbtn').className = "checkbox";
 		}
-	
+
+		initSound();
+
+		if (!(soundStorage.length > 0 && soundStorage == 'false') ){
+			
+		} else{
+			document.getElementById('soundbtn').setAttribute('data-checked','false');
+			document.getElementById('soundbtn').className = "checkbox";
+			GameJam.sound.unload();
+		}
 
    		requestTimeout(function(){
 			changeView('menu');
@@ -88,15 +93,53 @@ var core = function(document, window){
 		var musicbtn = document.getElementById('musicbtn');
 
 		musicbtn.addEventListener('click', function() {
-			//console.log("he: " +document.getElementById('musicbtn').getAttribute("data-checked"));
 		    var musicOn = document.getElementById('musicbtn').getAttribute("data-checked") == 'true';
-		    //console.log(musicOn	);
-		    musicOn ? GameJam.music.play() : GameJam.music.pause();
+		    musicOn ? (GameJam.music ? GameJam.music.play() : initMusic()) : GameJam.music.pause();
 		    localStorage.setItem("music", musicOn);
+		}, false);
+
+
+		var soundbtn = document.getElementById('soundbtn');
+
+		soundbtn.addEventListener('click', function() {
+		    var soundOn = document.getElementById('soundbtn').getAttribute("data-checked") == 'true';
+		    soundOn ? initSound() : GameJam.sound.unload();
+		    localStorage.setItem("sound", soundOn);
 		}, false);
 
 		getLevels();
 		interaction.LevelButtonEvents();
+   	}
+
+
+   	/**
+   	 * Initialize music
+   	 */
+   	function initMusic(){
+   		GameJam.music = new Howl({
+			urls: ['sound/music.ogg', 'sound/music.mp3'],
+			autoplay: true,
+			loop: true,
+			volume: 0.5
+		});
+   	}
+
+
+   	/**
+   	 * Initialize sound
+   	 */
+   	function initSound(){
+   		GameJam.sound = new Howl({
+			urls: ['sound/effects.ogg', 'sound/effects.mp3'],
+			sprite: {
+				click: [0, 100],
+			    plop: [200, 100],
+			    end: [400, 2600],
+			    start: [3500, 3000],
+			    move: [7000, 1000],
+			    run: [8500, 6200]
+			}
+		});
    	}
 
 
@@ -485,6 +528,8 @@ var core = function(document, window){
    	 * Start the second stage of the game
    	 */
    	function startGame(){
+   		GameJam.sound.play('start');
+   		GameJam.sound.play('run');
 		
 		// Put items in the map
 		itemsToObstacles(true);
@@ -524,6 +569,8 @@ var core = function(document, window){
 	 * End of the level
 	 */
 	function endLevel(){
+		GameJam.sound.play('end');
+
 		GameJam.gameEnded = true;
 		GameJam.paused = true;
 
@@ -560,7 +607,12 @@ var core = function(document, window){
 
 		function showStar(star){
 			requestTimeout(function(){
-				document.querySelectorAll('#star-big' + star)[0].className = 'star show';
+				var starElm = document.querySelectorAll('#star-big' + star)[0];
+				console.log(starElm.className);
+				if (starElm.className != 'star visible') {
+					GameJam.sound.play('plop');
+					starElm.className = 'star show';
+				}
 			}, star*500 + 500);
 		}
 

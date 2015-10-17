@@ -66,6 +66,8 @@ var interaction = function(document, window){
 						//console.log(startwidth + "-" + endwidth + "-" + startheight + "-" + endheight + "-" + cell);
 						
 						if (startwidth <= cell[0] && cell[0] <= endwidth && startheight <= cell[1] && cell[1] <= endheight) {
+							GameJam.sound.play('move');
+							
 							GameJam.draggedItem = i;
 						}
 					}
@@ -185,6 +187,7 @@ var interaction = function(document, window){
 		/** Expand/minimize the item list */
 		var mcSlider = new Hammer(document.getElementById('slider'));
 		mcSlider.on('tap', function(e){
+			GameJam.sound.play('click');
 			if (e.target.className.match(/minimized/g)) {
 				core.ShowObstacles();
 			} else{
@@ -203,6 +206,7 @@ var interaction = function(document, window){
 		/** Replay level button */
 		var mcReplay = new Hammer(document.querySelectorAll('.replay-btn')[0]);
 		mcReplay.on('tap', function(e){
+			GameJam.sound.play('click');
 			document.getElementById('complete').className = 'window hide';
 			core.LoadLevel(GameJam.currentLevel);
 		});
@@ -215,6 +219,7 @@ var interaction = function(document, window){
 	function nextLevelBtnEvent(){
 		var mcNext = new Hammer(document.querySelectorAll('.next-btn')[0]);
 		mcNext.on('tap', function(e){
+			GameJam.sound.play('click');
 			document.getElementById('complete').className = 'window hide';
 			var nextLevel = 'level' + (parseInt(GameJam.currentLevel.replace(/level/g, '')) + 1);
 			core.LoadLevel(nextLevel);
@@ -269,6 +274,8 @@ var interaction = function(document, window){
 
 				switch(e.type) {
 		            case 'panstart':
+		            	GameJam.sound.play('plop');
+
 		            	// Show icon
 		            	GameJam.draggedIcon.setAttribute('style', 'background-position: 0px -' + item.icon + 'px;');
 		            	GameJam.draggedIcon.className = 'show';
@@ -291,6 +298,8 @@ var interaction = function(document, window){
 		            	break;
 
 		            case 'panend':
+		            	GameJam.sound.play('plop');
+
 		            	// Hide icon
 		            	GameJam.draggedIcon.className = '';
 
@@ -299,9 +308,6 @@ var interaction = function(document, window){
 	            		pos.push(cellheight * GameJam.tileHeight);
 
 	            		// Remove obstacle from obstacle window
-	            		
-console.log(item,itemCount);
-
 	            		itemCount = itemCount - 1;
 	            		if (itemCount <= 0) {
 	            			obstacle.remove();
@@ -309,7 +315,7 @@ console.log(item,itemCount);
 	            			obstacle.querySelectorAll('.count')[0].innerHTML = itemCount;
 	            		}
 	            		item.count = itemCount;
-console.log(item,itemCount);
+
 	            		// Create a new item and add it to the global items list
 		            	var newItem = {};
 		            	newItem.width = item.width;
@@ -337,6 +343,7 @@ console.log(item,itemCount);
 			var mcView = new Hammer(viewList[i]);
 
 			mcView.on('tap', function(e){
+				GameJam.sound.play('click');
 				var newView = e.target.getAttribute('data-view');
 				core.ChangeView(newView);
 			});
@@ -348,6 +355,7 @@ console.log(item,itemCount);
 			var mcCheckbox = new Hammer(checkboxList[i]);
 
 			mcCheckbox.on('tap', function(e){
+				GameJam.sound.play('click');
 				var checked = e.target.getAttribute('data-checked');
 				if (checked === 'true') {
 					e.target.className = 'checkbox';
@@ -362,6 +370,7 @@ console.log(item,itemCount);
 		/** Reset button */
 		var mcReset = new Hammer(document.getElementById('reset-btn'));
 		mcReset.on('tap', function(e){
+			GameJam.sound.play('click');
 			if (core.LocalStorageActive) {
 				localStorage.clear();
 			}
@@ -380,6 +389,7 @@ console.log(item,itemCount);
 			var mcLevel = new Hammer(levelList[i]);
 
 			mcLevel.on('tap', function(e){
+				GameJam.sound.play('click');
 				core.LoadLevel(e.target.parentElement.id);
 			});
 		}
