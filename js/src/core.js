@@ -137,7 +137,8 @@ var core = function(document, window){
 			    end: [400, 2600],
 			    start: [3500, 3000],
 			    move: [7000, 1000],
-			    run: [8500, 6200]
+			    run: [8500, 6200],
+			    explode: [15000, 3000]
 			}
 		});
    	}

@@ -1109,7 +1109,8 @@ var core = function(document, window){
 			    end: [400, 2600],
 			    start: [3500, 3000],
 			    move: [7000, 1000],
-			    run: [8500, 6200]
+			    run: [8500, 6200],
+			    explode: [15000, 3000]
 			}
 		});
    	}
@@ -2681,6 +2682,7 @@ window.GameJam.movePrisoner = function(){
     GameJam.currentPath = GameJam.findPath(GameJam.obstacles, [GameJam.prisoner[0].pos[0] / GameJam.tileWidth, GameJam.prisoner[0].pos[1] / GameJam.tileHeight], GameJam.pathEnd);
 
     function breakItem(){
+        GameJam.sound.play('explode');
 
         //animation of breaking stuff        
         for (var i = GameJam.items.length - 1; i >= 0; i--) {

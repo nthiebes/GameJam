@@ -7,6 +7,7 @@ window.GameJam.movePrisoner = function(){
     GameJam.currentPath = GameJam.findPath(GameJam.obstacles, [GameJam.prisoner[0].pos[0] / GameJam.tileWidth, GameJam.prisoner[0].pos[1] / GameJam.tileHeight], GameJam.pathEnd);
 
     function breakItem(){
+        GameJam.sound.play('explode');
 
         //animation of breaking stuff        
         for (var i = GameJam.items.length - 1; i >= 0; i--) {
